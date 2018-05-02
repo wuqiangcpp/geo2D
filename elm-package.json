@@ -1,6 +1,6 @@
 {
     "version": "1.0.0",
-    "summary": "geo2d: an interactive tool for plotting 2D geometry figures",
+    "summary": "geo2d: an interactive tool for 2D geometry on web",
     "repository": "https://github.com/user/project.git",
     "license": "BSD3",
     "source-directories": [
