@@ -483,6 +483,13 @@ view model =
                       ][]
             ,button [onClick Plot] [text "plot"]
             ]
+        ,text "Input examples:"    
+        ,ul[style
+                 [("color","blue")
+                  ,("white-space","pre-line")
+                 ]
+            ]
+            examples
         ,div[style
                  [("color","red")
                   ,("white-space","pre-line")
@@ -493,8 +500,19 @@ view model =
             ]
            
         ]
-    
 
+examples=List.map text [
+                       "point A,B,C\n"
+                       ,"connect A B\n"
+                       ,"connect B C\n"
+                       ,"connect A C\n"
+                       ,"point D on line AB\n"
+                       ,"point E on line BC 1:1\n"
+                       ,"connect A E\n"
+                       ,"connect C D\n"
+                       ,"intersection of AE CD as point I"
+                       ]
+        
 translatePos:Position->Position->Position->Position
 translatePos pos start current=
     let newPos=Position
