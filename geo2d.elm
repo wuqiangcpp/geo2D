@@ -38,10 +38,22 @@ type alias Lines=Dict.DictList LLabel Line
 type alias State={dragging:Bool,labelDragging:Bool}
 defaultSta:State
 defaultSta={dragging=False,labelDragging=False}
+
+type alias Pstate={hidden:Bool}
+defaultPSta:Pstate
+defaultPSta={hidden=False}
+             
+type alias Lstate={hidden:Bool,dashed:Bool}
+defaultLSta:Lstate
+defaultLSta={hidden=False,dashed=False}
+
+type alias Pstates=Dict.DictList PLabel Pstate
+type alias Lstates=Dict.DictList LLabel Lstate
+
 --(point position,label position,state)     
-type alias Pinfo={pos:Position,labelPos:(Maybe Position),state:State}
+type alias Pinfo={pos:Position,labelPos:(Maybe Position),state:State,extraState:Maybe Pstate}
 type alias PList=Dict.DictList PLabel Pinfo
-type alias Linfo={twoPos:{a:Position,b:Position},state:State}
+type alias Linfo={twoPos:{a:Position,b:Position},state:Maybe Lstate}
 type alias LList=Dict.DictList LLabel Linfo
 type alias Labels=Dict.DictList String Position
 
@@ -51,6 +63,8 @@ type alias Model =
       points : Points
     , lines:Lines
     , labels:Labels
+    , pstates:Pstates
+    , lstates:Lstates
     , drag : Maybe Drag
     , mOver:Maybe Obj
     , input:String             
@@ -95,11 +109,14 @@ sampleLabels=Dict.singleton "A" ({x=4,y=4})
       |> Dict.cons "D" ({x=4,y=4})
       |> Dict.cons "E" ({x=4,y=4})
       |> Dict.cons "F" ({x=4,y=4})
-      |> Dict.cons "G" ({x=4,y=4})         
+      |> Dict.cons "G" ({x=4,y=4})
+
+pstates=Dict.empty
+lstates=Dict.empty         
                         
 init : ( Model, Cmd Msg )
 init =
-    ( Model points lines labels Nothing Nothing "" "", Cmd.none )
+    ( Model points lines labels pstates lstates Nothing Nothing "" "", Cmd.none )
                                 
 type Obj=P String | L String  | C String |Label String
 getObjLabel:Obj->String
@@ -153,7 +170,9 @@ plot model=
     let input=model.input
         info=interpret model input               
     in
-        {model|points=info.points,lines=info.lines,labels=info.labels,prompt=info.prompt}    
+        {model|points=info.points,lines=info.lines,labels=info.labels,prompt=info.prompt
+               ,pstates=info.pstates,lstates=info.lstates
+        }
 -- spaces:Parser ()
 -- spaces=
 --     ignore oneOrMore (\c->c==' ')
@@ -294,6 +313,12 @@ constructL model input=
     in
         (a++b,LineAB {a=a,b=b})
 
+
+mergeLSta:Lstate->Lstate->Lstate
+mergeLSta s1 s2={defaultLSta|hidden=s1.hidden||s2.hidden
+                        ,dashed=s1.dashed||s2.dashed}
+        
+
 correctPL:Points->Lines->(Points,Lines)
 correctPL points lines=
     let pcorrect=Dict.filter
@@ -349,7 +374,9 @@ check points lines=
                 (Dict.values lines)
     in List.foldl (++) "" (List.append pcheck lcheck)
             
-interpret:Model->String->{points:Points,lines:Lines,labels:Labels,prompt:String}
+interpret:Model->String
+         ->{points:Points,lines:Lines,labels:Labels,prompt:String,
+            pstates:Pstates,lstates:Lstates}
 interpret model input=
     let
         inputList=String.lines input |>List.filter (\c-> String.isEmpty c|> not)
@@ -368,18 +395,37 @@ interpret model input=
         pointsList=List.append points1 points2 |> List.concat 
         points=pointsList|> Dict.fromList
         labels=constructLabel model pointsList |> Dict.fromList
+
+        re4=R.regex "^\\s*hide\\s+point\\s+(\\w+)\\s*$"
+        (pstateInfo,res4)=match res3 re4
+        pstates=List.map (\x->(x!!0,{defaultPSta|hidden=True})) pstateInfo |> Dict.fromList
+
+        re5=R.regex "^\\s*hide\\s+line\\s+(\\w+)\\s*$"
+        (lstateInfo1,res5)=match res4 re5
+        lstates1=List.map (\x->(x!!0,{defaultLSta|hidden=True})) lstateInfo1 |> Dict.fromList
+
+        re6=R.regex "^\\s*line\\s+(\\w+)\\s+dashed\\s*$"
+        (lstateInfo2,res6)=match res4 re6
+        lstates2=List.map (\x->(x!!0,{defaultLSta|dashed=True})) lstateInfo2 |> Dict.fromList
+
+        lstates=Dict.merge (\c a r->Dict.cons c a r)
+                 (\c a b r->Dict.cons c (mergeLSta a b) r) (Dict.cons)
+                 lstates1 lstates2 Dict.empty
+                 
         errors=List.foldl (\i str->
                                str++"can not understand: \""++ i ++"\";\n"
-                          ) "" res3
+                          ) "" res6
         checks=check points lines
         prompt=errors++checks
     in
         if (String.isEmpty checks |> not) then
             let (p,l)=correctPL points lines
             in
-                {points=p,lines=l,labels=labels,prompt=prompt}
+                {points=p,lines=l,labels=labels,prompt=prompt
+                 ,pstates=pstates,lstates=lstates}
         else
-            {points=points,lines=lines,labels=labels,prompt=prompt}
+            {points=points,lines=lines,labels=labels,prompt=prompt
+             ,pstates=pstates,lstates=lstates}
 --        {points=samplePoints,lines=sampleLines,labels=sampleLabels,prompt=prompt}
 
         
@@ -408,28 +454,37 @@ onMouseDown obj=
 renderPoints:PList->List (S.Svg Msg)
 renderPoints plist=
     List.map
-    (\(label,{pos,labelPos,state})->
+    (\(label,{pos,labelPos,state,extraState})->
          S.g []
          (
-         case labelPos of
-            Just lpos->
-              [
-               S.circle [SA.cx (toString pos.x), SA.cy (toString pos.y),
-                         SA.r (if state.dragging||state.labelDragging then "6" else "4"),
-                         SA.fill (if state.dragging||state.labelDragging then "red" else "black"),
-                         SA.cursor (if state.dragging then "move" else "default"),
-                         onMouseDown (P label),
-                         onMouseOver (MOver (P label)),
-                         onMouseOut (MOut (P label))
-                        ][]
-              ,S.text_ [SA.x (pos.x+lpos.x |> toString), SA.y (-pos.y-lpos.y |>toString ),
+          let hidden=
+              case extraState of
+                  Just es->es.hidden
+                  Nothing->False
+          in
+              case labelPos of
+                  Just lpos->
+              if (not hidden)
+              then
+                  [
+                   S.circle [SA.cx (toString pos.x), SA.cy (toString pos.y),
+                             SA.r (if state.dragging||state.labelDragging then "6" else "4"),
+                             SA.fill (if state.dragging||state.labelDragging then "red" else "black"),
+                             SA.cursor (if state.dragging then "move" else "default"),
+                             onMouseDown (P label),
+                             onMouseOver (MOver (P label)),
+                             onMouseOut (MOut (P label))
+                            ][]
+                  ,S.text_ [SA.x (pos.x+lpos.x |> toString), SA.y (-pos.y-lpos.y |>toString ),
                                         SA.cursor "move",
                                         SA.transform "scale(1,-1)",
                                         SA.fill (if state.dragging || state.labelDragging then "red" else "black"),
                                         onMouseDown (Label label)
                                        ] [S.text label]
-              ]
-            Nothing  -> []
+                  ]
+              else
+                  []
+                  Nothing  -> []
          )
     )
     (Dict.toList plist)
@@ -438,13 +493,25 @@ renderLines:LList->List (S.Svg Msg)
 renderLines llist=
     List.map
     (\(label,{twoPos,state})->
-         S.g []
-         [
-          S.line [SA.style "stroke:black;stroke-width:3",
+          let (dashed,hidden)=
+              case state of
+                  Just es->(es.dashed,es.hidden)
+                  Nothing->(False,False)
+          in
+              S.g []
+         (
+          if (not hidden)
+          then
+              [
+               S.line [SA.style ("stroke:black;stroke-width:3;"
+                                 ++if dashed then "stroke-dasharray:10,6" else ""),
                   SA.x1 (toString twoPos.a.x), SA.y1 (toString twoPos.a.y),
                   SA.x2 (toString twoPos.b.x), SA.y2 (toString twoPos.b.y)
                  ][]
-         ]
+              ]
+          else
+              []
+         )
     )
     (Dict.toList llist)
 
@@ -510,7 +577,9 @@ examples=List.map text [
                        ,"point E on line BC 1:1\n"
                        ,"connect A E\n"
                        ,"connect C D\n"
-                       ,"intersection of AE CD as point I"
+                       ,"intersection of AE CD as point I\n"
+                       ,"hide point I\n"
+                       ,"hide line AE\n"
                        ]
         
 translatePos:Position->Position->Position->Position
@@ -652,6 +721,7 @@ getP model plabel=
         obj=P plabel
         labelObj=Label plabel
         dragObj=Maybe.map .obj model.drag
+        extraSta=Dict.get plabel model.pstates
     in
         case point of
             FP pos->
@@ -659,6 +729,7 @@ getP model plabel=
                  state={defaultSta|dragging=Just obj==model.mOver || Just obj==dragObj,
                         labelDragging=Just labelObj==dragObj
                        }
+                 ,extraState=extraSta
                 }
             FPOL llabel pos->
                 let actualPos=footPoint (getL model llabel |> .twoPos) pos
@@ -666,8 +737,9 @@ getP model plabel=
                     {pos=actualPos,
                      labelPos=(getLabelPos model plabel),
                      state={defaultSta|dragging=Just obj==model.mOver|| Just obj==dragObj,
-                            labelDragging=Just labelObj==dragObj                                
+                            labelDragging=Just labelObj==dragObj
                            }
+                    ,extraState=extraSta
                     }                
             POL llabel f1 f2->
                 let
@@ -683,6 +755,7 @@ getP model plabel=
                      state={defaultSta|dragging=False,
                             labelDragging=Just labelObj==dragObj
                            }
+                    ,extraState=extraSta                         
                     }
             P2L l1 l2->
                 let
@@ -694,6 +767,7 @@ getP model plabel=
                      state={defaultSta|dragging=False,
                             labelDragging=Just labelObj==dragObj          
                            }
+                    ,extraState=extraSta                         
                     }
 
 getLabelPos:Model->String->Maybe Position
@@ -708,12 +782,13 @@ getL:Model->LLabel->Linfo
 getL model llabel=
     let lines=getLines model
         line=Dict.get llabel lines |> fromJust
+        state=Dict.get llabel model.lstates
     in
         case line of
-            Line2P twoPos->{twoPos=twoPos,state={defaultSta|dragging=False}}
+            Line2P twoPos->{twoPos=twoPos,state=state}
             LineAB {a,b}->{
                     twoPos={a=getP model a |> .pos,b=getP model b |> .pos},
-                    state={defaultSta|dragging=False}
+                    state=state
                    }
         
 getPList : Model->PList

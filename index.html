@@ -13211,8 +13211,8 @@ var _user$project$Main$fromJust = function (x) {
 		return _elm_lang$core$Native_Utils.crashCase(
 			'Main',
 			{
-				start: {line: 645, column: 14},
-				end: {line: 647, column: 66}
+				start: {line: 714, column: 14},
+				end: {line: 716, column: 66}
 			},
 			_p0)('error: fromJust Nothing');
 	}
@@ -13315,8 +13315,16 @@ var _user$project$Main$examples = A2(
 									_0: 'connect C D\n',
 									_1: {
 										ctor: '::',
-										_0: 'intersection of AE CD as point I',
-										_1: {ctor: '[]'}
+										_0: 'intersection of AE CD as point I\n',
+										_1: {
+											ctor: '::',
+											_0: 'hide point I\n',
+											_1: {
+												ctor: '::',
+												_0: 'hide line AE\n',
+												_1: {ctor: '[]'}
+											}
+										}
 									}
 								}
 							}
@@ -13374,33 +13382,48 @@ var _user$project$Main$renderLines = function (llist) {
 		_elm_lang$core$List$map,
 		function (_p4) {
 			var _p5 = _p4;
-			var _p6 = _p5._1.twoPos;
+			var _p9 = _p5._1.twoPos;
+			var _p6 = function () {
+				var _p7 = _p5._1.state;
+				if (_p7.ctor === 'Just') {
+					var _p8 = _p7._0;
+					return {ctor: '_Tuple2', _0: _p8.dashed, _1: _p8.hidden};
+				} else {
+					return {ctor: '_Tuple2', _0: false, _1: false};
+				}
+			}();
+			var dashed = _p6._0;
+			var hidden = _p6._1;
 			return A2(
 				_elm_lang$svg$Svg$g,
 				{ctor: '[]'},
-				{
+				(!hidden) ? {
 					ctor: '::',
 					_0: A2(
 						_elm_lang$svg$Svg$line,
 						{
 							ctor: '::',
-							_0: _elm_lang$svg$Svg_Attributes$style('stroke:black;stroke-width:3'),
+							_0: _elm_lang$svg$Svg_Attributes$style(
+								A2(
+									_elm_lang$core$Basics_ops['++'],
+									'stroke:black;stroke-width:3;',
+									dashed ? 'stroke-dasharray:10,6' : '')),
 							_1: {
 								ctor: '::',
 								_0: _elm_lang$svg$Svg_Attributes$x1(
-									_elm_lang$core$Basics$toString(_p6.a.x)),
+									_elm_lang$core$Basics$toString(_p9.a.x)),
 								_1: {
 									ctor: '::',
 									_0: _elm_lang$svg$Svg_Attributes$y1(
-										_elm_lang$core$Basics$toString(_p6.a.y)),
+										_elm_lang$core$Basics$toString(_p9.a.y)),
 									_1: {
 										ctor: '::',
 										_0: _elm_lang$svg$Svg_Attributes$x2(
-											_elm_lang$core$Basics$toString(_p6.b.x)),
+											_elm_lang$core$Basics$toString(_p9.b.x)),
 										_1: {
 											ctor: '::',
 											_0: _elm_lang$svg$Svg_Attributes$y2(
-												_elm_lang$core$Basics$toString(_p6.b.y)),
+												_elm_lang$core$Basics$toString(_p9.b.y)),
 											_1: {ctor: '[]'}
 										}
 									}
@@ -13409,7 +13432,7 @@ var _user$project$Main$renderLines = function (llist) {
 						},
 						{ctor: '[]'}),
 					_1: {ctor: '[]'}
-				});
+				} : {ctor: '[]'});
 		},
 		_Gizra$elm_dictlist$DictList$toList(llist));
 };
@@ -13418,20 +13441,20 @@ var _user$project$Main$check = F2(
 		var lcheck = A2(
 			_elm_lang$core$List$map,
 			function (l) {
-				var _p7 = l;
-				if (_p7.ctor === 'LineAB') {
-					var _p9 = _p7._0.b;
-					var _p8 = _p7._0.a;
+				var _p10 = l;
+				if (_p10.ctor === 'LineAB') {
+					var _p12 = _p10._0.b;
+					var _p11 = _p10._0.a;
 					return A2(
 						_elm_lang$core$Basics_ops['++'],
-						A2(_Gizra$elm_dictlist$DictList$member, _p8, points) ? '' : A2(
+						A2(_Gizra$elm_dictlist$DictList$member, _p11, points) ? '' : A2(
 							_elm_lang$core$Basics_ops['++'],
 							'point ',
-							A2(_elm_lang$core$Basics_ops['++'], _p8, ' is not defined;\n')),
-						A2(_Gizra$elm_dictlist$DictList$member, _p9, points) ? '' : A2(
+							A2(_elm_lang$core$Basics_ops['++'], _p11, ' is not defined;\n')),
+						A2(_Gizra$elm_dictlist$DictList$member, _p12, points) ? '' : A2(
 							_elm_lang$core$Basics_ops['++'],
 							'point ',
-							A2(_elm_lang$core$Basics_ops['++'], _p9, ' is not defined;\n')));
+							A2(_elm_lang$core$Basics_ops['++'], _p12, ' is not defined;\n')));
 				} else {
 					return '';
 				}
@@ -13440,33 +13463,33 @@ var _user$project$Main$check = F2(
 		var pcheck = A2(
 			_elm_lang$core$List$map,
 			function (p) {
-				var _p10 = p;
-				switch (_p10.ctor) {
+				var _p13 = p;
+				switch (_p13.ctor) {
 					case 'POL':
-						var _p11 = _p10._0;
-						return A2(_Gizra$elm_dictlist$DictList$member, _p11, lines) ? '' : A2(
+						var _p14 = _p13._0;
+						return A2(_Gizra$elm_dictlist$DictList$member, _p14, lines) ? '' : A2(
 							_elm_lang$core$Basics_ops['++'],
 							'line ',
-							A2(_elm_lang$core$Basics_ops['++'], _p11, ' is not defined;\n'));
+							A2(_elm_lang$core$Basics_ops['++'], _p14, ' is not defined;\n'));
 					case 'FPOL':
-						var _p12 = _p10._0;
-						return A2(_Gizra$elm_dictlist$DictList$member, _p12, lines) ? '' : A2(
+						var _p15 = _p13._0;
+						return A2(_Gizra$elm_dictlist$DictList$member, _p15, lines) ? '' : A2(
 							_elm_lang$core$Basics_ops['++'],
 							'line ',
-							A2(_elm_lang$core$Basics_ops['++'], _p12, ' is not defined;\n'));
+							A2(_elm_lang$core$Basics_ops['++'], _p15, ' is not defined;\n'));
 					case 'P2L':
-						var _p14 = _p10._1;
-						var _p13 = _p10._0;
+						var _p17 = _p13._1;
+						var _p16 = _p13._0;
 						return A2(
 							_elm_lang$core$Basics_ops['++'],
-							A2(_Gizra$elm_dictlist$DictList$member, _p13, lines) ? '' : A2(
+							A2(_Gizra$elm_dictlist$DictList$member, _p16, lines) ? '' : A2(
 								_elm_lang$core$Basics_ops['++'],
 								'line ',
-								A2(_elm_lang$core$Basics_ops['++'], _p13, ' is not defined;\n')),
-							A2(_Gizra$elm_dictlist$DictList$member, _p14, lines) ? '' : A2(
+								A2(_elm_lang$core$Basics_ops['++'], _p16, ' is not defined;\n')),
+							A2(_Gizra$elm_dictlist$DictList$member, _p17, lines) ? '' : A2(
 								_elm_lang$core$Basics_ops['++'],
 								'line ',
-								A2(_elm_lang$core$Basics_ops['++'], _p14, ' is not defined;\n')));
+								A2(_elm_lang$core$Basics_ops['++'], _p17, ' is not defined;\n')));
 					default:
 						return '';
 				}
@@ -13487,9 +13510,9 @@ var _user$project$Main$correctPL = F2(
 			_Gizra$elm_dictlist$DictList$filter,
 			F2(
 				function (label, l) {
-					var _p15 = l;
-					if (_p15.ctor === 'LineAB') {
-						return A2(_Gizra$elm_dictlist$DictList$member, _p15._0.a, points) && A2(_Gizra$elm_dictlist$DictList$member, _p15._0.b, points);
+					var _p18 = l;
+					if (_p18.ctor === 'LineAB') {
+						return A2(_Gizra$elm_dictlist$DictList$member, _p18._0.a, points) && A2(_Gizra$elm_dictlist$DictList$member, _p18._0.b, points);
 					} else {
 						return true;
 					}
@@ -13499,14 +13522,14 @@ var _user$project$Main$correctPL = F2(
 			_Gizra$elm_dictlist$DictList$filter,
 			F2(
 				function (label, p) {
-					var _p16 = p;
-					switch (_p16.ctor) {
+					var _p19 = p;
+					switch (_p19.ctor) {
 						case 'POL':
-							return A2(_Gizra$elm_dictlist$DictList$member, _p16._0, lines);
+							return A2(_Gizra$elm_dictlist$DictList$member, _p19._0, lines);
 						case 'FPOL':
-							return A2(_Gizra$elm_dictlist$DictList$member, _p16._0, lines);
+							return A2(_Gizra$elm_dictlist$DictList$member, _p19._0, lines);
 						case 'P2L':
-							return A2(_Gizra$elm_dictlist$DictList$member, _p16._0, lines) && A2(_Gizra$elm_dictlist$DictList$member, _p16._1, lines);
+							return A2(_Gizra$elm_dictlist$DictList$member, _p19._0, lines) && A2(_Gizra$elm_dictlist$DictList$member, _p19._1, lines);
 						default:
 							return true;
 					}
@@ -13518,12 +13541,12 @@ var _user$project$Main$constructLabel = F2(
 	function (model, list) {
 		return A2(
 			_elm_lang$core$List$map,
-			function (_p17) {
-				var _p18 = _p17;
-				var _p19 = _p18._0;
-				var pos = A2(_Gizra$elm_dictlist$DictList$member, _p19, model.labels) ? _user$project$Main$fromJust(
-					A2(_user$project$Main$getLabelPos, model, _p19)) : {x: 4, y: 4};
-				return {ctor: '_Tuple2', _0: _p19, _1: pos};
+			function (_p20) {
+				var _p21 = _p20;
+				var _p22 = _p21._0;
+				var pos = A2(_Gizra$elm_dictlist$DictList$member, _p22, model.labels) ? _user$project$Main$fromJust(
+					A2(_user$project$Main$getLabelPos, model, _p22)) : {x: 4, y: 4};
+				return {ctor: '_Tuple2', _0: _p22, _1: pos};
 			},
 			list);
 	});
@@ -13536,17 +13559,17 @@ var _user$project$Main$onePos = function (m) {
 		function (n, r) {
 			help:
 			while (true) {
-				var _p20 = n;
-				if (_p20 === 0) {
+				var _p23 = n;
+				if (_p23 === 0) {
 					return r;
 				} else {
-					var _v10 = n - 1,
-						_v11 = {
+					var _v11 = n - 1,
+						_v12 = {
 						x: A2(_elm_lang$core$Basics_ops['%'], (a * r.x) + b, _user$project$Main$width) - halfW,
 						y: A2(_elm_lang$core$Basics_ops['%'], (a * r.y) + b, _user$project$Main$height) - halfH
 					};
-					n = _v10;
-					r = _v11;
+					n = _v11;
+					r = _v12;
 					continue help;
 				}
 			}
@@ -13591,9 +13614,9 @@ var _user$project$Main$match = F2(
 			_elm_lang$core$Tuple$second,
 			A2(
 				_elm_lang$core$List$filter,
-				function (_p21) {
-					var _p22 = _p21;
-					return !_elm_lang$core$List$isEmpty(_p22._1);
+				function (_p24) {
+					var _p25 = _p24;
+					return !_elm_lang$core$List$isEmpty(_p25._1);
 				},
 				matches));
 		var res = A2(
@@ -13601,26 +13624,28 @@ var _user$project$Main$match = F2(
 			_elm_lang$core$Tuple$first,
 			A2(
 				_elm_lang$core$List$filter,
-				function (_p23) {
-					var _p24 = _p23;
-					return _elm_lang$core$List$isEmpty(_p24._1);
+				function (_p26) {
+					var _p27 = _p26;
+					return _elm_lang$core$List$isEmpty(_p27._1);
 				},
 				matches));
 		return {ctor: '_Tuple2', _0: info, _1: res};
 	});
 var _user$project$Main$getObjLabel = function (obj) {
-	var _p25 = obj;
-	switch (_p25.ctor) {
+	var _p28 = obj;
+	switch (_p28.ctor) {
 		case 'P':
-			return _p25._0;
+			return _p28._0;
 		case 'L':
-			return _p25._0;
+			return _p28._0;
 		case 'C':
-			return _p25._0;
+			return _p28._0;
 		default:
-			return _p25._0;
+			return _p28._0;
 	}
 };
+var _user$project$Main$lstates = _Gizra$elm_dictlist$DictList$empty;
+var _user$project$Main$pstates = _Gizra$elm_dictlist$DictList$empty;
 var _user$project$Main$sampleLabels = A3(
 	_Gizra$elm_dictlist$DictList$cons,
 	'G',
@@ -13652,26 +13677,41 @@ var _user$project$Main$sampleLabels = A3(
 var _user$project$Main$labels = _Gizra$elm_dictlist$DictList$empty;
 var _user$project$Main$lines = _Gizra$elm_dictlist$DictList$empty;
 var _user$project$Main$points = _Gizra$elm_dictlist$DictList$empty;
+var _user$project$Main$defaultLSta = {hidden: false, dashed: false};
+var _user$project$Main$mergeLSta = F2(
+	function (s1, s2) {
+		return _elm_lang$core$Native_Utils.update(
+			_user$project$Main$defaultLSta,
+			{hidden: s1.hidden || s2.hidden, dashed: s1.dashed || s2.dashed});
+	});
+var _user$project$Main$defaultPSta = {hidden: false};
 var _user$project$Main$defaultSta = {dragging: false, labelDragging: false};
 var _user$project$Main$State = F2(
 	function (a, b) {
 		return {dragging: a, labelDragging: b};
 	});
-var _user$project$Main$Pinfo = F3(
-	function (a, b, c) {
-		return {pos: a, labelPos: b, state: c};
+var _user$project$Main$Pstate = function (a) {
+	return {hidden: a};
+};
+var _user$project$Main$Lstate = F2(
+	function (a, b) {
+		return {hidden: a, dashed: b};
+	});
+var _user$project$Main$Pinfo = F4(
+	function (a, b, c, d) {
+		return {pos: a, labelPos: b, state: c, extraState: d};
 	});
 var _user$project$Main$Linfo = F2(
 	function (a, b) {
 		return {twoPos: a, state: b};
 	});
-var _user$project$Main$Model = F7(
-	function (a, b, c, d, e, f, g) {
-		return {points: a, lines: b, labels: c, drag: d, mOver: e, input: f, prompt: g};
+var _user$project$Main$Model = F9(
+	function (a, b, c, d, e, f, g, h, i) {
+		return {points: a, lines: b, labels: c, pstates: d, lstates: e, drag: f, mOver: g, input: h, prompt: i};
 	});
 var _user$project$Main$init = {
 	ctor: '_Tuple2',
-	_0: A7(_user$project$Main$Model, _user$project$Main$points, _user$project$Main$lines, _user$project$Main$labels, _elm_lang$core$Maybe$Nothing, _elm_lang$core$Maybe$Nothing, '', ''),
+	_0: A9(_user$project$Main$Model, _user$project$Main$points, _user$project$Main$lines, _user$project$Main$labels, _user$project$Main$pstates, _user$project$Main$lstates, _elm_lang$core$Maybe$Nothing, _elm_lang$core$Maybe$Nothing, '', ''),
 	_1: _elm_lang$core$Platform_Cmd$none
 };
 var _user$project$Main$Drag = F3(
@@ -13816,6 +13856,7 @@ var _user$project$Main$P = function (a) {
 };
 var _user$project$Main$getP = F2(
 	function (model, plabel) {
+		var extraSta = A2(_Gizra$elm_dictlist$DictList$get, plabel, model.pstates);
 		var dragObj = A2(
 			_elm_lang$core$Maybe$map,
 			function (_) {
@@ -13825,11 +13866,11 @@ var _user$project$Main$getP = F2(
 		var labelObj = _user$project$Main$Label(plabel);
 		var obj = _user$project$Main$P(plabel);
 		var point = A2(_user$project$Main$getPoint, model, plabel);
-		var _p26 = point;
-		switch (_p26.ctor) {
+		var _p29 = point;
+		switch (_p29.ctor) {
 			case 'FP':
 				return {
-					pos: _p26._0,
+					pos: _p29._0,
 					labelPos: A2(_user$project$Main$getLabelPos, model, plabel),
 					state: _elm_lang$core$Native_Utils.update(
 						_user$project$Main$defaultSta,
@@ -13842,7 +13883,8 @@ var _user$project$Main$getP = F2(
 							labelDragging: _elm_lang$core$Native_Utils.eq(
 								_elm_lang$core$Maybe$Just(labelObj),
 								dragObj)
-						})
+						}),
+					extraState: extraSta
 				};
 			case 'FPOL':
 				var actualPos = A2(
@@ -13850,8 +13892,8 @@ var _user$project$Main$getP = F2(
 					function (_) {
 						return _.twoPos;
 					}(
-						A2(_user$project$Main$getL, model, _p26._0)),
-					_p26._1);
+						A2(_user$project$Main$getL, model, _p29._0)),
+					_p29._1);
 				return {
 					pos: actualPos,
 					labelPos: A2(_user$project$Main$getLabelPos, model, plabel),
@@ -13866,12 +13908,13 @@ var _user$project$Main$getP = F2(
 							labelDragging: _elm_lang$core$Native_Utils.eq(
 								_elm_lang$core$Maybe$Just(labelObj),
 								dragObj)
-						})
+						}),
+					extraState: extraSta
 				};
 			case 'POL':
-				var _p27 = _p26._1;
-				var ratio = _p27 / (_p27 + _p26._2);
-				var linfo = A2(_user$project$Main$getL, model, _p26._0);
+				var _p30 = _p29._1;
+				var ratio = _p30 / (_p30 + _p29._2);
+				var linfo = A2(_user$project$Main$getL, model, _p29._0);
 				var twoPos = linfo.twoPos;
 				var posa = twoPos.a;
 				var posb = twoPos.b;
@@ -13889,11 +13932,12 @@ var _user$project$Main$getP = F2(
 							labelDragging: _elm_lang$core$Native_Utils.eq(
 								_elm_lang$core$Maybe$Just(labelObj),
 								dragObj)
-						})
+						}),
+					extraState: extraSta
 				};
 			default:
-				var twoPos2 = A2(_user$project$Main$getL, model, _p26._1).twoPos;
-				var twoPos1 = A2(_user$project$Main$getL, model, _p26._0).twoPos;
+				var twoPos2 = A2(_user$project$Main$getL, model, _p29._1).twoPos;
+				var twoPos1 = A2(_user$project$Main$getL, model, _p29._0).twoPos;
 				return {
 					pos: A2(_user$project$Main$intersection, twoPos1, twoPos2),
 					labelPos: A2(_user$project$Main$getLabelPos, model, plabel),
@@ -13904,38 +13948,33 @@ var _user$project$Main$getP = F2(
 							labelDragging: _elm_lang$core$Native_Utils.eq(
 								_elm_lang$core$Maybe$Just(labelObj),
 								dragObj)
-						})
+						}),
+					extraState: extraSta
 				};
 		}
 	});
 var _user$project$Main$getL = F2(
 	function (model, llabel) {
+		var state = A2(_Gizra$elm_dictlist$DictList$get, llabel, model.lstates);
 		var lines = _user$project$Main$getLines(model);
 		var line = _user$project$Main$fromJust(
 			A2(_Gizra$elm_dictlist$DictList$get, llabel, lines));
-		var _p28 = line;
-		if (_p28.ctor === 'Line2P') {
-			return {
-				twoPos: _p28._0,
-				state: _elm_lang$core$Native_Utils.update(
-					_user$project$Main$defaultSta,
-					{dragging: false})
-			};
+		var _p31 = line;
+		if (_p31.ctor === 'Line2P') {
+			return {twoPos: _p31._0, state: state};
 		} else {
 			return {
 				twoPos: {
 					a: function (_) {
 						return _.pos;
 					}(
-						A2(_user$project$Main$getP, model, _p28._0.a)),
+						A2(_user$project$Main$getP, model, _p31._0.a)),
 					b: function (_) {
 						return _.pos;
 					}(
-						A2(_user$project$Main$getP, model, _p28._0.b))
+						A2(_user$project$Main$getP, model, _p31._0.b))
 				},
-				state: _elm_lang$core$Native_Utils.update(
-					_user$project$Main$defaultSta,
-					{dragging: false})
+				state: state
 			};
 		}
 	});
@@ -13943,31 +13982,31 @@ var _user$project$Main$getPoint = F2(
 	function (model, plabel) {
 		var point = _user$project$Main$fromJust(
 			A2(_Gizra$elm_dictlist$DictList$get, plabel, model.points));
-		var _p29 = model.drag;
-		if (_p29.ctor === 'Nothing') {
+		var _p32 = model.drag;
+		if (_p32.ctor === 'Nothing') {
 			return point;
 		} else {
-			var _p33 = _p29._0.start;
-			var _p32 = _p29._0.current;
+			var _p36 = _p32._0.start;
+			var _p35 = _p32._0.current;
 			if (_elm_lang$core$Native_Utils.eq(
-				_p29._0.obj,
+				_p32._0.obj,
 				_user$project$Main$P(plabel))) {
-				var _p30 = point;
-				switch (_p30.ctor) {
+				var _p33 = point;
+				switch (_p33.ctor) {
 					case 'FP':
 						return _user$project$Main$FP(
-							A3(_user$project$Main$translatePos, _p30._0, _p33, _p32));
+							A3(_user$project$Main$translatePos, _p33._0, _p36, _p35));
 					case 'FPOL':
-						var _p31 = _p30._0;
-						var newPos = A3(_user$project$Main$translatePos, _p30._1, _p33, _p32);
+						var _p34 = _p33._0;
+						var newPos = A3(_user$project$Main$translatePos, _p33._1, _p36, _p35);
 						var actualPos = A2(
 							_user$project$Main$footPoint,
 							function (_) {
 								return _.twoPos;
 							}(
-								A2(_user$project$Main$getL, model, _p31)),
+								A2(_user$project$Main$getL, model, _p34)),
 							newPos);
-						return A2(_user$project$Main$FPOL, _p31, actualPos);
+						return A2(_user$project$Main$FPOL, _p34, actualPos);
 					default:
 						return point;
 				}
@@ -13998,17 +14037,17 @@ var _user$project$Main$constructP = F2(
 			_elm_lang$core$List$range,
 			num + 1,
 			_elm_lang$core$List$length(labels) + num);
-		var _p34 = _elm_lang$core$List$length(str);
-		switch (_p34) {
+		var _p37 = _elm_lang$core$List$length(str);
+		switch (_p37) {
 			case 1:
 				return A2(
 					_elm_lang$core$List$map,
-					function (_p35) {
-						var _p36 = _p35;
-						var _p37 = _p36._0;
-						var p = A2(_Gizra$elm_dictlist$DictList$member, _p37, model.points) ? A2(_user$project$Main$getPoint, model, _p37) : _user$project$Main$FP(
-							_user$project$Main$onePos(_p36._1));
-						return {ctor: '_Tuple2', _0: _p37, _1: p};
+					function (_p38) {
+						var _p39 = _p38;
+						var _p40 = _p39._0;
+						var p = A2(_Gizra$elm_dictlist$DictList$member, _p40, model.points) ? A2(_user$project$Main$getPoint, model, _p40) : _user$project$Main$FP(
+							_user$project$Main$onePos(_p39._1));
+						return {ctor: '_Tuple2', _0: _p40, _1: p};
 					},
 					A3(
 						_elm_lang$core$List$map2,
@@ -14023,13 +14062,13 @@ var _user$project$Main$constructP = F2(
 					A2(_user$project$Main_ops['!!'], str, 1));
 				return A2(
 					_elm_lang$core$List$map,
-					function (_p38) {
-						var _p39 = _p38;
-						var _p40 = _p39._0;
-						var pos = A2(_Gizra$elm_dictlist$DictList$member, _p40, model.points) ? A2(_user$project$Main$getP, model, _p40).pos : _user$project$Main$onePos(_p39._1);
+					function (_p41) {
+						var _p42 = _p41;
+						var _p43 = _p42._0;
+						var pos = A2(_Gizra$elm_dictlist$DictList$member, _p43, model.points) ? A2(_user$project$Main$getP, model, _p43).pos : _user$project$Main$onePos(_p42._1);
 						return {
 							ctor: '_Tuple2',
-							_0: _p40,
+							_0: _p43,
 							_1: A2(
 								_user$project$Main$FPOL,
 								A2(_user$project$Main_ops['!!'], s, 2),
@@ -14083,6 +14122,9 @@ var _user$project$Main$constructP = F2(
 	});
 var _user$project$Main$interpret = F2(
 	function (model, input) {
+		var re6 = _elm_lang$core$Regex$regex('^\\s*line\\s+(\\w+)\\s+dashed\\s*$');
+		var re5 = _elm_lang$core$Regex$regex('^\\s*hide\\s+line\\s+(\\w+)\\s*$');
+		var re4 = _elm_lang$core$Regex$regex('^\\s*hide\\s+point\\s+(\\w+)\\s*$');
 		var re3 = _elm_lang$core$Regex$regex('^\\s*intersection\\s+of\\s+(\\w+)\\s+(\\w+)\\s+as\\s+point\\s+(\\w+)\\s*$');
 		var re2 = _elm_lang$core$Regex$regex('^\\s*connect\\s+(\\w+)\\s+(\\w+)\\s*$');
 		var re1 = _elm_lang$core$Regex$regex('^\\s*point\\s+(\\w+(?:\\s*,\\w+)*)((?:\\s+on\\s+\\w+\\s+\\w+)?)((?:\\s+[+-]?\\d+:[+-]?\\d+)?)\\s*$');
@@ -14092,24 +14134,24 @@ var _user$project$Main$interpret = F2(
 				return !_elm_lang$core$String$isEmpty(c);
 			},
 			_elm_lang$core$String$lines(input));
-		var _p41 = A2(_user$project$Main$match, inputList, re1);
-		var pointInfo1 = _p41._0;
-		var res1 = _p41._1;
+		var _p44 = A2(_user$project$Main$match, inputList, re1);
+		var pointInfo1 = _p44._0;
+		var res1 = _p44._1;
 		var points1 = A2(
 			_elm_lang$core$List$map,
 			_user$project$Main$constructP(model),
 			pointInfo1);
-		var _p42 = A2(_user$project$Main$match, res1, re2);
-		var lineInfo = _p42._0;
-		var res2 = _p42._1;
+		var _p45 = A2(_user$project$Main$match, res1, re2);
+		var lineInfo = _p45._0;
+		var res2 = _p45._1;
 		var lines = _Gizra$elm_dictlist$DictList$fromList(
 			A2(
 				_elm_lang$core$List$map,
 				_user$project$Main$constructL(model),
 				lineInfo));
-		var _p43 = A2(_user$project$Main$match, res2, re3);
-		var pointInfo3 = _p43._0;
-		var res3 = _p43._1;
+		var _p46 = A2(_user$project$Main$match, res2, re3);
+		var pointInfo3 = _p46._0;
+		var res3 = _p46._1;
 		var points2 = A2(
 			_elm_lang$core$List$map,
 			_user$project$Main$constructInterP(model),
@@ -14120,6 +14162,72 @@ var _user$project$Main$interpret = F2(
 		var checks = A2(_user$project$Main$check, points, lines);
 		var labels = _Gizra$elm_dictlist$DictList$fromList(
 			A2(_user$project$Main$constructLabel, model, pointsList));
+		var _p47 = A2(_user$project$Main$match, res3, re4);
+		var pstateInfo = _p47._0;
+		var res4 = _p47._1;
+		var pstates = _Gizra$elm_dictlist$DictList$fromList(
+			A2(
+				_elm_lang$core$List$map,
+				function (x) {
+					return {
+						ctor: '_Tuple2',
+						_0: A2(_user$project$Main_ops['!!'], x, 0),
+						_1: _elm_lang$core$Native_Utils.update(
+							_user$project$Main$defaultPSta,
+							{hidden: true})
+					};
+				},
+				pstateInfo));
+		var _p48 = A2(_user$project$Main$match, res4, re5);
+		var lstateInfo1 = _p48._0;
+		var res5 = _p48._1;
+		var lstates1 = _Gizra$elm_dictlist$DictList$fromList(
+			A2(
+				_elm_lang$core$List$map,
+				function (x) {
+					return {
+						ctor: '_Tuple2',
+						_0: A2(_user$project$Main_ops['!!'], x, 0),
+						_1: _elm_lang$core$Native_Utils.update(
+							_user$project$Main$defaultLSta,
+							{hidden: true})
+					};
+				},
+				lstateInfo1));
+		var _p49 = A2(_user$project$Main$match, res4, re6);
+		var lstateInfo2 = _p49._0;
+		var res6 = _p49._1;
+		var lstates2 = _Gizra$elm_dictlist$DictList$fromList(
+			A2(
+				_elm_lang$core$List$map,
+				function (x) {
+					return {
+						ctor: '_Tuple2',
+						_0: A2(_user$project$Main_ops['!!'], x, 0),
+						_1: _elm_lang$core$Native_Utils.update(
+							_user$project$Main$defaultLSta,
+							{dashed: true})
+					};
+				},
+				lstateInfo2));
+		var lstates = A6(
+			_Gizra$elm_dictlist$DictList$merge,
+			F3(
+				function (c, a, r) {
+					return A3(_Gizra$elm_dictlist$DictList$cons, c, a, r);
+				}),
+			F4(
+				function (c, a, b, r) {
+					return A3(
+						_Gizra$elm_dictlist$DictList$cons,
+						c,
+						A2(_user$project$Main$mergeLSta, a, b),
+						r);
+				}),
+			_Gizra$elm_dictlist$DictList$cons,
+			lstates1,
+			lstates2,
+			_Gizra$elm_dictlist$DictList$empty);
 		var errors = A3(
 			_elm_lang$core$List$foldl,
 			F2(
@@ -14133,15 +14241,15 @@ var _user$project$Main$interpret = F2(
 							A2(_elm_lang$core$Basics_ops['++'], i, '\";\n')));
 				}),
 			'',
-			res3);
+			res6);
 		var prompt = A2(_elm_lang$core$Basics_ops['++'], errors, checks);
 		if (!_elm_lang$core$String$isEmpty(checks)) {
-			var _p44 = A2(_user$project$Main$correctPL, points, lines);
-			var p = _p44._0;
-			var l = _p44._1;
-			return {points: p, lines: l, labels: labels, prompt: prompt};
+			var _p50 = A2(_user$project$Main$correctPL, points, lines);
+			var p = _p50._0;
+			var l = _p50._1;
+			return {points: p, lines: l, labels: labels, prompt: prompt, pstates: pstates, lstates: lstates};
 		} else {
-			return {points: points, lines: lines, labels: labels, prompt: prompt};
+			return {points: points, lines: lines, labels: labels, prompt: prompt, pstates: pstates, lstates: lstates};
 		}
 	});
 var _user$project$Main$plot = function (model) {
@@ -14149,7 +14257,7 @@ var _user$project$Main$plot = function (model) {
 	var info = A2(_user$project$Main$interpret, model, input);
 	return _elm_lang$core$Native_Utils.update(
 		model,
-		{points: info.points, lines: info.lines, labels: info.labels, prompt: info.prompt});
+		{points: info.points, lines: info.lines, labels: info.labels, prompt: info.prompt, pstates: info.pstates, lstates: info.lstates});
 };
 var _user$project$Main$getPoints = function (model) {
 	return A2(
@@ -14162,15 +14270,15 @@ var _user$project$Main$getPoints = function (model) {
 };
 var _user$project$Main$updateHelp = F2(
 	function (msg, model) {
-		var _p45 = msg;
-		switch (_p45.ctor) {
+		var _p51 = msg;
+		switch (_p51.ctor) {
 			case 'DragStart':
-				var _p46 = _p45._1;
+				var _p52 = _p51._1;
 				return _elm_lang$core$Native_Utils.update(
 					model,
 					{
 						drag: _elm_lang$core$Maybe$Just(
-							A3(_user$project$Main$Drag, _p45._0, _p46, _p46))
+							A3(_user$project$Main$Drag, _p51._0, _p52, _p52))
 					});
 			case 'DragAt':
 				return _elm_lang$core$Native_Utils.update(
@@ -14178,9 +14286,9 @@ var _user$project$Main$updateHelp = F2(
 					{
 						drag: A2(
 							_elm_lang$core$Maybe$map,
-							function (_p47) {
-								var _p48 = _p47;
-								return A3(_user$project$Main$Drag, _p48.obj, _p48.start, _p45._0);
+							function (_p53) {
+								var _p54 = _p53;
+								return A3(_user$project$Main$Drag, _p54.obj, _p54.start, _p51._0);
 							},
 							model.drag)
 					});
@@ -14196,7 +14304,7 @@ var _user$project$Main$updateHelp = F2(
 				return _elm_lang$core$Native_Utils.update(
 					model,
 					{
-						mOver: _elm_lang$core$Maybe$Just(_p45._0)
+						mOver: _elm_lang$core$Maybe$Just(_p51._0)
 					});
 			case 'MOut':
 				return _elm_lang$core$Native_Utils.update(
@@ -14205,7 +14313,7 @@ var _user$project$Main$updateHelp = F2(
 			case 'Change':
 				return _elm_lang$core$Native_Utils.update(
 					model,
-					{input: _p45._0});
+					{input: _p51._0});
 			case 'Plot':
 				return _user$project$Main$plot(model);
 			default:
@@ -14261,8 +14369,8 @@ var _user$project$Main$DragAt = function (a) {
 	return {ctor: 'DragAt', _0: a};
 };
 var _user$project$Main$subscriptions = function (model) {
-	var _p49 = model.drag;
-	if (_p49.ctor === 'Nothing') {
+	var _p55 = model.drag;
+	if (_p55.ctor === 'Nothing') {
 		return _elm_lang$core$Platform_Sub$none;
 	} else {
 		return _elm_lang$core$Platform_Sub$batch(
@@ -14293,56 +14401,64 @@ var _user$project$Main$onMouseDown = function (obj) {
 var _user$project$Main$renderPoints = function (plist) {
 	return A2(
 		_elm_lang$core$List$map,
-		function (_p50) {
-			var _p51 = _p50;
-			var _p56 = _p51._1.state;
-			var _p55 = _p51._1.pos;
-			var _p54 = _p51._0;
+		function (_p56) {
+			var _p57 = _p56;
+			var _p63 = _p57._1.state;
+			var _p62 = _p57._1.pos;
+			var _p61 = _p57._0;
 			return A2(
 				_elm_lang$svg$Svg$g,
 				{ctor: '[]'},
 				function () {
-					var _p52 = _p51._1.labelPos;
-					if (_p52.ctor === 'Just') {
-						var _p53 = _p52._0;
-						return {
+					var hidden = function () {
+						var _p58 = _p57._1.extraState;
+						if (_p58.ctor === 'Just') {
+							return _p58._0.hidden;
+						} else {
+							return false;
+						}
+					}();
+					var _p59 = _p57._1.labelPos;
+					if (_p59.ctor === 'Just') {
+						var _p60 = _p59._0;
+						return (!hidden) ? {
 							ctor: '::',
 							_0: A2(
 								_elm_lang$svg$Svg$circle,
 								{
 									ctor: '::',
 									_0: _elm_lang$svg$Svg_Attributes$cx(
-										_elm_lang$core$Basics$toString(_p55.x)),
+										_elm_lang$core$Basics$toString(_p62.x)),
 									_1: {
 										ctor: '::',
 										_0: _elm_lang$svg$Svg_Attributes$cy(
-											_elm_lang$core$Basics$toString(_p55.y)),
+											_elm_lang$core$Basics$toString(_p62.y)),
 										_1: {
 											ctor: '::',
 											_0: _elm_lang$svg$Svg_Attributes$r(
-												(_p56.dragging || _p56.labelDragging) ? '6' : '4'),
+												(_p63.dragging || _p63.labelDragging) ? '6' : '4'),
 											_1: {
 												ctor: '::',
 												_0: _elm_lang$svg$Svg_Attributes$fill(
-													(_p56.dragging || _p56.labelDragging) ? 'red' : 'black'),
+													(_p63.dragging || _p63.labelDragging) ? 'red' : 'black'),
 												_1: {
 													ctor: '::',
 													_0: _elm_lang$svg$Svg_Attributes$cursor(
-														_p56.dragging ? 'move' : 'default'),
+														_p63.dragging ? 'move' : 'default'),
 													_1: {
 														ctor: '::',
 														_0: _user$project$Main$onMouseDown(
-															_user$project$Main$P(_p54)),
+															_user$project$Main$P(_p61)),
 														_1: {
 															ctor: '::',
 															_0: _elm_lang$html$Html_Events$onMouseOver(
 																_user$project$Main$MOver(
-																	_user$project$Main$P(_p54))),
+																	_user$project$Main$P(_p61))),
 															_1: {
 																ctor: '::',
 																_0: _elm_lang$html$Html_Events$onMouseOut(
 																	_user$project$Main$MOut(
-																		_user$project$Main$P(_p54))),
+																		_user$project$Main$P(_p61))),
 																_1: {ctor: '[]'}
 															}
 														}
@@ -14360,11 +14476,11 @@ var _user$project$Main$renderPoints = function (plist) {
 									{
 										ctor: '::',
 										_0: _elm_lang$svg$Svg_Attributes$x(
-											_elm_lang$core$Basics$toString(_p55.x + _p53.x)),
+											_elm_lang$core$Basics$toString(_p62.x + _p60.x)),
 										_1: {
 											ctor: '::',
 											_0: _elm_lang$svg$Svg_Attributes$y(
-												_elm_lang$core$Basics$toString((0 - _p55.y) - _p53.y)),
+												_elm_lang$core$Basics$toString((0 - _p62.y) - _p60.y)),
 											_1: {
 												ctor: '::',
 												_0: _elm_lang$svg$Svg_Attributes$cursor('move'),
@@ -14374,11 +14490,11 @@ var _user$project$Main$renderPoints = function (plist) {
 													_1: {
 														ctor: '::',
 														_0: _elm_lang$svg$Svg_Attributes$fill(
-															(_p56.dragging || _p56.labelDragging) ? 'red' : 'black'),
+															(_p63.dragging || _p63.labelDragging) ? 'red' : 'black'),
 														_1: {
 															ctor: '::',
 															_0: _user$project$Main$onMouseDown(
-																_user$project$Main$Label(_p54)),
+																_user$project$Main$Label(_p61)),
 															_1: {ctor: '[]'}
 														}
 													}
@@ -14388,12 +14504,12 @@ var _user$project$Main$renderPoints = function (plist) {
 									},
 									{
 										ctor: '::',
-										_0: _elm_lang$svg$Svg$text(_p54),
+										_0: _elm_lang$svg$Svg$text(_p61),
 										_1: {ctor: '[]'}
 									}),
 								_1: {ctor: '[]'}
 							}
-						};
+						} : {ctor: '[]'};
 					} else {
 						return {ctor: '[]'};
 					}
