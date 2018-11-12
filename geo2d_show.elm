@@ -778,7 +778,7 @@ onMouseDown : Obj->Attribute Msg
 --onMouseDown obj=Pointer.onDown (\event->(let (x,y)=event.pointer.offsetPos
 --                                         in
 --                                              DragStart obj {x=x,y=y}))
-onMouseDown obj=Mouse.onDown (\event->(let (x,y)=event.clientPos
+onMouseDown obj=Mouse.onDown (\event->(let (x,y)=event.pagePos
                                          in
                                               DragStart obj {x=x,y=y}))
 

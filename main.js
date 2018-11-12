@@ -9339,7 +9339,7 @@ var mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$onDown = A2(mpizenberg
 var author$project$Main$onMouseDown = function (obj) {
 	return mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$onDown(
 		function (event) {
-			var _n0 = event.clientPos;
+			var _n0 = event.pagePos;
 			var x = _n0.a;
 			var y = _n0.b;
 			return A2(
