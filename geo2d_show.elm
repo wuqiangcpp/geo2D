@@ -883,35 +883,6 @@ view model =
                    ++(renderCircles (getCList model))                       
                   )
              ]
-        ,div[]
-            [
-             textarea [style "width" "400px"
-                        ,style "height" "200px"
-                        ,style "rows" "20"
-                        ,style "cols"  "30"
-                        ,style "background-color" "#595b5b"
-                        ,style "color" "#fff"                       
-                      ,placeholder "input commands here"
-                      ,value model.input
-                      ,onInput change
-                      ][]
-            ,button [onClick Plot] [text "plot"]
-            ,button [onClick Export] [text "export"]                
-            ]
-            
-        ,div[style "color" "red"
-             ,style "white-space" "pre-line"
-            ]
-            [
-             text model.prompt
-            ]
-
-        ,text "Input examples:"    
-        ,ul[style "color" "blue"
-            ,style "white-space" "pre-line"
-            ]
-            examples
-           
         ]
 
 examples=List.map text [
