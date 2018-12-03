@@ -73,8 +73,7 @@ type alias CList=Dict.Dict CLabel Cinfo
 -- MODEL
 type alias Model =
     {
-     width:Float
-    ,height:Float
+    styles:Styles
     , points : Points
     , lines:Lines
     , labels:Labels
@@ -133,14 +132,14 @@ sampleLabels=Dict.singleton "A" ({x=4,y=4})
 initpstates=Dict.empty
 initlstates=Dict.empty         
                         
-init :{width:Float,height:Float,input:String,objsStr:String}->( Model, Cmd Msg )
+init :{input:String,objsStr:String}->( Model, Cmd Msg )
 --init _=
 --    ( Model initpoints initlines initlabels initcircles initpstates initlstates Nothing Nothing "" "", Cmd.none )
-init {width,height,input,objsStr}=
+init {input,objsStr}=
     let
         objs=interpret0 objsStr
     in
-        (Model width height objs.points objs.lines objs.labels objs.circles objs.pstates objs.lstates Nothing Nothing input "",Cmd.none)
+        (Model objs.styles objs.points objs.lines objs.labels objs.circles objs.pstates objs.lstates Nothing Nothing input "",Cmd.none)
 
 
 interpret0:String->Objs
@@ -199,33 +198,50 @@ updateHelp msg model =
             plot model
         Export->
             let
-                objs={points=model.points,lines=model.lines,circles=model.circles
+                objs={styles=model.styles,points=model.points,lines=model.lines
+                     ,circles=model.circles
                      ,labels=model.labels,pstates=model.pstates,lstates=model.lstates
                      ,prompt=""}
             in
-                {model|prompt="'"++(String.join "\\n" (String.lines model.input))
-                     ++"','"
+                {model|prompt="input:"++"'"++(String.join "\\n"
+                                                  (String.lines model.input))
+                     ++"',objsStr:'"
                      ++(E.encode 0 (encodeObjs objs))++"'"
                 }
         _->model
+           
+type alias Styles={width:Float,height:Float}
+defaultStyles={width=500,height=300}
 
+decodeStyles:D.Decoder Styles
+decodeStyles=D.map2 (\w h->{width=w,height=h})
+              (D.field "width" D.float)
+              (D.field "height" D.float)
+
+encodeStyles:Styles->E.Value
+encodeStyles styles=E.object [("width",E.float styles.width)
+                             ,("height",E.float styles.height)
+                             ]           
+           
 plot:Model->Model
 plot model=
     let input=model.input
-        info=interpret model input               
+        info=interpret model input   
     in
-        {model|points=info.points,lines=info.lines,circles=info.circles
+        {model|styles=info.styles,points=info.points,lines=info.lines
+        ,circles=info.circles
         ,labels=info.labels,prompt=info.prompt
         ,pstates=info.pstates,lstates=info.lstates
         }
 
     
 
-type alias Objs={points:Points,lines:Lines,circles:Circles,labels:Labels
+type alias Objs={styles:Styles,points:Points,lines:Lines,circles:Circles,labels:Labels
                 ,prompt:String,pstates:Pstates,lstates:Lstates}
-emptyObjs={points=Dict.empty,lines=Dict.empty,circles=Dict.empty,
+emptyObjs={styles=defaultStyles,points=Dict.empty,lines=Dict.empty,circles=Dict.empty,
                labels=Dict.empty,prompt="",pstates=Dict.empty,lstates=Dict.empty}
-sampleObjs={points=samplePoints,lines=sampleLines,circles=Dict.empty
+sampleObjs={styles=defaultStyles,points=samplePoints,lines=sampleLines
+           ,circles=Dict.empty
            ,labels=sampleLabels,prompt=""
            ,pstates=Dict.empty,lstates=Dict.empty}
 
@@ -290,10 +306,11 @@ decodeLstate=D.map2 (\h d->{hidden=h,dashed=d})
                 (D.field "hidden" D.bool)
                 (D.field "dashed" D.bool)
 decodeObjs:D.Decoder Objs
-decodeObjs=D.map6 (\ps ls cs las pss lss->
-                    {points=ps,lines=ls,circles=cs,labels=las
+decodeObjs=D.map7 (\ss ps ls cs las pss lss->
+                    {styles=ss,points=ps,lines=ls,circles=cs,labels=las
                     ,pstates=pss,lstates=lss,prompt=""}
                   )
+                  (D.field "styles" decodeStyles)
                   (D.field "points" (D.dict decodePoint))
                   (D.field "lines" (D.dict decodeLine))
                   (D.field "circles" (D.dict decodeCircle))                      
@@ -367,7 +384,8 @@ encodeLstate lstate=E.object [("hidden",E.bool lstate.hidden)
 
 encodeObjs:Objs->E.Value
 encodeObjs objs=E.object
-                  [ ("points",E.object (Dict.map (\name point->encodePoint point)
+                  [("styles",encodeStyles objs.styles)
+                  ,("points",E.object (Dict.map (\name point->encodePoint point)
                                                  objs.points |> Dict.toList)
                     )
                    ,("lines",E.object (Dict.map (\name line->encodeLine line)
@@ -411,7 +429,10 @@ mergeLstates s1 s2=Dict.foldl
 
     
 addObjs:Objs->Objs->Objs
-addObjs objsAdded objs={objs|points=Dict.union objsAdded.points objs.points
+addObjs objsAdded objs={objs|styles=if(objsAdded.styles==defaultStyles)
+                                    then objs.styles
+                                    else objsAdded.styles
+                            ,points=Dict.union objsAdded.points objs.points
                             ,lines=Dict.union objsAdded.lines objs.lines
                             ,circles=Dict.union objsAdded.circles objs.circles
                             ,pstates=mergePstates objsAdded.pstates objs.pstates
@@ -476,8 +497,8 @@ nameToPosition model s=if (Dict.member s model.points)
                        then let p=getP model s
                             in p.pos
                        else
-                           let w=model.width-10
-                               h=model.height-10
+                           let w=model.styles.width-10
+                               h=model.styles.height-10
                            in
                                String.toList s |> List.map Char.toCode |>List.sum
                                          |>(\d->{x=toFloat ((modBy 13 d)*47
@@ -533,7 +554,18 @@ newPoints model ns t label a b=List.map
 statement:Model->Parser Objs
 statement model=succeed (identity)
             |.spaces
-            |=oneOf [succeed (\ns (t,label,(a,b))->{emptyObjs|
+            |=oneOf [
+               succeed (\w h->{emptyObjs|styles={width=w,height=h}})
+                   |.keyword "set"
+                   |.spaces
+                   |.keyword "size"
+                   |.spaces                   
+                   |=float
+                   |.spaces
+                   |=float
+                   |.spaces
+                   |.end
+               ,succeed (\ns (t,label,(a,b))->{emptyObjs|
                                            points=((newPoints model) ns t label a b)
                                                   }
                              )
@@ -875,9 +907,9 @@ view model =
         style "touch-action" "none"
         ]
         [
-         S.svg [SA.width (toString model.width), SA.height (toString model.height)]
+         S.svg [SA.width (toString model.styles.width), SA.height (toString model.styles.height)]
              [S.g [SA.transform
-                  ("translate("++(model.width/2 |> toString )++","++(model.height/2 |>toString)++") scale(1,-1)")]
+                  ("translate("++(model.styles.width/2 |> toString )++","++(model.styles.height/2 |>toString)++") scale(1,-1)")]
                   ((renderPoints (getPList model))
                    ++(renderLines (getLList model))
                    ++(renderCircles (getCList model))                       
@@ -944,8 +976,8 @@ translatePos model pos start current=
 truncatePos:Model->Position->Position
 truncatePos model pos=
     let    
-        maxx=model.width/2-10
-        maxy=model.height/2-10
+        maxx=model.styles.width/2-10
+        maxy=model.styles.height/2-10
         x=if( (abs pos.x)< maxx) then
               pos.x
           else

@@ -4419,20 +4419,18 @@ var _Parser_findSubString = F5(function(smallString, offset, row, col, bigString
 
 	return _Utils_Tuple3(newOffset, row, col);
 });
-var author$project$Main$Model = function (width) {
-	return function (height) {
-		return function (points) {
-			return function (lines) {
-				return function (labels) {
-					return function (circles) {
-						return function (pstates) {
-							return function (lstates) {
-								return function (drag) {
-									return function (mOver) {
-										return function (input) {
-											return function (prompt) {
-												return {circles: circles, drag: drag, height: height, input: input, labels: labels, lines: lines, lstates: lstates, mOver: mOver, points: points, prompt: prompt, pstates: pstates, width: width};
-											};
+var author$project$Main$Model = function (styles) {
+	return function (points) {
+		return function (lines) {
+			return function (labels) {
+				return function (circles) {
+					return function (pstates) {
+						return function (lstates) {
+							return function (drag) {
+								return function (mOver) {
+									return function (input) {
+										return function (prompt) {
+											return {circles: circles, drag: drag, input: input, labels: labels, lines: lines, lstates: lstates, mOver: mOver, points: points, prompt: prompt, pstates: pstates, styles: styles};
 										};
 									};
 								};
@@ -5100,6 +5098,14 @@ var author$project$Main$decodePstate = A2(
 		return {hidden: h};
 	},
 	A2(elm$json$Json$Decode$field, 'hidden', elm$json$Json$Decode$bool));
+var author$project$Main$decodeStyles = A3(
+	elm$json$Json$Decode$map2,
+	F2(
+		function (w, h) {
+			return {height: h, width: w};
+		}),
+	A2(elm$json$Json$Decode$field, 'width', elm$json$Json$Decode$float),
+	A2(elm$json$Json$Decode$field, 'height', elm$json$Json$Decode$float));
 var elm$core$Dict$RBEmpty_elm_builtin = {$: 'RBEmpty_elm_builtin'};
 var elm$core$Dict$empty = elm$core$Dict$RBEmpty_elm_builtin;
 var elm$core$Dict$Black = {$: 'Black'};
@@ -5230,13 +5236,14 @@ var elm$json$Json$Decode$dict = function (decoder) {
 		elm$core$Dict$fromList,
 		elm$json$Json$Decode$keyValuePairs(decoder));
 };
-var elm$json$Json$Decode$map6 = _Json_map6;
-var author$project$Main$decodeObjs = A7(
-	elm$json$Json$Decode$map6,
-	F6(
-		function (ps, ls, cs, las, pss, lss) {
-			return {circles: cs, labels: las, lines: ls, lstates: lss, points: ps, prompt: '', pstates: pss};
+var elm$json$Json$Decode$map7 = _Json_map7;
+var author$project$Main$decodeObjs = A8(
+	elm$json$Json$Decode$map7,
+	F7(
+		function (ss, ps, ls, cs, las, pss, lss) {
+			return {circles: cs, labels: las, lines: ls, lstates: lss, points: ps, prompt: '', pstates: pss, styles: ss};
 		}),
+	A2(elm$json$Json$Decode$field, 'styles', author$project$Main$decodeStyles),
 	A2(
 		elm$json$Json$Decode$field,
 		'points',
@@ -5261,7 +5268,8 @@ var author$project$Main$decodeObjs = A7(
 		elm$json$Json$Decode$field,
 		'lstates',
 		elm$json$Json$Decode$dict(author$project$Main$decodeLstate)));
-var author$project$Main$emptyObjs = {circles: elm$core$Dict$empty, labels: elm$core$Dict$empty, lines: elm$core$Dict$empty, lstates: elm$core$Dict$empty, points: elm$core$Dict$empty, prompt: '', pstates: elm$core$Dict$empty};
+var author$project$Main$defaultStyles = {height: 300, width: 500};
+var author$project$Main$emptyObjs = {circles: elm$core$Dict$empty, labels: elm$core$Dict$empty, lines: elm$core$Dict$empty, lstates: elm$core$Dict$empty, points: elm$core$Dict$empty, prompt: '', pstates: elm$core$Dict$empty, styles: author$project$Main$defaultStyles};
 var elm$json$Json$Decode$decodeString = _Json_runOnString;
 var author$project$Main$interpret0 = function (objsStr) {
 	var result = A2(elm$json$Json$Decode$decodeString, author$project$Main$decodeObjs, objsStr);
@@ -5278,13 +5286,11 @@ var author$project$Main$interpret0 = function (objsStr) {
 var elm$core$Platform$Cmd$batch = _Platform_batch;
 var elm$core$Platform$Cmd$none = elm$core$Platform$Cmd$batch(_List_Nil);
 var author$project$Main$init = function (_n0) {
-	var width = _n0.width;
-	var height = _n0.height;
 	var input = _n0.input;
 	var objsStr = _n0.objsStr;
 	var objs = author$project$Main$interpret0(objsStr);
 	return _Utils_Tuple2(
-		author$project$Main$Model(width)(height)(objs.points)(objs.lines)(objs.labels)(objs.circles)(objs.pstates)(objs.lstates)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(input)(''),
+		author$project$Main$Model(objs.styles)(objs.points)(objs.lines)(objs.labels)(objs.circles)(objs.pstates)(objs.lstates)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(input)(''),
 		elm$core$Platform$Cmd$none);
 };
 var author$project$Main$DragAt = function (a) {
@@ -6156,6 +6162,18 @@ var author$project$Main$encodePstate = function (pstate) {
 				elm$json$Json$Encode$bool(pstate.hidden))
 			]));
 };
+var author$project$Main$encodeStyles = function (styles) {
+	return elm$json$Json$Encode$object(
+		_List_fromArray(
+			[
+				_Utils_Tuple2(
+				'width',
+				elm$json$Json$Encode$float(styles.width)),
+				_Utils_Tuple2(
+				'height',
+				elm$json$Json$Encode$float(styles.height))
+			]));
+};
 var elm$core$Dict$map = F2(
 	function (func, dict) {
 		if (dict.$ === 'RBEmpty_elm_builtin') {
@@ -6179,6 +6197,9 @@ var author$project$Main$encodeObjs = function (objs) {
 	return elm$json$Json$Encode$object(
 		_List_fromArray(
 			[
+				_Utils_Tuple2(
+				'styles',
+				author$project$Main$encodeStyles(objs.styles)),
 				_Utils_Tuple2(
 				'points',
 				elm$json$Json$Encode$object(
@@ -6259,11 +6280,11 @@ var elm$core$Basics$abs = function (n) {
 };
 var author$project$Main$truncatePos = F2(
 	function (model, pos) {
-		var maxy = (model.height / 2) - 10;
+		var maxy = (model.styles.height / 2) - 10;
 		var y = (_Utils_cmp(
 			elm$core$Basics$abs(pos.y),
 			maxy) < 0) ? pos.y : ((pos.y > 0) ? maxy : (-maxy));
-		var maxx = (model.width / 2) - 10;
+		var maxx = (model.styles.width / 2) - 10;
 		var x = (_Utils_cmp(
 			elm$core$Basics$abs(pos.x),
 			maxx) < 0) ? pos.x : ((pos.x > 0) ? maxx : (-maxx));
@@ -6818,8 +6839,8 @@ var author$project$Main$fromJust = function (x) {
 		return _Debug_todo(
 			'Main',
 			{
-				start: {line: 1138, column: 29},
-				end: {line: 1138, column: 39}
+				start: {line: 1170, column: 29},
+				end: {line: 1170, column: 39}
 			})('error: fromJust Nothing');
 	}
 };
@@ -7265,7 +7286,8 @@ var author$project$Main$addObjs = F2(
 				lstates: A2(author$project$Main$mergeLstates, objsAdded.lstates, objs.lstates),
 				points: A2(elm$core$Dict$union, objsAdded.points, objs.points),
 				prompt: elm$core$String$isEmpty(objsAdded.prompt) ? objs.prompt : (objs.prompt + ('\n' + objsAdded.prompt)),
-				pstates: A2(author$project$Main$mergePstates, objsAdded.pstates, objs.pstates)
+				pstates: A2(author$project$Main$mergePstates, objsAdded.pstates, objs.pstates),
+				styles: _Utils_eq(objsAdded.styles, author$project$Main$defaultStyles) ? objs.styles : objsAdded.styles
 			});
 	});
 var author$project$Main$collectAndCheck = F2(
@@ -8100,8 +8122,8 @@ var author$project$Main$nameToPosition = F2(
 			var p = A2(author$project$Main$getP, model, s);
 			return p.pos;
 		} else {
-			var w = model.width - 10;
-			var h = model.height - 10;
+			var w = model.styles.width - 10;
+			var h = model.styles.height - 10;
 			return function (d) {
 				return {
 					x: A2(
@@ -8369,6 +8391,36 @@ var author$project$Main$statement = function (model) {
 		elm$parser$Parser$oneOf(
 			_List_fromArray(
 				[
+					A2(
+					elm$parser$Parser$keeper,
+					A2(
+						elm$parser$Parser$keeper,
+						A2(
+							elm$parser$Parser$ignorer,
+							A2(
+								elm$parser$Parser$ignorer,
+								A2(
+									elm$parser$Parser$ignorer,
+									A2(
+										elm$parser$Parser$ignorer,
+										elm$parser$Parser$succeed(
+											F2(
+												function (w, h) {
+													return _Utils_update(
+														author$project$Main$emptyObjs,
+														{
+															styles: {height: h, width: w}
+														});
+												})),
+										elm$parser$Parser$keyword('set')),
+									elm$parser$Parser$spaces),
+								elm$parser$Parser$keyword('size')),
+							elm$parser$Parser$spaces),
+						A2(elm$parser$Parser$ignorer, elm$parser$Parser$float, elm$parser$Parser$spaces)),
+					A2(
+						elm$parser$Parser$ignorer,
+						A2(elm$parser$Parser$ignorer, elm$parser$Parser$float, elm$parser$Parser$spaces),
+						elm$parser$Parser$end)),
 					A2(
 					elm$parser$Parser$keeper,
 					A2(
@@ -9016,7 +9068,7 @@ var author$project$Main$plot = function (model) {
 	var info = A2(author$project$Main$interpret, model, input);
 	return _Utils_update(
 		model,
-		{circles: info.circles, labels: info.labels, lines: info.lines, lstates: info.lstates, points: info.points, prompt: info.prompt, pstates: info.pstates});
+		{circles: info.circles, labels: info.labels, lines: info.lines, lstates: info.lstates, points: info.points, prompt: info.prompt, pstates: info.pstates, styles: info.styles});
 };
 var author$project$Main$updateHelp = F2(
 	function (msg, model) {
@@ -9072,17 +9124,17 @@ var author$project$Main$updateHelp = F2(
 			case 'Plot':
 				return author$project$Main$plot(model);
 			case 'Export':
-				var objs = {circles: model.circles, labels: model.labels, lines: model.lines, lstates: model.lstates, points: model.points, prompt: '', pstates: model.pstates};
+				var objs = {circles: model.circles, labels: model.labels, lines: model.lines, lstates: model.lstates, points: model.points, prompt: '', pstates: model.pstates, styles: model.styles};
 				return _Utils_update(
 					model,
 					{
-						prompt: '\'' + (A2(
+						prompt: 'input:' + ('\'' + (A2(
 							elm$core$String$join,
 							'\\n',
-							elm$core$String$lines(model.input)) + ('\',\'' + (A2(
+							elm$core$String$lines(model.input)) + ('\',objsStr:\'' + (A2(
 							elm$json$Json$Encode$encode,
 							0,
-							author$project$Main$encodeObjs(objs)) + '\'')))
+							author$project$Main$encodeObjs(objs)) + '\''))))
 					});
 			default:
 				return model;
@@ -9245,6 +9297,7 @@ var elm$html$Html$Events$custom = F2(
 			event,
 			elm$virtual_dom$VirtualDom$Custom(decoder));
 	});
+var elm$json$Json$Decode$map6 = _Json_map6;
 var mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$Event = F6(
 	function (keys, button, clientPos, offsetPos, pagePos, screenPos) {
 		return {button: button, clientPos: clientPos, keys: keys, offsetPos: offsetPos, pagePos: pagePos, screenPos: screenPos};
@@ -9521,9 +9574,9 @@ var author$project$Main$view = function (model) {
 				_List_fromArray(
 					[
 						elm$svg$Svg$Attributes$width(
-						elm$core$Debug$toString(model.width)),
+						elm$core$Debug$toString(model.styles.width)),
 						elm$svg$Svg$Attributes$height(
-						elm$core$Debug$toString(model.height))
+						elm$core$Debug$toString(model.styles.height))
 					]),
 				_List_fromArray(
 					[
@@ -9532,7 +9585,7 @@ var author$project$Main$view = function (model) {
 						_List_fromArray(
 							[
 								elm$svg$Svg$Attributes$transform(
-								'translate(' + (elm$core$Debug$toString(model.width / 2) + (',' + (elm$core$Debug$toString(model.height / 2) + ') scale(1,-1)'))))
+								'translate(' + (elm$core$Debug$toString(model.styles.width / 2) + (',' + (elm$core$Debug$toString(model.styles.height / 2) + ') scale(1,-1)'))))
 							]),
 						_Utils_ap(
 							author$project$Main$renderPoints(
@@ -9612,23 +9665,13 @@ var author$project$Main$main = elm$browser$Browser$element(
 _Platform_export({'Main':{'init':author$project$Main$main(
 	A2(
 		elm$json$Json$Decode$andThen,
-		function (width) {
+		function (objsStr) {
 			return A2(
 				elm$json$Json$Decode$andThen,
-				function (objsStr) {
-					return A2(
-						elm$json$Json$Decode$andThen,
-						function (input) {
-							return A2(
-								elm$json$Json$Decode$andThen,
-								function (height) {
-									return elm$json$Json$Decode$succeed(
-										{height: height, input: input, objsStr: objsStr, width: width});
-								},
-								A2(elm$json$Json$Decode$field, 'height', elm$json$Json$Decode$float));
-						},
-						A2(elm$json$Json$Decode$field, 'input', elm$json$Json$Decode$string));
+				function (input) {
+					return elm$json$Json$Decode$succeed(
+						{input: input, objsStr: objsStr});
 				},
-				A2(elm$json$Json$Decode$field, 'objsStr', elm$json$Json$Decode$string));
+				A2(elm$json$Json$Decode$field, 'input', elm$json$Json$Decode$string));
 		},
-		A2(elm$json$Json$Decode$field, 'width', elm$json$Json$Decode$float)))(0)}});}(this));
+		A2(elm$json$Json$Decode$field, 'objsStr', elm$json$Json$Decode$string)))(0)}});}(this));

@@ -6818,8 +6818,8 @@ var author$project$Main$fromJust = function (x) {
 		return _Debug_todo(
 			'Main',
 			{
-				start: {line: 1109, column: 29},
-				end: {line: 1109, column: 39}
+				start: {line: 1140, column: 29},
+				end: {line: 1140, column: 39}
 			})('error: fromJust Nothing');
 	}
 };
@@ -9076,13 +9076,13 @@ var author$project$Main$updateHelp = F2(
 				return _Utils_update(
 					model,
 					{
-						prompt: '\'' + (A2(
+						prompt: 'width:' + (elm$core$Debug$toString(model.width) + (',height:' + (elm$core$Debug$toString(model.height) + (',input:' + ('\'' + (A2(
 							elm$core$String$join,
 							'\\n',
 							elm$core$String$lines(model.input)) + ('\',\'' + (A2(
 							elm$json$Json$Encode$encode,
 							0,
-							author$project$Main$encodeObjs(objs)) + '\'')))
+							author$project$Main$encodeObjs(objs)) + '\''))))))))
 					});
 			default:
 				return model;
@@ -9094,6 +9094,21 @@ var author$project$Main$update = F2(
 			A2(author$project$Main$updateHelp, msg, model),
 			elm$core$Platform$Cmd$none);
 	});
+var author$project$Main$Export = {$: 'Export'};
+var author$project$Main$Plot = {$: 'Plot'};
+var author$project$Main$Change = function (a) {
+	return {$: 'Change', a: a};
+};
+var author$project$Main$change = function (input) {
+	return author$project$Main$Change(input);
+};
+var elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
+var elm$html$Html$text = elm$virtual_dom$VirtualDom$text;
+var author$project$Main$examples = A2(
+	elm$core$List$map,
+	elm$html$Html$text,
+	_List_fromArray(
+		['point A,B,C\n', 'connect AB,BC,AC\n', 'point D on line AB\n', 'point E on line BC 1:1\n', 'point F on circle ABC\n', 'connect AE dashed\n', 'connect CD\n', 'intersection of line AE line CD as point I\n', 'intersection of line AE circle ACD as point I\n', 'intersection of circle ABE circle ACD + as point I\n', 'intersection of circle ABE circle ACD - as point I\n', 'circle ABC\n', 'circle I:IA\n', 'projection of D on CB as point P\n', 'hide point I\n', 'hide line CD\n']));
 var author$project$Main$getCList = function (model) {
 	var circles = author$project$Main$getCircles(model);
 	return A2(
@@ -9355,7 +9370,6 @@ var elm$html$Html$Events$onMouseOver = function (msg) {
 		'mouseover',
 		elm$json$Json$Decode$succeed(msg));
 };
-var elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var elm$svg$Svg$text = elm$virtual_dom$VirtualDom$text;
 var elm$svg$Svg$text_ = elm$svg$Svg$trustedNode('text');
 var elm$svg$Svg$Attributes$cursor = _VirtualDom_attribute('cursor');
@@ -9438,9 +9452,58 @@ var author$project$Main$renderPoints = function (plist) {
 		},
 		elm$core$Dict$toList(plist));
 };
+var elm$html$Html$button = _VirtualDom_node('button');
 var elm$html$Html$div = _VirtualDom_node('div');
+var elm$html$Html$textarea = _VirtualDom_node('textarea');
+var elm$html$Html$ul = _VirtualDom_node('ul');
+var elm$html$Html$Attributes$stringProperty = F2(
+	function (key, string) {
+		return A2(
+			_VirtualDom_property,
+			key,
+			elm$json$Json$Encode$string(string));
+	});
+var elm$html$Html$Attributes$placeholder = elm$html$Html$Attributes$stringProperty('placeholder');
 var elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
 var elm$html$Html$Attributes$style = elm$virtual_dom$VirtualDom$style;
+var elm$html$Html$Attributes$value = elm$html$Html$Attributes$stringProperty('value');
+var elm$html$Html$Events$onClick = function (msg) {
+	return A2(
+		elm$html$Html$Events$on,
+		'click',
+		elm$json$Json$Decode$succeed(msg));
+};
+var elm$html$Html$Events$alwaysStop = function (x) {
+	return _Utils_Tuple2(x, true);
+};
+var elm$virtual_dom$VirtualDom$MayStopPropagation = function (a) {
+	return {$: 'MayStopPropagation', a: a};
+};
+var elm$html$Html$Events$stopPropagationOn = F2(
+	function (event, decoder) {
+		return A2(
+			elm$virtual_dom$VirtualDom$on,
+			event,
+			elm$virtual_dom$VirtualDom$MayStopPropagation(decoder));
+	});
+var elm$json$Json$Decode$at = F2(
+	function (fields, decoder) {
+		return A3(elm$core$List$foldr, elm$json$Json$Decode$field, decoder, fields);
+	});
+var elm$html$Html$Events$targetValue = A2(
+	elm$json$Json$Decode$at,
+	_List_fromArray(
+		['target', 'value']),
+	elm$json$Json$Decode$string);
+var elm$html$Html$Events$onInput = function (tagger) {
+	return A2(
+		elm$html$Html$Events$stopPropagationOn,
+		'input',
+		A2(
+			elm$json$Json$Decode$map,
+			elm$html$Html$Events$alwaysStop,
+			A2(elm$json$Json$Decode$map, tagger, elm$html$Html$Events$targetValue)));
+};
 var elm$svg$Svg$svg = elm$svg$Svg$trustedNode('svg');
 var elm$svg$Svg$Attributes$height = _VirtualDom_attribute('height');
 var elm$svg$Svg$Attributes$width = _VirtualDom_attribute('width');
@@ -9479,7 +9542,68 @@ var author$project$Main$view = function (model) {
 									author$project$Main$getLList(model)),
 								author$project$Main$renderCircles(
 									author$project$Main$getCList(model)))))
-					]))
+					])),
+				A2(
+				elm$html$Html$div,
+				_List_Nil,
+				_List_fromArray(
+					[
+						A2(
+						elm$html$Html$textarea,
+						_List_fromArray(
+							[
+								A2(elm$html$Html$Attributes$style, 'width', '400px'),
+								A2(elm$html$Html$Attributes$style, 'height', '200px'),
+								A2(elm$html$Html$Attributes$style, 'rows', '20'),
+								A2(elm$html$Html$Attributes$style, 'cols', '30'),
+								A2(elm$html$Html$Attributes$style, 'background-color', '#595b5b'),
+								A2(elm$html$Html$Attributes$style, 'color', '#fff'),
+								elm$html$Html$Attributes$placeholder('input commands here'),
+								elm$html$Html$Attributes$value(model.input),
+								elm$html$Html$Events$onInput(author$project$Main$change)
+							]),
+						_List_Nil),
+						A2(
+						elm$html$Html$button,
+						_List_fromArray(
+							[
+								elm$html$Html$Events$onClick(author$project$Main$Plot)
+							]),
+						_List_fromArray(
+							[
+								elm$html$Html$text('plot')
+							])),
+						A2(
+						elm$html$Html$button,
+						_List_fromArray(
+							[
+								elm$html$Html$Events$onClick(author$project$Main$Export)
+							]),
+						_List_fromArray(
+							[
+								elm$html$Html$text('export')
+							]))
+					])),
+				A2(
+				elm$html$Html$div,
+				_List_fromArray(
+					[
+						A2(elm$html$Html$Attributes$style, 'color', 'red'),
+						A2(elm$html$Html$Attributes$style, 'white-space', 'pre-line')
+					]),
+				_List_fromArray(
+					[
+						elm$html$Html$text(model.prompt)
+					])),
+				elm$html$Html$text('Input examples:'),
+				A2(
+				elm$html$Html$ul,
+				_List_fromArray(
+					[
+						A2(elm$html$Html$Attributes$style, 'color', 'blue'),
+						A2(elm$html$Html$Attributes$style, 'white-space', 'pre-line')
+					]),
+				author$project$Main$examples)
 			]));
 };
 var elm$browser$Browser$element = _Browser_element;
