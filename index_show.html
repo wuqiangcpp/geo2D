@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Main</title>
+  <link rel="stylesheet" href="">
+  <script src="main_show.js"></script>
+</head>
+
+<body>
+  <div id="elm1"></div>
+  <script>
+  var app1 = Elm.Main.init({
+  node: document.getElementById('elm1')
+  ,flags:{input:'point O,A\ncircle O:OA\npoint B,C on circle O:OA\nconnect AB,AC,BC\nprojection of A on BC as point E\nprojection of C on AB as point F\nintersection of line AE line CF as point H\nconnect AE,CF\nprojection of O on BC as point G\nconnect OG\nintersection of line AO circle ABC - as point I\nconnect AI,HI dashed',objsStr:'{"styles":{"width":500,"height":300},"points":{"A":{"type":"FP","position":{"x":-38,"y":128}},"B":{"type":"FPOC","clabel":"circle:O:AO","position":{"x":-199.84135273102555,"y":-77.23370002303561}},"C":{"type":"FPOC","clabel":"circle:O:AO","position":{"x":32.48896592808822,"y":-63.120270504575984}},"E":{"type":"POLP","plabel":"A","llabel":"BC"},"F":{"type":"POLP","plabel":"C","llabel":"AB"},"G":{"type":"POLP","plabel":"O","llabel":"BC"},"H":{"type":"P2L","llabel1":"AE","llabel2":"CF"},"I":{"type":"PCL","clabel":"circle:ABC","llabel":"AO","isPositive":false},"O":{"type":"FP","position":{"x":-88,"y":1}}},"lines":{"AB":{"type":"LineAB","plabel1":"A","plabel2":"B"},"AC":{"type":"LineAB","plabel1":"A","plabel2":"C"},"AE":{"type":"LineAB","plabel1":"A","plabel2":"E"},"AI":{"type":"LineAB","plabel1":"A","plabel2":"I"},"BC":{"type":"LineAB","plabel1":"B","plabel2":"C"},"CF":{"type":"LineAB","plabel1":"C","plabel2":"F"},"GO":{"type":"LineAB","plabel1":"G","plabel2":"O"},"HI":{"type":"LineAB","plabel1":"H","plabel2":"I"}},"circles":{"circle:O:AO":{"type":"Cir2","plabel":"O","llabel":"AO"}},"labels":{"A":{"x":4,"y":4},"B":{"x":-15,"y":-14},"C":{"x":8,"y":-14},"E":{"x":-3,"y":-18},"F":{"x":-14,"y":1},"G":{"x":-3,"y":-20},"H":{"x":4,"y":4},"I":{"x":-15,"y":-13},"O":{"x":8,"y":-4}},"pstates":{},"lstates":{"AB":{"hidden":false,"dashed":false},"AC":{"hidden":false,"dashed":false},"AE":{"hidden":false,"dashed":false},"AI":{"hidden":false,"dashed":true},"BC":{"hidden":false,"dashed":false},"CF":{"hidden":false,"dashed":false},"GO":{"hidden":false,"dashed":false},"HI":{"hidden":false,"dashed":true}}}'}
+  });
+
+  
+  </script>
+</body>
+</html>
