@@ -77,14 +77,14 @@ function A9(fun, a, b, c, d, e, f, g, h, i) {
   return fun.a === 9 ? fun.f(a, b, c, d, e, f, g, h, i) : fun(a)(b)(c)(d)(e)(f)(g)(h)(i);
 }
 
-console.warn('Compiled in DEV mode. Follow the advice at https://elm-lang.org/0.19.0/optimize for better performance and smaller assets.');
 
 
-var _List_Nil_UNUSED = { $: 0 };
-var _List_Nil = { $: '[]' };
 
-function _List_Cons_UNUSED(hd, tl) { return { $: 1, a: hd, b: tl }; }
-function _List_Cons(hd, tl) { return { $: '::', a: hd, b: tl }; }
+var _List_Nil = { $: 0 };
+var _List_Nil_UNUSED = { $: '[]' };
+
+function _List_Cons(hd, tl) { return { $: 1, a: hd, b: tl }; }
+function _List_Cons_UNUSED(hd, tl) { return { $: '::', a: hd, b: tl }; }
 
 
 var _List_cons = F2(_List_Cons);
@@ -194,7 +194,7 @@ function _Utils_eqHelp(x, y, depth, stack)
 		return false;
 	}
 
-	/**/
+	/**_UNUSED/
 	if (x.$ === 'Set_elm_builtin')
 	{
 		x = elm$core$Set$toList(x);
@@ -207,7 +207,7 @@ function _Utils_eqHelp(x, y, depth, stack)
 	}
 	//*/
 
-	/**_UNUSED/
+	/**/
 	if (x.$ < 0)
 	{
 		x = elm$core$Dict$toList(x);
@@ -242,7 +242,7 @@ function _Utils_cmp(x, y, ord)
 		return x === y ? /*EQ*/ 0 : x < y ? /*LT*/ -1 : /*GT*/ 1;
 	}
 
-	/**/
+	/**_UNUSED/
 	if (x instanceof String)
 	{
 		var a = x.valueOf();
@@ -251,10 +251,10 @@ function _Utils_cmp(x, y, ord)
 	}
 	//*/
 
-	/**_UNUSED/
+	/**/
 	if (!x.$)
 	//*/
-	/**/
+	/**_UNUSED/
 	if (x.$[0] === '#')
 	//*/
 	{
@@ -284,17 +284,17 @@ var _Utils_compare = F2(function(x, y)
 
 // COMMON VALUES
 
-var _Utils_Tuple0_UNUSED = 0;
-var _Utils_Tuple0 = { $: '#0' };
+var _Utils_Tuple0 = 0;
+var _Utils_Tuple0_UNUSED = { $: '#0' };
 
-function _Utils_Tuple2_UNUSED(a, b) { return { a: a, b: b }; }
-function _Utils_Tuple2(a, b) { return { $: '#2', a: a, b: b }; }
+function _Utils_Tuple2(a, b) { return { a: a, b: b }; }
+function _Utils_Tuple2_UNUSED(a, b) { return { $: '#2', a: a, b: b }; }
 
-function _Utils_Tuple3_UNUSED(a, b, c) { return { a: a, b: b, c: c }; }
-function _Utils_Tuple3(a, b, c) { return { $: '#3', a: a, b: b, c: c }; }
+function _Utils_Tuple3(a, b, c) { return { a: a, b: b, c: c }; }
+function _Utils_Tuple3_UNUSED(a, b, c) { return { $: '#3', a: a, b: b, c: c }; }
 
-function _Utils_chr_UNUSED(c) { return c; }
-function _Utils_chr(c) { return new String(c); }
+function _Utils_chr(c) { return c; }
+function _Utils_chr_UNUSED(c) { return new String(c); }
 
 
 // RECORDS
@@ -499,12 +499,12 @@ var _JsArray_appendN = F3(function(n, dest, source)
 
 // LOG
 
-var _Debug_log_UNUSED = F2(function(tag, value)
+var _Debug_log = F2(function(tag, value)
 {
 	return value;
 });
 
-var _Debug_log = F2(function(tag, value)
+var _Debug_log_UNUSED = F2(function(tag, value)
 {
 	console.log(tag + ': ' + _Debug_toString(value));
 	return value;
@@ -530,12 +530,12 @@ function _Debug_todoCase(moduleName, region, value)
 
 // TO STRING
 
-function _Debug_toString_UNUSED(value)
+function _Debug_toString(value)
 {
 	return '<internals>';
 }
 
-function _Debug_toString(value)
+function _Debug_toString_UNUSED(value)
 {
 	return _Debug_toAnsiString(false, value);
 }
@@ -706,13 +706,13 @@ function _Debug_internalColor(ansi, string)
 // CRASH
 
 
-function _Debug_crash_UNUSED(identifier)
+function _Debug_crash(identifier)
 {
 	throw new Error('https://github.com/elm/core/blob/1.0.0/hints/' + identifier + '.md');
 }
 
 
-function _Debug_crash(identifier, fact1, fact2, fact3, fact4)
+function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 {
 	switch(identifier)
 	{
@@ -770,11 +770,11 @@ function _Debug_crash(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region.start.line === region.end.line)
+	if (region.U.ae === region.as.ae)
 	{
-		return 'on line ' + region.start.line;
+		return 'on line ' + region.U.ae;
 	}
-	return 'on lines ' + region.start.line + ' through ' + region.end.line;
+	return 'on lines ' + region.U.ae + ' through ' + region.as.ae;
 }
 
 
@@ -1200,7 +1200,7 @@ function _String_fromList(chars)
 
 
 
-/**/
+/**_UNUSED/
 function _Json_errorToString(error)
 {
 	return elm$json$Json$Decode$errorToString(error);
@@ -1600,11 +1600,11 @@ var _Json_encode = F2(function(indentLevel, value)
 	return JSON.stringify(_Json_unwrap(value), null, indentLevel) + '';
 });
 
-function _Json_wrap(value) { return { $: 0, a: value }; }
-function _Json_unwrap(value) { return value.a; }
+function _Json_wrap_UNUSED(value) { return { $: 0, a: value }; }
+function _Json_unwrap_UNUSED(value) { return value.a; }
 
-function _Json_wrap_UNUSED(value) { return value; }
-function _Json_unwrap_UNUSED(value) { return value; }
+function _Json_wrap(value) { return value; }
+function _Json_unwrap(value) { return value; }
 
 function _Json_emptyArray() { return []; }
 function _Json_emptyObject() { return {}; }
@@ -1841,9 +1841,9 @@ var _Platform_worker = F4(function(impl, flagDecoder, debugMetadata, args)
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.init,
-		impl.update,
-		impl.subscriptions,
+		impl.bw,
+		impl.bX,
+		impl.bR,
 		function() { return function() {} }
 	);
 });
@@ -1856,7 +1856,7 @@ var _Platform_worker = F4(function(impl, flagDecoder, debugMetadata, args)
 function _Platform_initialize(flagDecoder, args, init, update, subscriptions, stepperBuilder)
 {
 	var result = A2(_Json_run, flagDecoder, _Json_wrap(args ? args['flags'] : undefined));
-	elm$core$Result$isOk(result) || _Debug_crash(2 /**/, _Json_errorToString(result.a) /**/);
+	elm$core$Result$isOk(result) || _Debug_crash(2 /**_UNUSED/, _Json_errorToString(result.a) /**/);
 	var managers = {};
 	result = init(result.a);
 	var model = result.a;
@@ -2255,7 +2255,7 @@ function _Platform_setupIncomingPort(name, sendToApp)
 //
 
 
-function _Platform_export_UNUSED(exports)
+function _Platform_export(exports)
 {
 	scope['Elm']
 		? _Platform_mergeExportsProd(scope['Elm'], exports)
@@ -2276,7 +2276,7 @@ function _Platform_mergeExportsProd(obj, exports)
 }
 
 
-function _Platform_export(exports)
+function _Platform_export_UNUSED(exports)
 {
 	scope['Elm']
 		? _Platform_mergeExportsDebug('Elm', scope['Elm'], exports)
@@ -2316,10 +2316,10 @@ var _VirtualDom_init = F4(function(virtualNode, flagDecoder, debugMetadata, args
 {
 	// NOTE: this function needs _Platform_export available to work
 
-	/**_UNUSED/
+	/**/
 	var node = args['node'];
 	//*/
-	/**/
+	/**_UNUSED/
 	var node = args && args['node'] ? args['node'] : _Debug_crash(0);
 	//*/
 
@@ -2574,24 +2574,24 @@ function _VirtualDom_noInnerHtmlOrFormAction(key)
 	return key == 'innerHTML' || key == 'formAction' ? 'data-' + key : key;
 }
 
-function _VirtualDom_noJavaScriptUri_UNUSED(value)
+function _VirtualDom_noJavaScriptUri(value)
 {
 	return /^javascript:/i.test(value.replace(/\s/g,'')) ? '' : value;
 }
 
-function _VirtualDom_noJavaScriptUri(value)
+function _VirtualDom_noJavaScriptUri_UNUSED(value)
 {
 	return /^javascript:/i.test(value.replace(/\s/g,''))
 		? 'javascript:alert("This is an XSS vector. Please use ports or web components instead.")'
 		: value;
 }
 
-function _VirtualDom_noJavaScriptOrHtmlUri_UNUSED(value)
+function _VirtualDom_noJavaScriptOrHtmlUri(value)
 {
 	return /^\s*(javascript:|data:text\/html)/i.test(value) ? '' : value;
 }
 
-function _VirtualDom_noJavaScriptOrHtmlUri(value)
+function _VirtualDom_noJavaScriptOrHtmlUri_UNUSED(value)
 {
 	return /^\s*(javascript:|data:text\/html)/i.test(value)
 		? 'javascript:alert("This is an XSS vector. Please use ports or web components instead.")'
@@ -2643,9 +2643,9 @@ var _VirtualDom_mapEventTuple = F2(function(func, tuple)
 var _VirtualDom_mapEventRecord = F2(function(func, record)
 {
 	return {
-		message: func(record.message),
-		stopPropagation: record.stopPropagation,
-		preventDefault: record.preventDefault
+		O: func(record.O),
+		az: record.az,
+		aw: record.aw
 	}
 });
 
@@ -2913,11 +2913,11 @@ function _VirtualDom_makeCallback(eventNode, initialHandler)
 		// 3 = Custom
 
 		var value = result.a;
-		var message = !tag ? value : tag < 3 ? value.a : value.message;
-		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.stopPropagation;
+		var message = !tag ? value : tag < 3 ? value.a : value.O;
+		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.az;
 		var currentEventNode = (
 			stopPropagation && event.stopPropagation(),
-			(tag == 2 ? value.b : tag == 3 && value.preventDefault) && event.preventDefault(),
+			(tag == 2 ? value.b : tag == 3 && value.aw) && event.preventDefault(),
 			eventNode
 		);
 		var tagger;
@@ -3867,15 +3867,15 @@ var _Browser_element = _Debugger_element || F4(function(impl, flagDecoder, debug
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.init,
-		impl.update,
-		impl.subscriptions,
+		impl.bw,
+		impl.bX,
+		impl.bR,
 		function(sendToApp, initialModel) {
-			var view = impl.view;
-			/**_UNUSED/
+			var view = impl.bZ;
+			/**/
 			var domNode = args['node'];
 			//*/
-			/**/
+			/**_UNUSED/
 			var domNode = args && args['node'] ? args['node'] : _Debug_crash(0);
 			//*/
 			var currNode = _VirtualDom_virtualize(domNode);
@@ -3903,12 +3903,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.init,
-		impl.update,
-		impl.subscriptions,
+		impl.bw,
+		impl.bX,
+		impl.bR,
 		function(sendToApp, initialModel) {
-			var divertHrefToApp = impl.setup && impl.setup(sendToApp)
-			var view = impl.view;
+			var divertHrefToApp = impl.ag && impl.ag(sendToApp)
+			var view = impl.bZ;
 			var title = _VirtualDom_doc.title;
 			var bodyNode = _VirtualDom_doc.body;
 			var currNode = _VirtualDom_virtualize(bodyNode);
@@ -3916,12 +3916,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 			{
 				_VirtualDom_divertHrefToApp = divertHrefToApp;
 				var doc = view(model);
-				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.body);
+				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.be);
 				var patches = _VirtualDom_diff(currNode, nextNode);
 				bodyNode = _VirtualDom_applyPatches(bodyNode, currNode, patches, sendToApp);
 				currNode = nextNode;
 				_VirtualDom_divertHrefToApp = 0;
-				(title !== doc.title) && (_VirtualDom_doc.title = title = doc.title);
+				(title !== doc.bV) && (_VirtualDom_doc.title = title = doc.bV);
 			});
 		}
 	);
@@ -3972,12 +3972,12 @@ function _Browser_makeAnimator(model, draw)
 
 function _Browser_application(impl)
 {
-	var onUrlChange = impl.onUrlChange;
-	var onUrlRequest = impl.onUrlRequest;
+	var onUrlChange = impl.bE;
+	var onUrlRequest = impl.bF;
 	var key = function() { key.a(onUrlChange(_Browser_getUrl())); };
 
 	return _Browser_document({
-		setup: function(sendToApp)
+		ag: function(sendToApp)
 		{
 			key.a = sendToApp;
 			_Browser_window.addEventListener('popstate', key);
@@ -3993,9 +3993,9 @@ function _Browser_application(impl)
 					var next = elm$url$Url$fromString(href).a;
 					sendToApp(onUrlRequest(
 						(next
-							&& curr.protocol === next.protocol
-							&& curr.host === next.host
-							&& curr.port_.a === next.port_.a
+							&& curr.a1 === next.a1
+							&& curr.aM === next.aM
+							&& curr.a_.a === next.a_.a
 						)
 							? elm$browser$Browser$Internal(next)
 							: elm$browser$Browser$External(href)
@@ -4003,13 +4003,13 @@ function _Browser_application(impl)
 				}
 			});
 		},
-		init: function(flags)
+		bw: function(flags)
 		{
-			return A3(impl.init, flags, _Browser_getUrl(), key);
+			return A3(impl.bw, flags, _Browser_getUrl(), key);
 		},
-		view: impl.view,
-		update: impl.update,
-		subscriptions: impl.subscriptions
+		bZ: impl.bZ,
+		bX: impl.bX,
+		bR: impl.bR
 	});
 }
 
@@ -4075,17 +4075,17 @@ var _Browser_decodeEvent = F2(function(decoder, event)
 function _Browser_visibilityInfo()
 {
 	return (typeof _VirtualDom_doc.hidden !== 'undefined')
-		? { hidden: 'hidden', change: 'visibilitychange' }
+		? { l: 'hidden', ad: 'visibilitychange' }
 		:
 	(typeof _VirtualDom_doc.mozHidden !== 'undefined')
-		? { hidden: 'mozHidden', change: 'mozvisibilitychange' }
+		? { l: 'mozHidden', ad: 'mozvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.msHidden !== 'undefined')
-		? { hidden: 'msHidden', change: 'msvisibilitychange' }
+		? { l: 'msHidden', ad: 'msvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.webkitHidden !== 'undefined')
-		? { hidden: 'webkitHidden', change: 'webkitvisibilitychange' }
-		: { hidden: 'hidden', change: 'visibilitychange' };
+		? { l: 'webkitHidden', ad: 'webkitvisibilitychange' }
+		: { l: 'hidden', ad: 'visibilitychange' };
 }
 
 
@@ -4166,12 +4166,12 @@ var _Browser_call = F2(function(functionName, id)
 function _Browser_getViewport()
 {
 	return {
-		scene: _Browser_getScene(),
-		viewport: {
-			x: _Browser_window.pageXOffset,
-			y: _Browser_window.pageYOffset,
-			width: _Browser_doc.documentElement.clientWidth,
-			height: _Browser_doc.documentElement.clientHeight
+		a7: _Browser_getScene(),
+		ba: {
+			a: _Browser_window.pageXOffset,
+			b: _Browser_window.pageYOffset,
+			M: _Browser_doc.documentElement.clientWidth,
+			J: _Browser_doc.documentElement.clientHeight
 		}
 	};
 }
@@ -4181,8 +4181,8 @@ function _Browser_getScene()
 	var body = _Browser_doc.body;
 	var elem = _Browser_doc.documentElement;
 	return {
-		width: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
-		height: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
+		M: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
+		J: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
 	};
 }
 
@@ -4205,15 +4205,15 @@ function _Browser_getViewportOf(id)
 	return _Browser_withNode(id, function(node)
 	{
 		return {
-			scene: {
-				width: node.scrollWidth,
-				height: node.scrollHeight
+			a7: {
+				M: node.scrollWidth,
+				J: node.scrollHeight
 			},
-			viewport: {
-				x: node.scrollLeft,
-				y: node.scrollTop,
-				width: node.clientWidth,
-				height: node.clientHeight
+			ba: {
+				a: node.scrollLeft,
+				b: node.scrollTop,
+				M: node.clientWidth,
+				J: node.clientHeight
 			}
 		};
 	});
@@ -4243,18 +4243,18 @@ function _Browser_getElement(id)
 		var x = _Browser_window.pageXOffset;
 		var y = _Browser_window.pageYOffset;
 		return {
-			scene: _Browser_getScene(),
-			viewport: {
-				x: x,
-				y: y,
-				width: _Browser_doc.documentElement.clientWidth,
-				height: _Browser_doc.documentElement.clientHeight
+			a7: _Browser_getScene(),
+			ba: {
+				a: x,
+				b: y,
+				M: _Browser_doc.documentElement.clientWidth,
+				J: _Browser_doc.documentElement.clientHeight
 			},
-			element: {
-				x: x + rect.left,
-				y: y + rect.top,
-				width: rect.width,
-				height: rect.height
+			bq: {
+				a: x + rect.left,
+				b: y + rect.top,
+				M: rect.width,
+				J: rect.height
 			}
 		};
 	});
@@ -4419,20 +4419,18 @@ var _Parser_findSubString = F5(function(smallString, offset, row, col, bigString
 
 	return _Utils_Tuple3(newOffset, row, col);
 });
-var author$project$Main$Model = function (width) {
-	return function (height) {
-		return function (points) {
-			return function (lines) {
-				return function (labels) {
-					return function (circles) {
-						return function (pstates) {
-							return function (lstates) {
-								return function (drag) {
-									return function (mOver) {
-										return function (input) {
-											return function (prompt) {
-												return {circles: circles, drag: drag, height: height, input: input, labels: labels, lines: lines, lstates: lstates, mOver: mOver, points: points, prompt: prompt, pstates: pstates, width: width};
-											};
+var author$project$Main$Model = function (styles) {
+	return function (points) {
+		return function (lines) {
+			return function (labels) {
+				return function (circles) {
+					return function (pstates) {
+						return function (lstates) {
+							return function (drag) {
+								return function (mOver) {
+									return function (input) {
+										return function (prompt) {
+											return {r: circles, I: drag, X: input, o: labels, s: lines, p: lstates, Y: mOver, i: points, t: prompt, u: pstates, j: styles};
 										};
 									};
 								};
@@ -4445,10 +4443,10 @@ var author$project$Main$Model = function (width) {
 	};
 };
 var author$project$Main$Cir2 = function (a) {
-	return {$: 'Cir2', a: a};
+	return {$: 0, a: a};
 };
 var author$project$Main$Cir3 = function (a) {
-	return {$: 'Cir3', a: a};
+	return {$: 1, a: a};
 };
 var elm$core$Basics$apR = F2(
 	function (x, f) {
@@ -4457,16 +4455,16 @@ var elm$core$Basics$apR = F2(
 var elm$core$Array$branchFactor = 32;
 var elm$core$Array$Array_elm_builtin = F4(
 	function (a, b, c, d) {
-		return {$: 'Array_elm_builtin', a: a, b: b, c: c, d: d};
+		return {$: 0, a: a, b: b, c: c, d: d};
 	});
-var elm$core$Basics$EQ = {$: 'EQ'};
-var elm$core$Basics$GT = {$: 'GT'};
-var elm$core$Basics$LT = {$: 'LT'};
+var elm$core$Basics$EQ = 1;
+var elm$core$Basics$GT = 2;
+var elm$core$Basics$LT = 0;
 var elm$core$Dict$foldr = F3(
 	function (func, acc, t) {
 		foldr:
 		while (true) {
-			if (t.$ === 'RBEmpty_elm_builtin') {
+			if (t.$ === -2) {
 				return acc;
 			} else {
 				var key = t.b;
@@ -4512,7 +4510,7 @@ var elm$core$Dict$keys = function (dict) {
 		dict);
 };
 var elm$core$Set$toList = function (_n0) {
-	var dict = _n0.a;
+	var dict = _n0;
 	return elm$core$Dict$keys(dict);
 };
 var elm$core$Elm$JsArray$foldr = _JsArray_foldr;
@@ -4522,7 +4520,7 @@ var elm$core$Array$foldr = F3(
 		var tail = _n0.d;
 		var helper = F2(
 			function (node, acc) {
-				if (node.$ === 'SubTree') {
+				if (!node.$) {
 					var subTree = node.a;
 					return A3(elm$core$Elm$JsArray$foldr, helper, acc, subTree);
 				} else {
@@ -4551,10 +4549,10 @@ var elm$core$Array$shiftStep = elm$core$Basics$ceiling(
 var elm$core$Elm$JsArray$empty = _JsArray_empty;
 var elm$core$Array$empty = A4(elm$core$Array$Array_elm_builtin, 0, elm$core$Array$shiftStep, elm$core$Elm$JsArray$empty, elm$core$Elm$JsArray$empty);
 var elm$core$Array$Leaf = function (a) {
-	return {$: 'Leaf', a: a};
+	return {$: 1, a: a};
 };
 var elm$core$Array$SubTree = function (a) {
-	return {$: 'SubTree', a: a};
+	return {$: 0, a: a};
 };
 var elm$core$Elm$JsArray$initializeFromList = _JsArray_initializeFromList;
 var elm$core$List$foldl = F3(
@@ -4638,28 +4636,28 @@ var elm$core$Basics$sub = _Basics_sub;
 var elm$core$Elm$JsArray$length = _JsArray_length;
 var elm$core$Array$builderToArray = F2(
 	function (reverseNodeList, builder) {
-		if (!builder.nodeListSize) {
+		if (!builder.k) {
 			return A4(
 				elm$core$Array$Array_elm_builtin,
-				elm$core$Elm$JsArray$length(builder.tail),
+				elm$core$Elm$JsArray$length(builder.n),
 				elm$core$Array$shiftStep,
 				elm$core$Elm$JsArray$empty,
-				builder.tail);
+				builder.n);
 		} else {
-			var treeLen = builder.nodeListSize * elm$core$Array$branchFactor;
+			var treeLen = builder.k * elm$core$Array$branchFactor;
 			var depth = elm$core$Basics$floor(
 				A2(elm$core$Basics$logBase, elm$core$Array$branchFactor, treeLen - 1));
-			var correctNodeList = reverseNodeList ? elm$core$List$reverse(builder.nodeList) : builder.nodeList;
-			var tree = A2(elm$core$Array$treeFromBuilder, correctNodeList, builder.nodeListSize);
+			var correctNodeList = reverseNodeList ? elm$core$List$reverse(builder.q) : builder.q;
+			var tree = A2(elm$core$Array$treeFromBuilder, correctNodeList, builder.k);
 			return A4(
 				elm$core$Array$Array_elm_builtin,
-				elm$core$Elm$JsArray$length(builder.tail) + treeLen,
+				elm$core$Elm$JsArray$length(builder.n) + treeLen,
 				A2(elm$core$Basics$max, 5, depth * elm$core$Array$shiftStep),
 				tree,
-				builder.tail);
+				builder.n);
 		}
 	});
-var elm$core$Basics$False = {$: 'False'};
+var elm$core$Basics$False = 1;
 var elm$core$Basics$idiv = _Basics_idiv;
 var elm$core$Basics$lt = _Utils_lt;
 var elm$core$Elm$JsArray$initialize = _JsArray_initialize;
@@ -4671,7 +4669,7 @@ var elm$core$Array$initializeHelp = F5(
 				return A2(
 					elm$core$Array$builderToArray,
 					false,
-					{nodeList: nodeList, nodeListSize: (len / elm$core$Array$branchFactor) | 0, tail: tail});
+					{q: nodeList, k: (len / elm$core$Array$branchFactor) | 0, n: tail});
 			} else {
 				var leaf = elm$core$Array$Leaf(
 					A3(elm$core$Elm$JsArray$initialize, elm$core$Array$branchFactor, fromIndex, fn));
@@ -4703,18 +4701,18 @@ var elm$core$Array$initialize = F2(
 		}
 	});
 var elm$core$Maybe$Just = function (a) {
-	return {$: 'Just', a: a};
+	return {$: 0, a: a};
 };
-var elm$core$Maybe$Nothing = {$: 'Nothing'};
+var elm$core$Maybe$Nothing = {$: 1};
 var elm$core$Result$Err = function (a) {
-	return {$: 'Err', a: a};
+	return {$: 1, a: a};
 };
 var elm$core$Result$Ok = function (a) {
-	return {$: 'Ok', a: a};
+	return {$: 0, a: a};
 };
-var elm$core$Basics$True = {$: 'True'};
+var elm$core$Basics$True = 0;
 var elm$core$Result$isOk = function (result) {
-	if (result.$ === 'Ok') {
+	if (!result.$) {
 		return true;
 	} else {
 		return false;
@@ -4722,18 +4720,18 @@ var elm$core$Result$isOk = function (result) {
 };
 var elm$json$Json$Decode$Failure = F2(
 	function (a, b) {
-		return {$: 'Failure', a: a, b: b};
+		return {$: 3, a: a, b: b};
 	});
 var elm$json$Json$Decode$Field = F2(
 	function (a, b) {
-		return {$: 'Field', a: a, b: b};
+		return {$: 0, a: a, b: b};
 	});
 var elm$json$Json$Decode$Index = F2(
 	function (a, b) {
-		return {$: 'Index', a: a, b: b};
+		return {$: 1, a: a, b: b};
 	});
 var elm$json$Json$Decode$OneOf = function (a) {
-	return {$: 'OneOf', a: a};
+	return {$: 2, a: a};
 };
 var elm$core$Basics$and = _Basics_and;
 var elm$core$Basics$append = _Utils_append;
@@ -4835,12 +4833,12 @@ var elm$json$Json$Decode$errorToStringHelp = F2(
 		errorToStringHelp:
 		while (true) {
 			switch (error.$) {
-				case 'Field':
+				case 0:
 					var f = error.a;
 					var err = error.b;
 					var isSimple = function () {
 						var _n1 = elm$core$String$uncons(f);
-						if (_n1.$ === 'Nothing') {
+						if (_n1.$ === 1) {
 							return false;
 						} else {
 							var _n2 = _n1.a;
@@ -4855,7 +4853,7 @@ var elm$json$Json$Decode$errorToStringHelp = F2(
 					error = $temp$error;
 					context = $temp$context;
 					continue errorToStringHelp;
-				case 'Index':
+				case 1:
 					var i = error.a;
 					var err = error.b;
 					var indexName = '[' + (elm$core$String$fromInt(i) + ']');
@@ -4864,7 +4862,7 @@ var elm$json$Json$Decode$errorToStringHelp = F2(
 					error = $temp$error;
 					context = $temp$context;
 					continue errorToStringHelp;
-				case 'OneOf':
+				case 2:
 					var errors = error.a;
 					if (!errors.b) {
 						return 'Ran into a Json.Decode.oneOf with no possibilities' + function () {
@@ -4941,7 +4939,7 @@ var author$project$Main$decodeCircle = A2(
 					F2(
 						function (a, b) {
 							return author$project$Main$Cir2(
-								{a: a, b: b});
+								{d: a, e: b});
 						}),
 					A2(elm$json$Json$Decode$field, 'plabel', elm$json$Json$Decode$string),
 					A2(elm$json$Json$Decode$field, 'llabel', elm$json$Json$Decode$string));
@@ -4951,7 +4949,7 @@ var author$project$Main$decodeCircle = A2(
 					F3(
 						function (a, b, c) {
 							return author$project$Main$Cir3(
-								{a: a, b: b, c: c});
+								{d: a, e: b, B: c});
 						}),
 					A2(elm$json$Json$Decode$field, 'plabel1', elm$json$Json$Decode$string),
 					A2(elm$json$Json$Decode$field, 'plabel2', elm$json$Json$Decode$string),
@@ -4961,9 +4959,7 @@ var author$project$Main$decodeCircle = A2(
 		}
 	},
 	A2(elm$json$Json$Decode$field, 'type', elm$json$Json$Decode$string));
-var author$project$Main$LineAB = function (a) {
-	return {$: 'LineAB', a: a};
-};
+var author$project$Main$LineAB = elm$core$Basics$identity;
 var elm$core$Basics$identity = function (x) {
 	return x;
 };
@@ -4975,8 +4971,7 @@ var author$project$Main$decodeLine = A2(
 				elm$json$Json$Decode$map2,
 				F2(
 					function (a, b) {
-						return author$project$Main$LineAB(
-							{a: a, b: b});
+						return {d: a, e: b};
 					}),
 				A2(elm$json$Json$Decode$field, 'plabel1', elm$json$Json$Decode$string),
 				A2(elm$json$Json$Decode$field, 'plabel2', elm$json$Json$Decode$string));
@@ -4990,47 +4985,47 @@ var author$project$Main$decodeLstate = A3(
 	elm$json$Json$Decode$map2,
 	F2(
 		function (h, d) {
-			return {dashed: d, hidden: h};
+			return {H: d, l: h};
 		}),
 	A2(elm$json$Json$Decode$field, 'hidden', elm$json$Json$Decode$bool),
 	A2(elm$json$Json$Decode$field, 'dashed', elm$json$Json$Decode$bool));
 var author$project$Main$FP = function (a) {
-	return {$: 'FP', a: a};
+	return {$: 0, a: a};
 };
 var author$project$Main$FPOC = F2(
 	function (a, b) {
-		return {$: 'FPOC', a: a, b: b};
+		return {$: 7, a: a, b: b};
 	});
 var author$project$Main$FPOL = F2(
 	function (a, b) {
-		return {$: 'FPOL', a: a, b: b};
+		return {$: 2, a: a, b: b};
 	});
 var author$project$Main$P2C = F3(
 	function (a, b, c) {
-		return {$: 'P2C', a: a, b: b, c: c};
+		return {$: 5, a: a, b: b, c: c};
 	});
 var author$project$Main$P2L = F2(
 	function (a, b) {
-		return {$: 'P2L', a: a, b: b};
+		return {$: 3, a: a, b: b};
 	});
 var author$project$Main$PCL = F3(
 	function (a, b, c) {
-		return {$: 'PCL', a: a, b: b, c: c};
+		return {$: 6, a: a, b: b, c: c};
 	});
 var author$project$Main$POL = F3(
 	function (a, b, c) {
-		return {$: 'POL', a: a, b: b, c: c};
+		return {$: 1, a: a, b: b, c: c};
 	});
 var author$project$Main$POLP = F2(
 	function (a, b) {
-		return {$: 'POLP', a: a, b: b};
+		return {$: 4, a: a, b: b};
 	});
 var elm$json$Json$Decode$float = _Json_decodeFloat;
 var author$project$Main$decodePosition = A3(
 	elm$json$Json$Decode$map2,
 	F2(
 		function (x, y) {
-			return {x: x, y: y};
+			return {a: x, b: y};
 		}),
 	A2(elm$json$Json$Decode$field, 'x', elm$json$Json$Decode$float),
 	A2(elm$json$Json$Decode$field, 'y', elm$json$Json$Decode$float));
@@ -5097,27 +5092,35 @@ var author$project$Main$decodePoint = A2(
 var author$project$Main$decodePstate = A2(
 	elm$json$Json$Decode$map,
 	function (h) {
-		return {hidden: h};
+		return {l: h};
 	},
 	A2(elm$json$Json$Decode$field, 'hidden', elm$json$Json$Decode$bool));
-var elm$core$Dict$RBEmpty_elm_builtin = {$: 'RBEmpty_elm_builtin'};
+var author$project$Main$decodeStyles = A3(
+	elm$json$Json$Decode$map2,
+	F2(
+		function (w, h) {
+			return {J: h, M: w};
+		}),
+	A2(elm$json$Json$Decode$field, 'width', elm$json$Json$Decode$float),
+	A2(elm$json$Json$Decode$field, 'height', elm$json$Json$Decode$float));
+var elm$core$Dict$RBEmpty_elm_builtin = {$: -2};
 var elm$core$Dict$empty = elm$core$Dict$RBEmpty_elm_builtin;
-var elm$core$Dict$Black = {$: 'Black'};
+var elm$core$Dict$Black = 1;
 var elm$core$Dict$RBNode_elm_builtin = F5(
 	function (a, b, c, d, e) {
-		return {$: 'RBNode_elm_builtin', a: a, b: b, c: c, d: d, e: e};
+		return {$: -1, a: a, b: b, c: c, d: d, e: e};
 	});
 var elm$core$Basics$compare = _Utils_compare;
-var elm$core$Dict$Red = {$: 'Red'};
+var elm$core$Dict$Red = 0;
 var elm$core$Dict$balance = F5(
 	function (color, key, value, left, right) {
-		if ((right.$ === 'RBNode_elm_builtin') && (right.a.$ === 'Red')) {
+		if ((right.$ === -1) && (!right.a)) {
 			var _n1 = right.a;
 			var rK = right.b;
 			var rV = right.c;
 			var rLeft = right.d;
 			var rRight = right.e;
-			if ((left.$ === 'RBNode_elm_builtin') && (left.a.$ === 'Red')) {
+			if ((left.$ === -1) && (!left.a)) {
 				var _n3 = left.a;
 				var lK = left.b;
 				var lV = left.c;
@@ -5125,22 +5128,22 @@ var elm$core$Dict$balance = F5(
 				var lRight = left.e;
 				return A5(
 					elm$core$Dict$RBNode_elm_builtin,
-					elm$core$Dict$Red,
+					0,
 					key,
 					value,
-					A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Black, lK, lV, lLeft, lRight),
-					A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Black, rK, rV, rLeft, rRight));
+					A5(elm$core$Dict$RBNode_elm_builtin, 1, lK, lV, lLeft, lRight),
+					A5(elm$core$Dict$RBNode_elm_builtin, 1, rK, rV, rLeft, rRight));
 			} else {
 				return A5(
 					elm$core$Dict$RBNode_elm_builtin,
 					color,
 					rK,
 					rV,
-					A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Red, key, value, left, rLeft),
+					A5(elm$core$Dict$RBNode_elm_builtin, 0, key, value, left, rLeft),
 					rRight);
 			}
 		} else {
-			if ((((left.$ === 'RBNode_elm_builtin') && (left.a.$ === 'Red')) && (left.d.$ === 'RBNode_elm_builtin')) && (left.d.a.$ === 'Red')) {
+			if ((((left.$ === -1) && (!left.a)) && (left.d.$ === -1)) && (!left.d.a)) {
 				var _n5 = left.a;
 				var lK = left.b;
 				var lV = left.c;
@@ -5153,11 +5156,11 @@ var elm$core$Dict$balance = F5(
 				var lRight = left.e;
 				return A5(
 					elm$core$Dict$RBNode_elm_builtin,
-					elm$core$Dict$Red,
+					0,
 					lK,
 					lV,
-					A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Black, llK, llV, llLeft, llRight),
-					A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Black, key, value, lRight, right));
+					A5(elm$core$Dict$RBNode_elm_builtin, 1, llK, llV, llLeft, llRight),
+					A5(elm$core$Dict$RBNode_elm_builtin, 1, key, value, lRight, right));
 			} else {
 				return A5(elm$core$Dict$RBNode_elm_builtin, color, key, value, left, right);
 			}
@@ -5165,8 +5168,8 @@ var elm$core$Dict$balance = F5(
 	});
 var elm$core$Dict$insertHelp = F3(
 	function (key, value, dict) {
-		if (dict.$ === 'RBEmpty_elm_builtin') {
-			return A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Red, key, value, elm$core$Dict$RBEmpty_elm_builtin, elm$core$Dict$RBEmpty_elm_builtin);
+		if (dict.$ === -2) {
+			return A5(elm$core$Dict$RBNode_elm_builtin, 0, key, value, elm$core$Dict$RBEmpty_elm_builtin, elm$core$Dict$RBEmpty_elm_builtin);
 		} else {
 			var nColor = dict.a;
 			var nKey = dict.b;
@@ -5174,8 +5177,8 @@ var elm$core$Dict$insertHelp = F3(
 			var nLeft = dict.d;
 			var nRight = dict.e;
 			var _n1 = A2(elm$core$Basics$compare, key, nKey);
-			switch (_n1.$) {
-				case 'LT':
+			switch (_n1) {
+				case 0:
 					return A5(
 						elm$core$Dict$balance,
 						nColor,
@@ -5183,7 +5186,7 @@ var elm$core$Dict$insertHelp = F3(
 						nValue,
 						A3(elm$core$Dict$insertHelp, key, value, nLeft),
 						nRight);
-				case 'EQ':
+				case 1:
 					return A5(elm$core$Dict$RBNode_elm_builtin, nColor, nKey, value, nLeft, nRight);
 				default:
 					return A5(
@@ -5199,13 +5202,13 @@ var elm$core$Dict$insertHelp = F3(
 var elm$core$Dict$insert = F3(
 	function (key, value, dict) {
 		var _n0 = A3(elm$core$Dict$insertHelp, key, value, dict);
-		if ((_n0.$ === 'RBNode_elm_builtin') && (_n0.a.$ === 'Red')) {
+		if ((_n0.$ === -1) && (!_n0.a)) {
 			var _n1 = _n0.a;
 			var k = _n0.b;
 			var v = _n0.c;
 			var l = _n0.d;
 			var r = _n0.e;
-			return A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Black, k, v, l, r);
+			return A5(elm$core$Dict$RBNode_elm_builtin, 1, k, v, l, r);
 		} else {
 			var x = _n0;
 			return x;
@@ -5230,13 +5233,14 @@ var elm$json$Json$Decode$dict = function (decoder) {
 		elm$core$Dict$fromList,
 		elm$json$Json$Decode$keyValuePairs(decoder));
 };
-var elm$json$Json$Decode$map6 = _Json_map6;
-var author$project$Main$decodeObjs = A7(
-	elm$json$Json$Decode$map6,
-	F6(
-		function (ps, ls, cs, las, pss, lss) {
-			return {circles: cs, labels: las, lines: ls, lstates: lss, points: ps, prompt: '', pstates: pss};
+var elm$json$Json$Decode$map7 = _Json_map7;
+var author$project$Main$decodeObjs = A8(
+	elm$json$Json$Decode$map7,
+	F7(
+		function (ss, ps, ls, cs, las, pss, lss) {
+			return {r: cs, o: las, s: ls, p: lss, i: ps, t: '', u: pss, j: ss};
 		}),
+	A2(elm$json$Json$Decode$field, 'styles', author$project$Main$decodeStyles),
 	A2(
 		elm$json$Json$Decode$field,
 		'points',
@@ -5261,37 +5265,36 @@ var author$project$Main$decodeObjs = A7(
 		elm$json$Json$Decode$field,
 		'lstates',
 		elm$json$Json$Decode$dict(author$project$Main$decodeLstate)));
-var author$project$Main$emptyObjs = {circles: elm$core$Dict$empty, labels: elm$core$Dict$empty, lines: elm$core$Dict$empty, lstates: elm$core$Dict$empty, points: elm$core$Dict$empty, prompt: '', pstates: elm$core$Dict$empty};
+var author$project$Main$defaultStyles = {J: 300, M: 500};
+var author$project$Main$emptyObjs = {r: elm$core$Dict$empty, o: elm$core$Dict$empty, s: elm$core$Dict$empty, p: elm$core$Dict$empty, i: elm$core$Dict$empty, t: '', u: elm$core$Dict$empty, j: author$project$Main$defaultStyles};
 var elm$json$Json$Decode$decodeString = _Json_runOnString;
 var author$project$Main$interpret0 = function (objsStr) {
 	var result = A2(elm$json$Json$Decode$decodeString, author$project$Main$decodeObjs, objsStr);
-	if (result.$ === 'Ok') {
+	if (!result.$) {
 		var objs = result.a;
 		return objs;
 	} else {
 		var error = result.a;
 		return _Utils_update(
 			author$project$Main$emptyObjs,
-			{prompt: 'error'});
+			{t: 'error'});
 	}
 };
 var elm$core$Platform$Cmd$batch = _Platform_batch;
 var elm$core$Platform$Cmd$none = elm$core$Platform$Cmd$batch(_List_Nil);
 var author$project$Main$init = function (_n0) {
-	var width = _n0.width;
-	var height = _n0.height;
-	var input = _n0.input;
-	var objsStr = _n0.objsStr;
+	var input = _n0.X;
+	var objsStr = _n0.aT;
 	var objs = author$project$Main$interpret0(objsStr);
 	return _Utils_Tuple2(
-		author$project$Main$Model(width)(height)(objs.points)(objs.lines)(objs.labels)(objs.circles)(objs.pstates)(objs.lstates)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(input)(''),
+		author$project$Main$Model(objs.j)(objs.i)(objs.s)(objs.o)(objs.r)(objs.u)(objs.p)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(input)(''),
 		elm$core$Platform$Cmd$none);
 };
 var author$project$Main$DragAt = function (a) {
-	return {$: 'DragAt', a: a};
+	return {$: 1, a: a};
 };
 var author$project$Main$DragEnd = function (a) {
-	return {$: 'DragEnd', a: a};
+	return {$: 2, a: a};
 };
 var elm$json$Json$Decode$int = _Json_decodeInt;
 var author$project$Main$mousePosition = function () {
@@ -5301,25 +5304,25 @@ var author$project$Main$mousePosition = function () {
 		elm$json$Json$Decode$map2,
 		F2(
 			function (a, b) {
-				return {x: a, y: b};
+				return {a: a, b: b};
 			}),
 		x,
 		y);
 }();
-var elm$browser$Browser$Events$Document = {$: 'Document'};
+var elm$browser$Browser$Events$Document = 0;
 var elm$browser$Browser$Events$MySub = F3(
 	function (a, b, c) {
-		return {$: 'MySub', a: a, b: b, c: c};
+		return {$: 0, a: a, b: b, c: c};
 	});
 var elm$browser$Browser$Events$State = F2(
 	function (subs, pids) {
-		return {pids: pids, subs: subs};
+		return {aZ: pids, a8: subs};
 	});
 var elm$core$Task$succeed = _Scheduler_succeed;
 var elm$browser$Browser$Events$init = elm$core$Task$succeed(
 	A2(elm$browser$Browser$Events$State, _List_Nil, elm$core$Dict$empty));
 var elm$browser$Browser$Events$nodeToKey = function (node) {
-	if (node.$ === 'Document') {
+	if (!node) {
 		return 'd_';
 	} else {
 		return 'w_';
@@ -5336,7 +5339,7 @@ var elm$browser$Browser$Events$addKey = function (sub) {
 };
 var elm$browser$Browser$Events$Event = F2(
 	function (key, event) {
-		return {event: event, key: key};
+		return {aH: event, aP: key};
 	});
 var elm$core$Platform$sendToSelf = _Platform_sendToSelf;
 var elm$core$Task$andThen = _Scheduler_andThen;
@@ -5351,27 +5354,23 @@ var elm$core$Task$map = F2(
 			taskA);
 	});
 var elm$browser$Browser$External = function (a) {
-	return {$: 'External', a: a};
+	return {$: 1, a: a};
 };
 var elm$browser$Browser$Internal = function (a) {
-	return {$: 'Internal', a: a};
+	return {$: 0, a: a};
 };
-var elm$browser$Browser$Dom$NotFound = function (a) {
-	return {$: 'NotFound', a: a};
-};
+var elm$browser$Browser$Dom$NotFound = elm$core$Basics$identity;
 var elm$core$Basics$never = function (_n0) {
 	never:
 	while (true) {
-		var nvr = _n0.a;
+		var nvr = _n0;
 		var $temp$_n0 = nvr;
 		_n0 = $temp$_n0;
 		continue never;
 	}
 };
-var elm$core$Task$Perform = function (a) {
-	return {$: 'Perform', a: a};
-};
-var elm$core$Task$init = elm$core$Task$succeed(_Utils_Tuple0);
+var elm$core$Task$Perform = elm$core$Basics$identity;
+var elm$core$Task$init = elm$core$Task$succeed(0);
 var elm$core$List$foldrHelper = F4(
 	function (fn, acc, ctr, ls) {
 		if (!ls.b) {
@@ -5466,7 +5465,7 @@ var elm$core$Task$sequence = function (tasks) {
 var elm$core$Platform$sendToApp = _Platform_sendToApp;
 var elm$core$Task$spawnCmd = F2(
 	function (router, _n0) {
-		var task = _n0.a;
+		var task = _n0;
 		return _Scheduler_spawn(
 			A2(
 				elm$core$Task$andThen,
@@ -5478,7 +5477,7 @@ var elm$core$Task$onEffects = F3(
 		return A2(
 			elm$core$Task$map,
 			function (_n0) {
-				return _Utils_Tuple0;
+				return 0;
 			},
 			elm$core$Task$sequence(
 				A2(
@@ -5488,30 +5487,28 @@ var elm$core$Task$onEffects = F3(
 	});
 var elm$core$Task$onSelfMsg = F3(
 	function (_n0, _n1, _n2) {
-		return elm$core$Task$succeed(_Utils_Tuple0);
+		return elm$core$Task$succeed(0);
 	});
 var elm$core$Task$cmdMap = F2(
 	function (tagger, _n0) {
-		var task = _n0.a;
-		return elm$core$Task$Perform(
-			A2(elm$core$Task$map, tagger, task));
+		var task = _n0;
+		return A2(elm$core$Task$map, tagger, task);
 	});
 _Platform_effectManagers['Task'] = _Platform_createManager(elm$core$Task$init, elm$core$Task$onEffects, elm$core$Task$onSelfMsg, elm$core$Task$cmdMap);
 var elm$core$Task$command = _Platform_leaf('Task');
 var elm$core$Task$perform = F2(
 	function (toMessage, task) {
 		return elm$core$Task$command(
-			elm$core$Task$Perform(
-				A2(elm$core$Task$map, toMessage, task)));
+			A2(elm$core$Task$map, toMessage, task));
 	});
 var elm$json$Json$Decode$succeed = _Json_succeed;
 var elm$virtual_dom$VirtualDom$toHandlerInt = function (handler) {
 	switch (handler.$) {
-		case 'Normal':
+		case 0:
 			return 0;
-		case 'MayStopPropagation':
+		case 1:
 			return 1;
-		case 'MayPreventDefault':
+		case 2:
 			return 2;
 		default:
 			return 3;
@@ -5528,8 +5525,8 @@ var elm$core$String$dropLeft = F2(
 			string);
 	});
 var elm$core$String$startsWith = _String_startsWith;
-var elm$url$Url$Http = {$: 'Http'};
-var elm$url$Url$Https = {$: 'Https'};
+var elm$url$Url$Http = 0;
+var elm$url$Url$Https = 1;
 var elm$core$String$indexes = _String_indexes;
 var elm$core$String$isEmpty = function (string) {
 	return string === '';
@@ -5542,7 +5539,7 @@ var elm$core$String$contains = _String_contains;
 var elm$core$String$toInt = _String_toInt;
 var elm$url$Url$Url = F6(
 	function (protocol, host, port_, path, query, fragment) {
-		return {fragment: fragment, host: host, path: path, port_: port_, protocol: protocol, query: query};
+		return {aK: fragment, aM: host, aY: path, a_: port_, a1: protocol, a2: query};
 	});
 var elm$url$Url$chompBeforePath = F5(
 	function (protocol, path, params, frag, str) {
@@ -5558,7 +5555,7 @@ var elm$url$Url$chompBeforePath = F5(
 					var i = _n0.a;
 					var _n1 = elm$core$String$toInt(
 						A2(elm$core$String$dropLeft, i + 1, str));
-					if (_n1.$ === 'Nothing') {
+					if (_n1.$ === 1) {
 						return elm$core$Maybe$Nothing;
 					} else {
 						var port_ = _n1;
@@ -5640,10 +5637,10 @@ var elm$url$Url$chompAfterProtocol = F2(
 var elm$url$Url$fromString = function (str) {
 	return A2(elm$core$String$startsWith, 'http://', str) ? A2(
 		elm$url$Url$chompAfterProtocol,
-		elm$url$Url$Http,
+		0,
 		A2(elm$core$String$dropLeft, 7, str)) : (A2(elm$core$String$startsWith, 'https://', str) ? A2(
 		elm$url$Url$chompAfterProtocol,
-		elm$url$Url$Https,
+		1,
 		A2(elm$core$String$dropLeft, 8, str)) : elm$core$Maybe$Nothing);
 };
 var elm$browser$Browser$Events$spawn = F3(
@@ -5651,7 +5648,7 @@ var elm$browser$Browser$Events$spawn = F3(
 		var node = _n0.a;
 		var name = _n0.b;
 		var actualNode = function () {
-			if (node.$ === 'Document') {
+			if (!node) {
 				return _Browser_doc;
 			} else {
 				return _Browser_window;
@@ -5677,7 +5674,7 @@ var elm$core$Dict$foldl = F3(
 	function (func, acc, dict) {
 		foldl:
 		while (true) {
-			if (dict.$ === 'RBEmpty_elm_builtin') {
+			if (dict.$ === -2) {
 				return acc;
 			} else {
 				var key = dict.b;
@@ -5805,7 +5802,7 @@ var elm$browser$Browser$Events$onEffects = F3(
 			stepLeft,
 			stepBoth,
 			stepRight,
-			state.pids,
+			state.aZ,
 			elm$core$Dict$fromList(newSubs),
 			_Utils_Tuple3(_List_Nil, elm$core$Dict$empty, _List_Nil));
 		var deadPids = _n0.a;
@@ -5834,7 +5831,7 @@ var elm$browser$Browser$Events$onEffects = F3(
 var elm$core$List$maybeCons = F3(
 	function (f, mx, xs) {
 		var _n0 = f(mx);
-		if (_n0.$ === 'Just') {
+		if (!_n0.$) {
 			var x = _n0.a;
 			return A2(elm$core$List$cons, x, xs);
 		} else {
@@ -5851,8 +5848,8 @@ var elm$core$List$filterMap = F2(
 	});
 var elm$browser$Browser$Events$onSelfMsg = F3(
 	function (router, _n0, state) {
-		var key = _n0.key;
-		var event = _n0.event;
+		var key = _n0.aP;
+		var event = _n0.aH;
 		var toMessage = function (_n2) {
 			var subKey = _n2.a;
 			var _n3 = _n2.b;
@@ -5861,7 +5858,7 @@ var elm$browser$Browser$Events$onSelfMsg = F3(
 			var decoder = _n3.c;
 			return _Utils_eq(subKey, key) ? A2(_Browser_decodeEvent, decoder, event) : elm$core$Maybe$Nothing;
 		};
-		var messages = A2(elm$core$List$filterMap, toMessage, state.subs);
+		var messages = A2(elm$core$List$filterMap, toMessage, state.a8);
 		return A2(
 			elm$core$Task$andThen,
 			function (_n1) {
@@ -5891,13 +5888,13 @@ var elm$browser$Browser$Events$on = F3(
 		return elm$browser$Browser$Events$subscription(
 			A3(elm$browser$Browser$Events$MySub, node, name, decoder));
 	});
-var elm$browser$Browser$Events$onMouseMove = A2(elm$browser$Browser$Events$on, elm$browser$Browser$Events$Document, 'mousemove');
-var elm$browser$Browser$Events$onMouseUp = A2(elm$browser$Browser$Events$on, elm$browser$Browser$Events$Document, 'mouseup');
+var elm$browser$Browser$Events$onMouseMove = A2(elm$browser$Browser$Events$on, 0, 'mousemove');
+var elm$browser$Browser$Events$onMouseUp = A2(elm$browser$Browser$Events$on, 0, 'mouseup');
 var elm$core$Platform$Sub$batch = _Platform_batch;
 var elm$core$Platform$Sub$none = elm$core$Platform$Sub$batch(_List_Nil);
 var author$project$Main$subscriptions = function (model) {
-	var _n0 = model.drag;
-	if (_n0.$ === 'Nothing') {
+	var _n0 = model.I;
+	if (_n0.$ === 1) {
 		return elm$core$Platform$Sub$none;
 	} else {
 		var drag = _n0.a;
@@ -5913,7 +5910,7 @@ var author$project$Main$subscriptions = function (model) {
 };
 var author$project$Main$Drag = F3(
 	function (obj, start, current) {
-		return {current: current, obj: obj, start: start};
+		return {aq: current, af: obj, U: start};
 	});
 var elm$json$Json$Encode$object = function (pairs) {
 	return _Json_wrap(
@@ -5925,12 +5922,12 @@ var elm$json$Json$Encode$object = function (pairs) {
 					var v = _n0.b;
 					return A3(_Json_addField, k, v, obj);
 				}),
-			_Json_emptyObject(_Utils_Tuple0),
+			_Json_emptyObject(0),
 			pairs));
 };
 var elm$json$Json$Encode$string = _Json_wrap;
 var author$project$Main$encodeCircle = function (circle) {
-	if (circle.$ === 'Cir2') {
+	if (!circle.$) {
 		var pl = circle.a;
 		return elm$json$Json$Encode$object(
 			_List_fromArray(
@@ -5940,10 +5937,10 @@ var author$project$Main$encodeCircle = function (circle) {
 					elm$json$Json$Encode$string('Cir2')),
 					_Utils_Tuple2(
 					'plabel',
-					elm$json$Json$Encode$string(pl.a)),
+					elm$json$Json$Encode$string(pl.d)),
 					_Utils_Tuple2(
 					'llabel',
-					elm$json$Json$Encode$string(pl.b))
+					elm$json$Json$Encode$string(pl.e))
 				]));
 	} else {
 		var threeP = circle.a;
@@ -5955,18 +5952,18 @@ var author$project$Main$encodeCircle = function (circle) {
 					elm$json$Json$Encode$string('Cir3')),
 					_Utils_Tuple2(
 					'plabel1',
-					elm$json$Json$Encode$string(threeP.a)),
+					elm$json$Json$Encode$string(threeP.d)),
 					_Utils_Tuple2(
 					'plabel2',
-					elm$json$Json$Encode$string(threeP.b)),
+					elm$json$Json$Encode$string(threeP.e)),
 					_Utils_Tuple2(
 					'plabel3',
-					elm$json$Json$Encode$string(threeP.c))
+					elm$json$Json$Encode$string(threeP.B))
 				]));
 	}
 };
 var author$project$Main$encodeLine = function (_n0) {
-	var twoP = _n0.a;
+	var twoP = _n0;
 	return elm$json$Json$Encode$object(
 		_List_fromArray(
 			[
@@ -5975,10 +5972,10 @@ var author$project$Main$encodeLine = function (_n0) {
 				elm$json$Json$Encode$string('LineAB')),
 				_Utils_Tuple2(
 				'plabel1',
-				elm$json$Json$Encode$string(twoP.a)),
+				elm$json$Json$Encode$string(twoP.d)),
 				_Utils_Tuple2(
 				'plabel2',
-				elm$json$Json$Encode$string(twoP.b))
+				elm$json$Json$Encode$string(twoP.e))
 			]));
 };
 var elm$json$Json$Encode$bool = _Json_wrap;
@@ -5988,10 +5985,10 @@ var author$project$Main$encodeLstate = function (lstate) {
 			[
 				_Utils_Tuple2(
 				'hidden',
-				elm$json$Json$Encode$bool(lstate.hidden)),
+				elm$json$Json$Encode$bool(lstate.l)),
 				_Utils_Tuple2(
 				'dashed',
-				elm$json$Json$Encode$bool(lstate.dashed))
+				elm$json$Json$Encode$bool(lstate.H))
 			]));
 };
 var elm$json$Json$Encode$float = _Json_wrap;
@@ -6001,15 +5998,15 @@ var author$project$Main$encodePosition = function (pos) {
 			[
 				_Utils_Tuple2(
 				'x',
-				elm$json$Json$Encode$float(pos.x)),
+				elm$json$Json$Encode$float(pos.a)),
 				_Utils_Tuple2(
 				'y',
-				elm$json$Json$Encode$float(pos.y))
+				elm$json$Json$Encode$float(pos.b))
 			]));
 };
 var author$project$Main$encodePoint = function (point) {
 	switch (point.$) {
-		case 'FP':
+		case 0:
 			var pos = point.a;
 			return elm$json$Json$Encode$object(
 				_List_fromArray(
@@ -6021,7 +6018,7 @@ var author$project$Main$encodePoint = function (point) {
 						'position',
 						author$project$Main$encodePosition(pos))
 					]));
-		case 'POL':
+		case 1:
 			var ll = point.a;
 			var a = point.b;
 			var b = point.c;
@@ -6041,7 +6038,7 @@ var author$project$Main$encodePoint = function (point) {
 						'b',
 						elm$json$Json$Encode$float(b))
 					]));
-		case 'FPOL':
+		case 2:
 			var ll = point.a;
 			var pos = point.b;
 			return elm$json$Json$Encode$object(
@@ -6057,7 +6054,7 @@ var author$project$Main$encodePoint = function (point) {
 						'position',
 						author$project$Main$encodePosition(pos))
 					]));
-		case 'P2L':
+		case 3:
 			var ll1 = point.a;
 			var ll2 = point.b;
 			return elm$json$Json$Encode$object(
@@ -6073,7 +6070,7 @@ var author$project$Main$encodePoint = function (point) {
 						'llabel2',
 						elm$json$Json$Encode$string(ll2))
 					]));
-		case 'POLP':
+		case 4:
 			var pl = point.a;
 			var ll = point.b;
 			return elm$json$Json$Encode$object(
@@ -6089,7 +6086,7 @@ var author$project$Main$encodePoint = function (point) {
 						'llabel',
 						elm$json$Json$Encode$string(ll))
 					]));
-		case 'P2C':
+		case 5:
 			var c1 = point.a;
 			var c2 = point.b;
 			var isPositive = point.c;
@@ -6109,7 +6106,7 @@ var author$project$Main$encodePoint = function (point) {
 						'isPositive',
 						elm$json$Json$Encode$bool(isPositive))
 					]));
-		case 'PCL':
+		case 6:
 			var c = point.a;
 			var l = point.b;
 			var isPositive = point.c;
@@ -6153,12 +6150,24 @@ var author$project$Main$encodePstate = function (pstate) {
 			[
 				_Utils_Tuple2(
 				'hidden',
-				elm$json$Json$Encode$bool(pstate.hidden))
+				elm$json$Json$Encode$bool(pstate.l))
+			]));
+};
+var author$project$Main$encodeStyles = function (styles) {
+	return elm$json$Json$Encode$object(
+		_List_fromArray(
+			[
+				_Utils_Tuple2(
+				'width',
+				elm$json$Json$Encode$float(styles.M)),
+				_Utils_Tuple2(
+				'height',
+				elm$json$Json$Encode$float(styles.J))
 			]));
 };
 var elm$core$Dict$map = F2(
 	function (func, dict) {
-		if (dict.$ === 'RBEmpty_elm_builtin') {
+		if (dict.$ === -2) {
 			return elm$core$Dict$RBEmpty_elm_builtin;
 		} else {
 			var color = dict.a;
@@ -6180,6 +6189,9 @@ var author$project$Main$encodeObjs = function (objs) {
 		_List_fromArray(
 			[
 				_Utils_Tuple2(
+				'styles',
+				author$project$Main$encodeStyles(objs.j)),
+				_Utils_Tuple2(
 				'points',
 				elm$json$Json$Encode$object(
 					elm$core$Dict$toList(
@@ -6189,7 +6201,7 @@ var author$project$Main$encodeObjs = function (objs) {
 								function (name, point) {
 									return author$project$Main$encodePoint(point);
 								}),
-							objs.points)))),
+							objs.i)))),
 				_Utils_Tuple2(
 				'lines',
 				elm$json$Json$Encode$object(
@@ -6200,7 +6212,7 @@ var author$project$Main$encodeObjs = function (objs) {
 								function (name, line) {
 									return author$project$Main$encodeLine(line);
 								}),
-							objs.lines)))),
+							objs.s)))),
 				_Utils_Tuple2(
 				'circles',
 				elm$json$Json$Encode$object(
@@ -6211,7 +6223,7 @@ var author$project$Main$encodeObjs = function (objs) {
 								function (name, circle) {
 									return author$project$Main$encodeCircle(circle);
 								}),
-							objs.circles)))),
+							objs.r)))),
 				_Utils_Tuple2(
 				'labels',
 				elm$json$Json$Encode$object(
@@ -6222,7 +6234,7 @@ var author$project$Main$encodeObjs = function (objs) {
 								function (name, pos) {
 									return author$project$Main$encodePosition(pos);
 								}),
-							objs.labels)))),
+							objs.o)))),
 				_Utils_Tuple2(
 				'pstates',
 				elm$json$Json$Encode$object(
@@ -6233,7 +6245,7 @@ var author$project$Main$encodeObjs = function (objs) {
 								function (name, pstate) {
 									return author$project$Main$encodePstate(pstate);
 								}),
-							objs.pstates)))),
+							objs.u)))),
 				_Utils_Tuple2(
 				'lstates',
 				elm$json$Json$Encode$object(
@@ -6244,12 +6256,12 @@ var author$project$Main$encodeObjs = function (objs) {
 								function (name, lstate) {
 									return author$project$Main$encodeLstate(lstate);
 								}),
-							objs.lstates))))
+							objs.p))))
 			]));
 };
 var author$project$Main$Position = F2(
 	function (x, y) {
-		return {x: x, y: y};
+		return {a: x, b: y};
 	});
 var elm$core$Basics$negate = function (n) {
 	return -n;
@@ -6259,26 +6271,26 @@ var elm$core$Basics$abs = function (n) {
 };
 var author$project$Main$truncatePos = F2(
 	function (model, pos) {
-		var maxy = (model.height / 2) - 10;
+		var maxy = (model.j.J / 2) - 10;
 		var y = (_Utils_cmp(
-			elm$core$Basics$abs(pos.y),
-			maxy) < 0) ? pos.y : ((pos.y > 0) ? maxy : (-maxy));
-		var maxx = (model.width / 2) - 10;
+			elm$core$Basics$abs(pos.b),
+			maxy) < 0) ? pos.b : ((pos.b > 0) ? maxy : (-maxy));
+		var maxx = (model.j.M / 2) - 10;
 		var x = (_Utils_cmp(
-			elm$core$Basics$abs(pos.x),
-			maxx) < 0) ? pos.x : ((pos.x > 0) ? maxx : (-maxx));
-		return {x: x, y: y};
+			elm$core$Basics$abs(pos.a),
+			maxx) < 0) ? pos.a : ((pos.a > 0) ? maxx : (-maxx));
+		return {a: x, b: y};
 	});
 var author$project$Main$translatePos = F4(
 	function (model, pos, start, current) {
-		var newPos = A2(author$project$Main$Position, (pos.x + current.x) - start.x, pos.y - (current.y - start.y));
+		var newPos = A2(author$project$Main$Position, (pos.a + current.a) - start.a, pos.b - (current.b - start.b));
 		return A2(author$project$Main$truncatePos, model, newPos);
 	});
 var elm$core$Dict$get = F2(
 	function (targetKey, dict) {
 		get:
 		while (true) {
-			if (dict.$ === 'RBEmpty_elm_builtin') {
+			if (dict.$ === -2) {
 				return elm$core$Maybe$Nothing;
 			} else {
 				var key = dict.b;
@@ -6286,14 +6298,14 @@ var elm$core$Dict$get = F2(
 				var left = dict.d;
 				var right = dict.e;
 				var _n1 = A2(elm$core$Basics$compare, targetKey, key);
-				switch (_n1.$) {
-					case 'LT':
+				switch (_n1) {
+					case 0:
 						var $temp$targetKey = targetKey,
 							$temp$dict = left;
 						targetKey = $temp$targetKey;
 						dict = $temp$dict;
 						continue get;
-					case 'EQ':
+					case 1:
 						return elm$core$Maybe$Just(value);
 					default:
 						var $temp$targetKey = targetKey,
@@ -6308,7 +6320,7 @@ var elm$core$Dict$get = F2(
 var elm$core$Dict$getMin = function (dict) {
 	getMin:
 	while (true) {
-		if ((dict.$ === 'RBNode_elm_builtin') && (dict.d.$ === 'RBNode_elm_builtin')) {
+		if ((dict.$ === -1) && (dict.d.$ === -1)) {
 			var left = dict.d;
 			var $temp$dict = left;
 			dict = $temp$dict;
@@ -6319,8 +6331,8 @@ var elm$core$Dict$getMin = function (dict) {
 	}
 };
 var elm$core$Dict$moveRedLeft = function (dict) {
-	if (((dict.$ === 'RBNode_elm_builtin') && (dict.d.$ === 'RBNode_elm_builtin')) && (dict.e.$ === 'RBNode_elm_builtin')) {
-		if ((dict.e.d.$ === 'RBNode_elm_builtin') && (dict.e.d.a.$ === 'Red')) {
+	if (((dict.$ === -1) && (dict.d.$ === -1)) && (dict.e.$ === -1)) {
+		if ((dict.e.d.$ === -1) && (!dict.e.d.a)) {
 			var clr = dict.a;
 			var k = dict.b;
 			var v = dict.c;
@@ -6343,17 +6355,17 @@ var elm$core$Dict$moveRedLeft = function (dict) {
 			var rRight = _n2.e;
 			return A5(
 				elm$core$Dict$RBNode_elm_builtin,
-				elm$core$Dict$Red,
+				0,
 				rlK,
 				rlV,
 				A5(
 					elm$core$Dict$RBNode_elm_builtin,
-					elm$core$Dict$Black,
+					1,
 					k,
 					v,
-					A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Red, lK, lV, lLeft, lRight),
+					A5(elm$core$Dict$RBNode_elm_builtin, 0, lK, lV, lLeft, lRight),
 					rlL),
-				A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Black, rK, rV, rlR, rRight));
+				A5(elm$core$Dict$RBNode_elm_builtin, 1, rK, rV, rlR, rRight));
 		} else {
 			var clr = dict.a;
 			var k = dict.b;
@@ -6370,22 +6382,22 @@ var elm$core$Dict$moveRedLeft = function (dict) {
 			var rV = _n5.c;
 			var rLeft = _n5.d;
 			var rRight = _n5.e;
-			if (clr.$ === 'Black') {
+			if (clr === 1) {
 				return A5(
 					elm$core$Dict$RBNode_elm_builtin,
-					elm$core$Dict$Black,
+					1,
 					k,
 					v,
-					A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Red, lK, lV, lLeft, lRight),
-					A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Red, rK, rV, rLeft, rRight));
+					A5(elm$core$Dict$RBNode_elm_builtin, 0, lK, lV, lLeft, lRight),
+					A5(elm$core$Dict$RBNode_elm_builtin, 0, rK, rV, rLeft, rRight));
 			} else {
 				return A5(
 					elm$core$Dict$RBNode_elm_builtin,
-					elm$core$Dict$Black,
+					1,
 					k,
 					v,
-					A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Red, lK, lV, lLeft, lRight),
-					A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Red, rK, rV, rLeft, rRight));
+					A5(elm$core$Dict$RBNode_elm_builtin, 0, lK, lV, lLeft, lRight),
+					A5(elm$core$Dict$RBNode_elm_builtin, 0, rK, rV, rLeft, rRight));
 			}
 		}
 	} else {
@@ -6393,8 +6405,8 @@ var elm$core$Dict$moveRedLeft = function (dict) {
 	}
 };
 var elm$core$Dict$moveRedRight = function (dict) {
-	if (((dict.$ === 'RBNode_elm_builtin') && (dict.d.$ === 'RBNode_elm_builtin')) && (dict.e.$ === 'RBNode_elm_builtin')) {
-		if ((dict.d.d.$ === 'RBNode_elm_builtin') && (dict.d.d.a.$ === 'Red')) {
+	if (((dict.$ === -1) && (dict.d.$ === -1)) && (dict.e.$ === -1)) {
+		if ((dict.d.d.$ === -1) && (!dict.d.d.a)) {
 			var clr = dict.a;
 			var k = dict.b;
 			var v = dict.c;
@@ -6417,17 +6429,17 @@ var elm$core$Dict$moveRedRight = function (dict) {
 			var rRight = _n4.e;
 			return A5(
 				elm$core$Dict$RBNode_elm_builtin,
-				elm$core$Dict$Red,
+				0,
 				lK,
 				lV,
-				A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Black, llK, llV, llLeft, llRight),
+				A5(elm$core$Dict$RBNode_elm_builtin, 1, llK, llV, llLeft, llRight),
 				A5(
 					elm$core$Dict$RBNode_elm_builtin,
-					elm$core$Dict$Black,
+					1,
 					k,
 					v,
 					lRight,
-					A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Red, rK, rV, rLeft, rRight)));
+					A5(elm$core$Dict$RBNode_elm_builtin, 0, rK, rV, rLeft, rRight)));
 		} else {
 			var clr = dict.a;
 			var k = dict.b;
@@ -6444,22 +6456,22 @@ var elm$core$Dict$moveRedRight = function (dict) {
 			var rV = _n6.c;
 			var rLeft = _n6.d;
 			var rRight = _n6.e;
-			if (clr.$ === 'Black') {
+			if (clr === 1) {
 				return A5(
 					elm$core$Dict$RBNode_elm_builtin,
-					elm$core$Dict$Black,
+					1,
 					k,
 					v,
-					A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Red, lK, lV, lLeft, lRight),
-					A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Red, rK, rV, rLeft, rRight));
+					A5(elm$core$Dict$RBNode_elm_builtin, 0, lK, lV, lLeft, lRight),
+					A5(elm$core$Dict$RBNode_elm_builtin, 0, rK, rV, rLeft, rRight));
 			} else {
 				return A5(
 					elm$core$Dict$RBNode_elm_builtin,
-					elm$core$Dict$Black,
+					1,
 					k,
 					v,
-					A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Red, lK, lV, lLeft, lRight),
-					A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Red, rK, rV, rLeft, rRight));
+					A5(elm$core$Dict$RBNode_elm_builtin, 0, lK, lV, lLeft, lRight),
+					A5(elm$core$Dict$RBNode_elm_builtin, 0, rK, rV, rLeft, rRight));
 			}
 		}
 	} else {
@@ -6468,7 +6480,7 @@ var elm$core$Dict$moveRedRight = function (dict) {
 };
 var elm$core$Dict$removeHelpPrepEQGT = F7(
 	function (targetKey, dict, color, key, value, left, right) {
-		if ((left.$ === 'RBNode_elm_builtin') && (left.a.$ === 'Red')) {
+		if ((left.$ === -1) && (!left.a)) {
 			var _n1 = left.a;
 			var lK = left.b;
 			var lV = left.c;
@@ -6480,13 +6492,13 @@ var elm$core$Dict$removeHelpPrepEQGT = F7(
 				lK,
 				lV,
 				lLeft,
-				A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Red, key, value, lRight, right));
+				A5(elm$core$Dict$RBNode_elm_builtin, 0, key, value, lRight, right));
 		} else {
 			_n2$2:
 			while (true) {
-				if ((right.$ === 'RBNode_elm_builtin') && (right.a.$ === 'Black')) {
-					if (right.d.$ === 'RBNode_elm_builtin') {
-						if (right.d.a.$ === 'Black') {
+				if ((right.$ === -1) && (right.a === 1)) {
+					if (right.d.$ === -1) {
+						if (right.d.a === 1) {
 							var _n3 = right.a;
 							var _n4 = right.d;
 							var _n5 = _n4.a;
@@ -6507,7 +6519,7 @@ var elm$core$Dict$removeHelpPrepEQGT = F7(
 		}
 	});
 var elm$core$Dict$removeMin = function (dict) {
-	if ((dict.$ === 'RBNode_elm_builtin') && (dict.d.$ === 'RBNode_elm_builtin')) {
+	if ((dict.$ === -1) && (dict.d.$ === -1)) {
 		var color = dict.a;
 		var key = dict.b;
 		var value = dict.c;
@@ -6515,8 +6527,8 @@ var elm$core$Dict$removeMin = function (dict) {
 		var lColor = left.a;
 		var lLeft = left.d;
 		var right = dict.e;
-		if (lColor.$ === 'Black') {
-			if ((lLeft.$ === 'RBNode_elm_builtin') && (lLeft.a.$ === 'Red')) {
+		if (lColor === 1) {
+			if ((lLeft.$ === -1) && (!lLeft.a)) {
 				var _n3 = lLeft.a;
 				return A5(
 					elm$core$Dict$RBNode_elm_builtin,
@@ -6527,7 +6539,7 @@ var elm$core$Dict$removeMin = function (dict) {
 					right);
 			} else {
 				var _n4 = elm$core$Dict$moveRedLeft(dict);
-				if (_n4.$ === 'RBNode_elm_builtin') {
+				if (_n4.$ === -1) {
 					var nColor = _n4.a;
 					var nKey = _n4.b;
 					var nValue = _n4.c;
@@ -6559,7 +6571,7 @@ var elm$core$Dict$removeMin = function (dict) {
 };
 var elm$core$Dict$removeHelp = F2(
 	function (targetKey, dict) {
-		if (dict.$ === 'RBEmpty_elm_builtin') {
+		if (dict.$ === -2) {
 			return elm$core$Dict$RBEmpty_elm_builtin;
 		} else {
 			var color = dict.a;
@@ -6568,10 +6580,10 @@ var elm$core$Dict$removeHelp = F2(
 			var left = dict.d;
 			var right = dict.e;
 			if (_Utils_cmp(targetKey, key) < 0) {
-				if ((left.$ === 'RBNode_elm_builtin') && (left.a.$ === 'Black')) {
+				if ((left.$ === -1) && (left.a === 1)) {
 					var _n4 = left.a;
 					var lLeft = left.d;
-					if ((lLeft.$ === 'RBNode_elm_builtin') && (lLeft.a.$ === 'Red')) {
+					if ((lLeft.$ === -1) && (!lLeft.a)) {
 						var _n6 = lLeft.a;
 						return A5(
 							elm$core$Dict$RBNode_elm_builtin,
@@ -6582,7 +6594,7 @@ var elm$core$Dict$removeHelp = F2(
 							right);
 					} else {
 						var _n7 = elm$core$Dict$moveRedLeft(dict);
-						if (_n7.$ === 'RBNode_elm_builtin') {
+						if (_n7.$ === -1) {
 							var nColor = _n7.a;
 							var nKey = _n7.b;
 							var nValue = _n7.c;
@@ -6618,7 +6630,7 @@ var elm$core$Dict$removeHelp = F2(
 	});
 var elm$core$Dict$removeHelpEQGT = F2(
 	function (targetKey, dict) {
-		if (dict.$ === 'RBNode_elm_builtin') {
+		if (dict.$ === -1) {
 			var color = dict.a;
 			var key = dict.b;
 			var value = dict.c;
@@ -6626,7 +6638,7 @@ var elm$core$Dict$removeHelpEQGT = F2(
 			var right = dict.e;
 			if (_Utils_eq(targetKey, key)) {
 				var _n1 = elm$core$Dict$getMin(right);
-				if (_n1.$ === 'RBNode_elm_builtin') {
+				if (_n1.$ === -1) {
 					var minKey = _n1.b;
 					var minValue = _n1.c;
 					return A5(
@@ -6655,13 +6667,13 @@ var elm$core$Dict$removeHelpEQGT = F2(
 var elm$core$Dict$remove = F2(
 	function (key, dict) {
 		var _n0 = A2(elm$core$Dict$removeHelp, key, dict);
-		if ((_n0.$ === 'RBNode_elm_builtin') && (_n0.a.$ === 'Red')) {
+		if ((_n0.$ === -1) && (!_n0.a)) {
 			var _n1 = _n0.a;
 			var k = _n0.b;
 			var v = _n0.c;
 			var l = _n0.d;
 			var r = _n0.e;
-			return A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Black, k, v, l, r);
+			return A5(elm$core$Dict$RBNode_elm_builtin, 1, k, v, l, r);
 		} else {
 			var x = _n0;
 			return x;
@@ -6671,7 +6683,7 @@ var elm$core$Dict$update = F3(
 	function (targetKey, alter, dictionary) {
 		var _n0 = alter(
 			A2(elm$core$Dict$get, targetKey, dictionary));
-		if (_n0.$ === 'Just') {
+		if (!_n0.$) {
 			var value = _n0.a;
 			return A3(elm$core$Dict$insert, targetKey, value, dictionary);
 		} else {
@@ -6680,7 +6692,7 @@ var elm$core$Dict$update = F3(
 	});
 var elm$core$Maybe$map = F2(
 	function (f, maybe) {
-		if (maybe.$ === 'Just') {
+		if (!maybe.$) {
 			var value = maybe.a;
 			return elm$core$Maybe$Just(
 				f(value));
@@ -6689,14 +6701,14 @@ var elm$core$Maybe$map = F2(
 		}
 	});
 var author$project$Main$getLabels = function (model) {
-	var _n0 = model.drag;
-	if (_n0.$ === 'Nothing') {
-		return model.labels;
+	var _n0 = model.I;
+	if (_n0.$ === 1) {
+		return model.o;
 	} else {
-		var obj = _n0.a.obj;
-		var start = _n0.a.start;
-		var current = _n0.a.current;
-		if (obj.$ === 'Label') {
+		var obj = _n0.a.af;
+		var start = _n0.a.U;
+		var current = _n0.a.aq;
+		if (obj.$ === 1) {
 			var label = obj.a;
 			return A3(
 				elm$core$Dict$update,
@@ -6705,76 +6717,76 @@ var author$project$Main$getLabels = function (model) {
 					function (pos) {
 						return A4(author$project$Main$translatePos, model, pos, start, current);
 					}),
-				model.labels);
+				model.o);
 		} else {
-			return model.labels;
+			return model.o;
 		}
 	}
 };
 var author$project$Main$Label = function (a) {
-	return {$: 'Label', a: a};
+	return {$: 1, a: a};
 };
 var author$project$Main$P = function (a) {
-	return {$: 'P', a: a};
+	return {$: 0, a: a};
 };
 var author$project$Main$twoPointLine = function (twoPos) {
-	var y2 = twoPos.b.y;
-	var y1 = twoPos.a.y;
-	var x2 = twoPos.b.x;
-	var x1 = twoPos.a.x;
+	var y2 = twoPos.e.b;
+	var y1 = twoPos.d.b;
+	var x2 = twoPos.e.a;
+	var x1 = twoPos.d.a;
 	var s = x1 - x2;
 	var r = y2 - y1;
 	var d = (x1 * y2) - (x2 * y1);
-	return {a: r, b: s, c: d};
+	return {d: r, e: s, B: d};
 };
 var author$project$Main$intersectionL = F2(
 	function (twoPos1, twoPos2) {
 		var l2 = author$project$Main$twoPointLine(twoPos2);
-		var r2 = l2.a;
-		var s2 = l2.b;
+		var r2 = l2.d;
+		var s2 = l2.e;
 		var l1 = author$project$Main$twoPointLine(twoPos1);
-		var r1 = l1.a;
-		var s1 = l1.b;
+		var r1 = l1.d;
+		var s1 = l1.e;
 		var dd = (r1 * s2) - (s1 * r2);
-		var d2 = l2.c;
-		var d1 = l1.c;
+		var d2 = l2.B;
+		var d1 = l1.B;
 		var x = ((d1 * s2) - (d2 * s1)) / dd;
 		var y = ((r1 * d2) - (r2 * d1)) / dd;
-		return {x: x, y: y};
+		return {a: x, b: y};
 	});
 var author$project$Main$minusPos = F2(
 	function (pos1, pos2) {
-		return {x: pos1.x - pos2.x, y: pos1.y - pos2.y};
+		return {a: pos1.a - pos2.a, b: pos1.b - pos2.b};
 	});
 var author$project$Main$plusPos = F2(
 	function (pos1, pos2) {
-		return {x: pos1.x + pos2.x, y: pos1.y + pos2.y};
+		return {a: pos1.a + pos2.a, b: pos1.b + pos2.b};
 	});
 var author$project$Main$scalePos = F2(
 	function (scale, pos) {
-		return {x: scale * pos.x, y: scale * pos.y};
+		return {a: scale * pos.a, b: scale * pos.b};
 	});
 var author$project$Main$midperpend = function (twoPos) {
-	var dir = A2(author$project$Main$minusPos, twoPos.a, twoPos.b);
-	var perdir = {x: -dir.y, y: dir.x};
+	var dir = A2(author$project$Main$minusPos, twoPos.d, twoPos.e);
+	var perdir = {a: -dir.b, b: dir.a};
 	var center = A2(
 		author$project$Main$scalePos,
 		0.5,
-		A2(author$project$Main$plusPos, twoPos.a, twoPos.b));
+		A2(author$project$Main$plusPos, twoPos.d, twoPos.e));
 	var perPos = A2(author$project$Main$plusPos, center, perdir);
-	return {a: center, b: perPos};
+	return {d: center, e: perPos};
 };
 var elm$core$Basics$sqrt = _Basics_sqrt;
 var author$project$Main$circle3P = F3(
 	function (a, b, c) {
-		var twoPosac = {a: a, b: c};
-		var twoPosab = {a: a, b: b};
+		var twoPosac = {d: a, e: c};
+		var twoPosab = {d: a, e: b};
 		var midperac = author$project$Main$midperpend(twoPosac);
 		var midperab = author$project$Main$midperpend(twoPosab);
 		var center = A2(author$project$Main$intersectionL, midperab, midperac);
 		var dr = A2(author$project$Main$minusPos, a, center);
-		var radius = elm$core$Basics$sqrt((dr.x * dr.x) + (dr.y * dr.y));
-		return {center: center, radius: radius};
+		var radius = elm$core$Basics$sqrt((dr.a * dr.a) + (dr.b * dr.b));
+		return {C: center, F: radius};
 	});
 var author$project$Main$circleNameToCircle = function (clabel) {
 	var _n0 = elm$core$String$length(clabel);
@@ -6784,47 +6796,42 @@ var author$project$Main$circleNameToCircle = function (clabel) {
 			var a = A3(elm$core$String$slice, 7, 8, clabel);
 			return elm$core$Maybe$Just(
 				author$project$Main$Cir2(
-					{a: a, b: b}));
+					{d: a, e: b}));
 		case 10:
 			var c = A3(elm$core$String$slice, 9, 10, clabel);
 			var b = A3(elm$core$String$slice, 8, 9, clabel);
 			var a = A3(elm$core$String$slice, 7, 8, clabel);
 			return elm$core$Maybe$Just(
 				author$project$Main$Cir3(
-					{a: a, b: b, c: c}));
+					{d: a, e: b, B: c}));
 		default:
 			return elm$core$Maybe$Nothing;
 	}
 };
-var author$project$Main$defaultSta = {dragging: false, labelDragging: false};
+var author$project$Main$defaultSta = {v: false, y: false};
 var author$project$Main$footPoint = F2(
 	function (twoP, pos) {
-		var vap = A2(author$project$Main$minusPos, pos, twoP.a);
-		var vab = A2(author$project$Main$minusPos, twoP.b, twoP.a);
-		var len = (vab.x * vab.x) + (vab.y * vab.y);
-		var dot = (vap.x * vab.x) + (vap.y * vab.y);
+		var vap = A2(author$project$Main$minusPos, pos, twoP.d);
+		var vab = A2(author$project$Main$minusPos, twoP.e, twoP.d);
+		var len = (vab.a * vab.a) + (vab.b * vab.b);
+		var dot = (vap.a * vab.a) + (vap.b * vab.b);
 		var scale = dot / len;
 		return A2(
 			author$project$Main$plusPos,
-			twoP.a,
+			twoP.d,
 			A2(author$project$Main$scalePos, scale, vab));
 	});
-var elm$core$Debug$todo = _Debug_todo;
-var author$project$Main$fromJust = function (x) {
-	if (x.$ === 'Just') {
-		var y = x.a;
-		return y;
-	} else {
-		return _Debug_todo(
-			'Main',
-			{
-				start: {line: 1140, column: 29},
-				end: {line: 1140, column: 39}
-			})('error: fromJust Nothing');
-	}
-};
+var author$project$Main$fromJust = F2(
+	function (na, x) {
+		if (!x.$) {
+			var y = x.a;
+			return y;
+		} else {
+			return na;
+		}
+	});
 var author$project$Main$getCircles = function (model) {
-	return model.circles;
+	return model.r;
 };
 var author$project$Main$getLabelPos = F2(
 	function (model, label) {
@@ -6832,33 +6839,33 @@ var author$project$Main$getLabelPos = F2(
 		return A2(elm$core$Dict$get, label, labels);
 	});
 var author$project$Main$getLines = function (model) {
-	return model.lines;
+	return model.s;
 };
 var elm$core$Basics$pow = _Basics_pow;
 var author$project$Main$intersectionCL = F3(
 	function (cinfo, l, isPositive) {
-		var r = cinfo.radius;
-		var o = cinfo.center;
-		var c = l.c;
-		var b = l.b;
-		var a = l.a;
-		var aa = (((a * a) * o.y) + (b * c)) - ((a * b) * o.x);
+		var r = cinfo.F;
+		var o = cinfo.C;
+		var c = l.B;
+		var b = l.e;
+		var a = l.d;
+		var aa = (((a * a) * o.b) + (b * c)) - ((a * b) * o.a);
 		var d = elm$core$Basics$sqrt(
-			A2(elm$core$Basics$pow, (((a * b) * o.x) - (b * c)) - ((a * a) * o.y), 2) - ((A2(elm$core$Basics$pow, a, 2) + A2(elm$core$Basics$pow, b, 2)) * ((A2(elm$core$Basics$pow, c, 2) - (((2 * a) * c) * o.x)) + (A2(elm$core$Basics$pow, a, 2) * ((A2(elm$core$Basics$pow, o.x, 2) + A2(elm$core$Basics$pow, o.y, 2)) - A2(elm$core$Basics$pow, r, 2))))));
+			A2(elm$core$Basics$pow, (((a * b) * o.a) - (b * c)) - ((a * a) * o.b), 2) - ((A2(elm$core$Basics$pow, a, 2) + A2(elm$core$Basics$pow, b, 2)) * ((A2(elm$core$Basics$pow, c, 2) - (((2 * a) * c) * o.a)) + (A2(elm$core$Basics$pow, a, 2) * ((A2(elm$core$Basics$pow, o.a, 2) + A2(elm$core$Basics$pow, o.b, 2)) - A2(elm$core$Basics$pow, r, 2))))));
 		var y = isPositive ? ((aa + d) / (A2(elm$core$Basics$pow, a, 2) + A2(elm$core$Basics$pow, b, 2))) : ((aa - d) / (A2(elm$core$Basics$pow, a, 2) + A2(elm$core$Basics$pow, b, 2)));
 		var x = (c - (b * y)) / a;
-		return {x: x, y: y};
+		return {a: x, b: y};
 	});
 var author$project$Main$intersectionC = F3(
 	function (c1, c2, isPositive) {
-		var c2r = c2.radius;
-		var c2o = c2.center;
-		var c1r = c1.radius;
-		var c1o = c1.center;
-		var c = ((((((c2r * c2r) - (c1r * c1r)) + (c1o.x * c1o.x)) + (c1o.y * c1o.y)) - (c2o.x * c2o.x)) - (c2o.y * c2o.y)) / 2;
-		var b = c1o.y - c2o.y;
-		var a = c1o.x - c2o.x;
-		var l = {a: a, b: b, c: c};
+		var c2r = c2.F;
+		var c2o = c2.C;
+		var c1r = c1.F;
+		var c1o = c1.C;
+		var c = ((((((c2r * c2r) - (c1r * c1r)) + (c1o.a * c1o.a)) + (c1o.b * c1o.b)) - (c2o.a * c2o.a)) - (c2o.b * c2o.b)) / 2;
+		var b = c1o.b - c2o.b;
+		var a = c1o.a - c2o.a;
+		var l = {d: a, e: b, B: c};
 		return A3(author$project$Main$intersectionCL, c1, l, isPositive);
 	});
 var author$project$Main$lineNameToLine = function (l) {
@@ -6867,19 +6874,20 @@ var author$project$Main$lineNameToLine = function (l) {
 		var p2 = A3(elm$core$String$slice, 1, 2, l);
 		var p1 = A3(elm$core$String$slice, 0, 1, l);
 		return elm$core$Maybe$Just(
-			author$project$Main$LineAB(
-				{a: p1, b: p2}));
+			{d: p1, e: p2});
 	} else {
 		return elm$core$Maybe$Nothing;
 	}
 };
+var author$project$Main$nPos = {a: 0 / 0, b: 0 / 0};
+var author$project$Main$nPoint = author$project$Main$FP(author$project$Main$nPos);
 var elm$core$Basics$atan2 = _Basics_atan2;
 var elm$core$Basics$cos = _Basics_cos;
 var elm$core$Basics$sin = _Basics_sin;
 var elm$core$Dict$member = F2(
 	function (key, dict) {
 		var _n0 = A2(elm$core$Dict$get, key, dict);
-		if (_n0.$ === 'Just') {
+		if (!_n0.$) {
 			return true;
 		} else {
 			return false;
@@ -6889,58 +6897,58 @@ var author$project$Main$getC = F2(
 	function (model, clabel) {
 		var circles = author$project$Main$getCircles(model);
 		var circle = A2(elm$core$Dict$member, clabel, circles) ? A2(elm$core$Dict$get, clabel, circles) : author$project$Main$circleNameToCircle(clabel);
-		if (circle.$ === 'Just') {
-			if (circle.a.$ === 'Cir2') {
-				var a = circle.a.a.a;
-				var b = circle.a.a.b;
+		if (!circle.$) {
+			if (!circle.a.$) {
+				var a = circle.a.a.d;
+				var b = circle.a.a.e;
 				var infob = A2(author$project$Main$getL, model, b);
-				var posb = infob.twoPos;
+				var posb = infob.A;
 				var infoa = A2(author$project$Main$getP, model, a);
-				var posa = infoa.pos;
-				var dpos = A2(author$project$Main$minusPos, posb.a, posb.b);
-				var r = elm$core$Basics$sqrt((dpos.x * dpos.x) + (dpos.y * dpos.y));
+				var posa = infoa.m;
+				var dpos = A2(author$project$Main$minusPos, posb.d, posb.e);
+				var r = elm$core$Basics$sqrt((dpos.a * dpos.a) + (dpos.b * dpos.b));
 				var cpos = posa;
-				return {center: cpos, radius: r};
+				return {C: cpos, F: r};
 			} else {
-				var a = circle.a.a.a;
-				var b = circle.a.a.b;
-				var c = circle.a.a.c;
+				var a = circle.a.a.d;
+				var b = circle.a.a.e;
+				var c = circle.a.a.B;
 				var infoc = A2(author$project$Main$getP, model, c);
-				var posc = infoc.pos;
+				var posc = infoc.m;
 				var infob = A2(author$project$Main$getP, model, b);
-				var posb = infob.pos;
+				var posb = infob.m;
 				var infoa = A2(author$project$Main$getP, model, a);
-				var posa = infoa.pos;
+				var posa = infoa.m;
 				return A3(author$project$Main$circle3P, posa, posb, posc);
 			}
 		} else {
 			return {
-				center: {x: 0, y: 0},
-				radius: 0
+				C: {a: 0, b: 0},
+				F: 0
 			};
 		}
 	});
 var author$project$Main$getL = F2(
 	function (model, llabel) {
-		var state = A2(elm$core$Dict$get, llabel, model.lstates);
+		var state = A2(elm$core$Dict$get, llabel, model.p);
 		var lines = author$project$Main$getLines(model);
 		var line = A2(elm$core$Dict$member, llabel, lines) ? A2(elm$core$Dict$get, llabel, lines) : author$project$Main$lineNameToLine(llabel);
-		if (line.$ === 'Just') {
-			var a = line.a.a.a;
-			var b = line.a.a.b;
+		if (!line.$) {
+			var a = line.a.d;
+			var b = line.a.e;
 			return {
-				extraState: state,
-				twoPos: {
-					a: A2(author$project$Main$getP, model, a).pos,
-					b: A2(author$project$Main$getP, model, b).pos
+				w: state,
+				A: {
+					d: A2(author$project$Main$getP, model, a).m,
+					e: A2(author$project$Main$getP, model, b).m
 				}
 			};
 		} else {
 			return {
-				extraState: elm$core$Maybe$Nothing,
-				twoPos: {
-					a: {x: 0, y: 0},
-					b: {x: 0, y: 0}
+				w: elm$core$Maybe$Nothing,
+				A: {
+					d: {a: 0, b: 0},
+					e: {a: 0, b: 0}
 				}
 			};
 		}
@@ -6950,157 +6958,157 @@ var author$project$Main$getP = F2(
 		var point = A2(author$project$Main$getPoint, model, plabel);
 		var obj = author$project$Main$P(plabel);
 		var labelObj = author$project$Main$Label(plabel);
-		var extraSta = A2(elm$core$Dict$get, plabel, model.pstates);
+		var extraSta = A2(elm$core$Dict$get, plabel, model.u);
 		var dragObj = A2(
 			elm$core$Maybe$map,
 			function ($) {
-				return $.obj;
+				return $.af;
 			},
-			model.drag);
+			model.I);
 		switch (point.$) {
-			case 'FP':
+			case 0:
 				var pos = point.a;
 				return {
-					extraState: extraSta,
-					labelPos: A2(author$project$Main$getLabelPos, model, plabel),
-					pos: pos,
-					state: _Utils_update(
+					w: extraSta,
+					D: A2(author$project$Main$getLabelPos, model, plabel),
+					m: pos,
+					G: _Utils_update(
 						author$project$Main$defaultSta,
 						{
-							dragging: _Utils_eq(
+							v: _Utils_eq(
 								elm$core$Maybe$Just(obj),
-								model.mOver) || _Utils_eq(
+								model.Y) || _Utils_eq(
 								elm$core$Maybe$Just(obj),
 								dragObj),
-							labelDragging: _Utils_eq(
+							y: _Utils_eq(
 								elm$core$Maybe$Just(labelObj),
 								dragObj)
 						})
 				};
-			case 'FPOL':
+			case 2:
 				var llabel = point.a;
 				var pos = point.b;
 				var actualPos = A2(
 					author$project$Main$footPoint,
-					A2(author$project$Main$getL, model, llabel).twoPos,
+					A2(author$project$Main$getL, model, llabel).A,
 					pos);
 				return {
-					extraState: extraSta,
-					labelPos: A2(author$project$Main$getLabelPos, model, plabel),
-					pos: actualPos,
-					state: _Utils_update(
+					w: extraSta,
+					D: A2(author$project$Main$getLabelPos, model, plabel),
+					m: actualPos,
+					G: _Utils_update(
 						author$project$Main$defaultSta,
 						{
-							dragging: _Utils_eq(
+							v: _Utils_eq(
 								elm$core$Maybe$Just(obj),
-								model.mOver) || _Utils_eq(
+								model.Y) || _Utils_eq(
 								elm$core$Maybe$Just(obj),
 								dragObj),
-							labelDragging: _Utils_eq(
+							y: _Utils_eq(
 								elm$core$Maybe$Just(labelObj),
 								dragObj)
 						})
 				};
-			case 'POL':
+			case 1:
 				var llabel = point.a;
 				var f1 = point.b;
 				var f2 = point.c;
 				var ratio = f1 / (f1 + f2);
 				var linfo = A2(author$project$Main$getL, model, llabel);
-				var twoPos = linfo.twoPos;
-				var posa = twoPos.a;
-				var posb = twoPos.b;
+				var twoPos = linfo.A;
+				var posa = twoPos.d;
+				var posb = twoPos.e;
 				var vab = A2(author$project$Main$minusPos, posb, posa);
 				return {
-					extraState: extraSta,
-					labelPos: A2(author$project$Main$getLabelPos, model, plabel),
-					pos: A2(
+					w: extraSta,
+					D: A2(author$project$Main$getLabelPos, model, plabel),
+					m: A2(
 						author$project$Main$plusPos,
 						posa,
 						A2(author$project$Main$scalePos, ratio, vab)),
-					state: _Utils_update(
+					G: _Utils_update(
 						author$project$Main$defaultSta,
 						{
-							dragging: false,
-							labelDragging: _Utils_eq(
+							v: false,
+							y: _Utils_eq(
 								elm$core$Maybe$Just(labelObj),
 								dragObj)
 						})
 				};
-			case 'P2L':
+			case 3:
 				var l1 = point.a;
 				var l2 = point.b;
-				var twoPos2 = A2(author$project$Main$getL, model, l2).twoPos;
-				var twoPos1 = A2(author$project$Main$getL, model, l1).twoPos;
+				var twoPos2 = A2(author$project$Main$getL, model, l2).A;
+				var twoPos1 = A2(author$project$Main$getL, model, l1).A;
 				return {
-					extraState: extraSta,
-					labelPos: A2(author$project$Main$getLabelPos, model, plabel),
-					pos: A2(author$project$Main$intersectionL, twoPos1, twoPos2),
-					state: _Utils_update(
+					w: extraSta,
+					D: A2(author$project$Main$getLabelPos, model, plabel),
+					m: A2(author$project$Main$intersectionL, twoPos1, twoPos2),
+					G: _Utils_update(
 						author$project$Main$defaultSta,
 						{
-							dragging: false,
-							labelDragging: _Utils_eq(
+							v: false,
+							y: _Utils_eq(
 								elm$core$Maybe$Just(labelObj),
 								dragObj)
 						})
 				};
-			case 'POLP':
+			case 4:
 				var pl = point.a;
 				var ll = point.b;
 				var twoP = A2(author$project$Main$getL, model, ll);
 				var pinfo = A2(author$project$Main$getP, model, pl);
 				return {
-					extraState: extraSta,
-					labelPos: A2(author$project$Main$getLabelPos, model, plabel),
-					pos: A2(author$project$Main$footPoint, twoP.twoPos, pinfo.pos),
-					state: _Utils_update(
+					w: extraSta,
+					D: A2(author$project$Main$getLabelPos, model, plabel),
+					m: A2(author$project$Main$footPoint, twoP.A, pinfo.m),
+					G: _Utils_update(
 						author$project$Main$defaultSta,
 						{
-							dragging: false,
-							labelDragging: _Utils_eq(
+							v: false,
+							y: _Utils_eq(
 								elm$core$Maybe$Just(labelObj),
 								dragObj)
 						})
 				};
-			case 'P2C':
+			case 5:
 				var c1 = point.a;
 				var c2 = point.b;
 				var isPositive = point.c;
 				var c2info = A2(author$project$Main$getC, model, c2);
 				var c1info = A2(author$project$Main$getC, model, c1);
 				return {
-					extraState: extraSta,
-					labelPos: A2(author$project$Main$getLabelPos, model, plabel),
-					pos: A3(author$project$Main$intersectionC, c1info, c2info, isPositive),
-					state: _Utils_update(
+					w: extraSta,
+					D: A2(author$project$Main$getLabelPos, model, plabel),
+					m: A3(author$project$Main$intersectionC, c1info, c2info, isPositive),
+					G: _Utils_update(
 						author$project$Main$defaultSta,
 						{
-							dragging: false,
-							labelDragging: _Utils_eq(
+							v: false,
+							y: _Utils_eq(
 								elm$core$Maybe$Just(labelObj),
 								dragObj)
 						})
 				};
-			case 'PCL':
+			case 6:
 				var c = point.a;
 				var l = point.b;
 				var isPositive = point.c;
 				var linfo = A2(author$project$Main$getL, model, l);
 				var cinfo = A2(author$project$Main$getC, model, c);
 				return {
-					extraState: extraSta,
-					labelPos: A2(author$project$Main$getLabelPos, model, plabel),
-					pos: A3(
+					w: extraSta,
+					D: A2(author$project$Main$getLabelPos, model, plabel),
+					m: A3(
 						author$project$Main$intersectionCL,
 						cinfo,
-						author$project$Main$twoPointLine(linfo.twoPos),
+						author$project$Main$twoPointLine(linfo.A),
 						isPositive),
-					state: _Utils_update(
+					G: _Utils_update(
 						author$project$Main$defaultSta,
 						{
-							dragging: false,
-							labelDragging: _Utils_eq(
+							v: false,
+							y: _Utils_eq(
 								elm$core$Maybe$Just(labelObj),
 								dragObj)
 						})
@@ -7109,30 +7117,30 @@ var author$project$Main$getP = F2(
 				var clabel = point.a;
 				var pos = point.b;
 				var c = A2(author$project$Main$getC, model, clabel);
-				var center = c.center;
+				var center = c.C;
 				var d = A2(author$project$Main$minusPos, pos, center);
-				var r = c.radius;
-				var angle = A2(elm$core$Basics$atan2, d.y, d.x);
+				var r = c.F;
+				var angle = A2(elm$core$Basics$atan2, d.b, d.a);
 				var actualPos = A2(
 					author$project$Main$plusPos,
 					center,
 					{
-						x: r * elm$core$Basics$cos(angle),
-						y: r * elm$core$Basics$sin(angle)
+						a: r * elm$core$Basics$cos(angle),
+						b: r * elm$core$Basics$sin(angle)
 					});
 				return {
-					extraState: extraSta,
-					labelPos: A2(author$project$Main$getLabelPos, model, plabel),
-					pos: actualPos,
-					state: _Utils_update(
+					w: extraSta,
+					D: A2(author$project$Main$getLabelPos, model, plabel),
+					m: actualPos,
+					G: _Utils_update(
 						author$project$Main$defaultSta,
 						{
-							dragging: _Utils_eq(
+							v: _Utils_eq(
 								elm$core$Maybe$Just(obj),
-								model.mOver) || _Utils_eq(
+								model.Y) || _Utils_eq(
 								elm$core$Maybe$Just(obj),
 								dragObj),
-							labelDragging: _Utils_eq(
+							y: _Utils_eq(
 								elm$core$Maybe$Just(labelObj),
 								dragObj)
 						})
@@ -7141,47 +7149,49 @@ var author$project$Main$getP = F2(
 	});
 var author$project$Main$getPoint = F2(
 	function (model, plabel) {
-		var point = author$project$Main$fromJust(
-			A2(elm$core$Dict$get, plabel, model.points));
-		var _n0 = model.drag;
-		if (_n0.$ === 'Nothing') {
+		var point = A2(
+			author$project$Main$fromJust,
+			author$project$Main$nPoint,
+			A2(elm$core$Dict$get, plabel, model.i));
+		var _n0 = model.I;
+		if (_n0.$ === 1) {
 			return point;
 		} else {
-			var obj = _n0.a.obj;
-			var start = _n0.a.start;
-			var current = _n0.a.current;
+			var obj = _n0.a.af;
+			var start = _n0.a.U;
+			var current = _n0.a.aq;
 			if (_Utils_eq(
 				obj,
 				author$project$Main$P(plabel))) {
 				switch (point.$) {
-					case 'FP':
+					case 0:
 						var pos = point.a;
 						return author$project$Main$FP(
 							A4(author$project$Main$translatePos, model, pos, start, current));
-					case 'FPOL':
+					case 2:
 						var llabel = point.a;
 						var pos = point.b;
 						var newPos = A4(author$project$Main$translatePos, model, pos, start, current);
 						var actualPos = A2(
 							author$project$Main$footPoint,
-							A2(author$project$Main$getL, model, llabel).twoPos,
+							A2(author$project$Main$getL, model, llabel).A,
 							newPos);
 						return A2(author$project$Main$FPOL, llabel, actualPos);
-					case 'FPOC':
+					case 7:
 						var clabel = point.a;
 						var pos = point.b;
 						var newPos = A4(author$project$Main$translatePos, model, pos, start, current);
 						var c = A2(author$project$Main$getC, model, clabel);
-						var center = c.center;
+						var center = c.C;
 						var d = A2(author$project$Main$minusPos, newPos, center);
-						var r = c.radius;
-						var angle = A2(elm$core$Basics$atan2, d.y, d.x);
+						var r = c.F;
+						var angle = A2(elm$core$Basics$atan2, d.b, d.a);
 						var actualPos = A2(
 							author$project$Main$plusPos,
 							center,
 							{
-								x: r * elm$core$Basics$cos(angle),
-								y: r * elm$core$Basics$sin(angle)
+								a: r * elm$core$Basics$cos(angle),
+								b: r * elm$core$Basics$sin(angle)
 							});
 						return A2(author$project$Main$FPOC, clabel, actualPos);
 					default:
@@ -7199,18 +7209,18 @@ var author$project$Main$getPoints = function (model) {
 			function (label, pold) {
 				return A2(author$project$Main$getPoint, model, label);
 			}),
-		model.points);
+		model.i);
 };
-var author$project$Main$defaultLSta = {dashed: false, hidden: false};
+var author$project$Main$defaultLSta = {H: false, l: false};
 var author$project$Main$mergeLstate = F2(
 	function (s1, s) {
-		if (s.$ === 'Nothing') {
+		if (s.$ === 1) {
 			return s1;
 		} else {
 			var s2 = s.a;
 			return _Utils_update(
 				author$project$Main$defaultLSta,
-				{dashed: s1.dashed || s2.dashed, hidden: s1.hidden || s2.hidden});
+				{H: s1.H || s2.H, l: s1.l || s2.l});
 		}
 	});
 var author$project$Main$mergeLstates = F2(
@@ -7228,16 +7238,16 @@ var author$project$Main$mergeLstates = F2(
 			s2,
 			s1);
 	});
-var author$project$Main$defaultPSta = {hidden: false};
+var author$project$Main$defaultPSta = {l: false};
 var author$project$Main$mergePstate = F2(
 	function (ps1, s) {
-		if (s.$ === 'Nothing') {
+		if (s.$ === 1) {
 			return ps1;
 		} else {
 			var ps2 = s.a;
 			return _Utils_update(
 				author$project$Main$defaultPSta,
-				{hidden: ps1.hidden || ps2.hidden});
+				{l: ps1.l || ps2.l});
 		}
 	});
 var author$project$Main$mergePstates = F2(
@@ -7260,12 +7270,13 @@ var author$project$Main$addObjs = F2(
 		return _Utils_update(
 			objs,
 			{
-				circles: A2(elm$core$Dict$union, objsAdded.circles, objs.circles),
-				lines: A2(elm$core$Dict$union, objsAdded.lines, objs.lines),
-				lstates: A2(author$project$Main$mergeLstates, objsAdded.lstates, objs.lstates),
-				points: A2(elm$core$Dict$union, objsAdded.points, objs.points),
-				prompt: elm$core$String$isEmpty(objsAdded.prompt) ? objs.prompt : (objs.prompt + ('\n' + objsAdded.prompt)),
-				pstates: A2(author$project$Main$mergePstates, objsAdded.pstates, objs.pstates)
+				r: A2(elm$core$Dict$union, objsAdded.r, objs.r),
+				s: A2(elm$core$Dict$union, objsAdded.s, objs.s),
+				p: A2(author$project$Main$mergeLstates, objsAdded.p, objs.p),
+				i: A2(elm$core$Dict$union, objsAdded.i, objs.i),
+				t: elm$core$String$isEmpty(objsAdded.t) ? objs.t : (objs.t + ('\n' + objsAdded.t)),
+				u: A2(author$project$Main$mergePstates, objsAdded.u, objs.u),
+				j: _Utils_eq(objsAdded.j, author$project$Main$defaultStyles) ? objs.j : objsAdded.j
 			});
 	});
 var author$project$Main$collectAndCheck = F2(
@@ -7274,14 +7285,16 @@ var author$project$Main$collectAndCheck = F2(
 		return _Utils_update(
 			objs,
 			{
-				labels: A2(
+				o: A2(
 					elm$core$Dict$map,
 					F2(
 						function (s, p) {
-							return A2(elm$core$Dict$member, s, model.labels) ? author$project$Main$fromJust(
-								A2(author$project$Main$getLabelPos, model, s)) : {x: 4, y: 4};
+							return A2(elm$core$Dict$member, s, model.o) ? A2(
+								author$project$Main$fromJust,
+								author$project$Main$nPos,
+								A2(author$project$Main$getLabelPos, model, s)) : {a: 4, b: 4};
 						}),
-					objs.points)
+					objs.i)
 			});
 	});
 var elm$core$List$takeReverse = F3(
@@ -7421,8 +7434,8 @@ var author$project$Main$showError = function (ds) {
 				A2(
 					elm$core$List$map,
 					function (dead) {
-						var _n0 = dead.problem;
-						if (_n0.$ === 'Problem') {
+						var _n0 = dead.bM;
+						if (_n0.$ === 12) {
 							var ps = _n0.a;
 							return ps;
 						} else {
@@ -7437,82 +7450,78 @@ var author$project$Main$lineNameFrom2P = F2(
 	});
 var elm$parser$Parser$Advanced$Bad = F2(
 	function (a, b) {
-		return {$: 'Bad', a: a, b: b};
+		return {$: 1, a: a, b: b};
 	});
 var elm$parser$Parser$Advanced$Good = F3(
 	function (a, b, c) {
-		return {$: 'Good', a: a, b: b, c: c};
+		return {$: 0, a: a, b: b, c: c};
 	});
-var elm$parser$Parser$Advanced$Parser = function (a) {
-	return {$: 'Parser', a: a};
-};
+var elm$parser$Parser$Advanced$Parser = elm$core$Basics$identity;
 var elm$parser$Parser$Advanced$andThen = F2(
 	function (callback, _n0) {
-		var parseA = _n0.a;
-		return elm$parser$Parser$Advanced$Parser(
-			function (s0) {
-				var _n1 = parseA(s0);
-				if (_n1.$ === 'Bad') {
-					var p = _n1.a;
-					var x = _n1.b;
-					return A2(elm$parser$Parser$Advanced$Bad, p, x);
+		var parseA = _n0;
+		return function (s0) {
+			var _n1 = parseA(s0);
+			if (_n1.$ === 1) {
+				var p = _n1.a;
+				var x = _n1.b;
+				return A2(elm$parser$Parser$Advanced$Bad, p, x);
+			} else {
+				var p1 = _n1.a;
+				var a = _n1.b;
+				var s1 = _n1.c;
+				var _n2 = callback(a);
+				var parseB = _n2;
+				var _n3 = parseB(s1);
+				if (_n3.$ === 1) {
+					var p2 = _n3.a;
+					var x = _n3.b;
+					return A2(elm$parser$Parser$Advanced$Bad, p1 || p2, x);
 				} else {
-					var p1 = _n1.a;
-					var a = _n1.b;
-					var s1 = _n1.c;
-					var _n2 = callback(a);
-					var parseB = _n2.a;
-					var _n3 = parseB(s1);
-					if (_n3.$ === 'Bad') {
-						var p2 = _n3.a;
-						var x = _n3.b;
-						return A2(elm$parser$Parser$Advanced$Bad, p1 || p2, x);
-					} else {
-						var p2 = _n3.a;
-						var b = _n3.b;
-						var s2 = _n3.c;
-						return A3(elm$parser$Parser$Advanced$Good, p1 || p2, b, s2);
-					}
+					var p2 = _n3.a;
+					var b = _n3.b;
+					var s2 = _n3.c;
+					return A3(elm$parser$Parser$Advanced$Good, p1 || p2, b, s2);
 				}
-			});
+			}
+		};
 	});
 var elm$parser$Parser$andThen = elm$parser$Parser$Advanced$andThen;
-var elm$parser$Parser$UnexpectedChar = {$: 'UnexpectedChar'};
+var elm$parser$Parser$UnexpectedChar = {$: 11};
 var elm$parser$Parser$Advanced$AddRight = F2(
 	function (a, b) {
-		return {$: 'AddRight', a: a, b: b};
+		return {$: 1, a: a, b: b};
 	});
 var elm$parser$Parser$Advanced$DeadEnd = F4(
 	function (row, col, problem, contextStack) {
-		return {col: col, contextStack: contextStack, problem: problem, row: row};
+		return {aE: col, bk: contextStack, bM: problem, a6: row};
 	});
-var elm$parser$Parser$Advanced$Empty = {$: 'Empty'};
+var elm$parser$Parser$Advanced$Empty = {$: 0};
 var elm$parser$Parser$Advanced$fromState = F2(
 	function (s, x) {
 		return A2(
 			elm$parser$Parser$Advanced$AddRight,
 			elm$parser$Parser$Advanced$Empty,
-			A4(elm$parser$Parser$Advanced$DeadEnd, s.row, s.col, x, s.context));
+			A4(elm$parser$Parser$Advanced$DeadEnd, s.a6, s.aE, x, s.g));
 	});
 var elm$parser$Parser$Advanced$isSubChar = _Parser_isSubChar;
 var elm$parser$Parser$Advanced$chompIf = F2(
 	function (isGood, expecting) {
-		return elm$parser$Parser$Advanced$Parser(
-			function (s) {
-				var newOffset = A3(elm$parser$Parser$Advanced$isSubChar, isGood, s.offset, s.src);
-				return _Utils_eq(newOffset, -1) ? A2(
-					elm$parser$Parser$Advanced$Bad,
-					false,
-					A2(elm$parser$Parser$Advanced$fromState, s, expecting)) : (_Utils_eq(newOffset, -2) ? A3(
-					elm$parser$Parser$Advanced$Good,
-					true,
-					_Utils_Tuple0,
-					{col: 1, context: s.context, indent: s.indent, offset: s.offset + 1, row: s.row + 1, src: s.src}) : A3(
-					elm$parser$Parser$Advanced$Good,
-					true,
-					_Utils_Tuple0,
-					{col: s.col + 1, context: s.context, indent: s.indent, offset: newOffset, row: s.row, src: s.src}));
-			});
+		return function (s) {
+			var newOffset = A3(elm$parser$Parser$Advanced$isSubChar, isGood, s.f, s.c);
+			return _Utils_eq(newOffset, -1) ? A2(
+				elm$parser$Parser$Advanced$Bad,
+				false,
+				A2(elm$parser$Parser$Advanced$fromState, s, expecting)) : (_Utils_eq(newOffset, -2) ? A3(
+				elm$parser$Parser$Advanced$Good,
+				true,
+				0,
+				{aE: 1, g: s.g, h: s.h, f: s.f + 1, a6: s.a6 + 1, c: s.c}) : A3(
+				elm$parser$Parser$Advanced$Good,
+				true,
+				0,
+				{aE: s.aE + 1, g: s.g, h: s.h, f: newOffset, a6: s.a6, c: s.c}));
+		};
 	});
 var elm$parser$Parser$chompIf = function (isGood) {
 	return A2(elm$parser$Parser$Advanced$chompIf, isGood, elm$parser$Parser$UnexpectedChar);
@@ -7523,54 +7532,51 @@ var elm$core$Basics$always = F2(
 	});
 var elm$parser$Parser$Advanced$mapChompedString = F2(
 	function (func, _n0) {
-		var parse = _n0.a;
-		return elm$parser$Parser$Advanced$Parser(
-			function (s0) {
-				var _n1 = parse(s0);
-				if (_n1.$ === 'Bad') {
-					var p = _n1.a;
-					var x = _n1.b;
-					return A2(elm$parser$Parser$Advanced$Bad, p, x);
-				} else {
-					var p = _n1.a;
-					var a = _n1.b;
-					var s1 = _n1.c;
-					return A3(
-						elm$parser$Parser$Advanced$Good,
-						p,
-						A2(
-							func,
-							A3(elm$core$String$slice, s0.offset, s1.offset, s0.src),
-							a),
-						s1);
-				}
-			});
+		var parse = _n0;
+		return function (s0) {
+			var _n1 = parse(s0);
+			if (_n1.$ === 1) {
+				var p = _n1.a;
+				var x = _n1.b;
+				return A2(elm$parser$Parser$Advanced$Bad, p, x);
+			} else {
+				var p = _n1.a;
+				var a = _n1.b;
+				var s1 = _n1.c;
+				return A3(
+					elm$parser$Parser$Advanced$Good,
+					p,
+					A2(
+						func,
+						A3(elm$core$String$slice, s0.f, s1.f, s0.c),
+						a),
+					s1);
+			}
+		};
 	});
 var elm$parser$Parser$Advanced$getChompedString = function (parser) {
 	return A2(elm$parser$Parser$Advanced$mapChompedString, elm$core$Basics$always, parser);
 };
 var elm$parser$Parser$getChompedString = elm$parser$Parser$Advanced$getChompedString;
 var elm$parser$Parser$Problem = function (a) {
-	return {$: 'Problem', a: a};
+	return {$: 12, a: a};
 };
 var elm$parser$Parser$Advanced$problem = function (x) {
-	return elm$parser$Parser$Advanced$Parser(
-		function (s) {
-			return A2(
-				elm$parser$Parser$Advanced$Bad,
-				false,
-				A2(elm$parser$Parser$Advanced$fromState, s, x));
-		});
+	return function (s) {
+		return A2(
+			elm$parser$Parser$Advanced$Bad,
+			false,
+			A2(elm$parser$Parser$Advanced$fromState, s, x));
+	};
 };
 var elm$parser$Parser$problem = function (msg) {
 	return elm$parser$Parser$Advanced$problem(
 		elm$parser$Parser$Problem(msg));
 };
 var elm$parser$Parser$Advanced$succeed = function (a) {
-	return elm$parser$Parser$Advanced$Parser(
-		function (s) {
-			return A3(elm$parser$Parser$Advanced$Good, false, a, s);
-		});
+	return function (s) {
+		return A3(elm$parser$Parser$Advanced$Good, false, a, s);
+	};
 };
 var elm$parser$Parser$succeed = elm$parser$Parser$Advanced$succeed;
 var author$project$Main$pointLabelName = A2(
@@ -7582,36 +7588,35 @@ var author$project$Main$pointLabelName = A2(
 		elm$parser$Parser$chompIf(elm$core$Char$isAlpha)));
 var elm$parser$Parser$Advanced$map2 = F3(
 	function (func, _n0, _n1) {
-		var parseA = _n0.a;
-		var parseB = _n1.a;
-		return elm$parser$Parser$Advanced$Parser(
-			function (s0) {
-				var _n2 = parseA(s0);
-				if (_n2.$ === 'Bad') {
-					var p = _n2.a;
-					var x = _n2.b;
-					return A2(elm$parser$Parser$Advanced$Bad, p, x);
+		var parseA = _n0;
+		var parseB = _n1;
+		return function (s0) {
+			var _n2 = parseA(s0);
+			if (_n2.$ === 1) {
+				var p = _n2.a;
+				var x = _n2.b;
+				return A2(elm$parser$Parser$Advanced$Bad, p, x);
+			} else {
+				var p1 = _n2.a;
+				var a = _n2.b;
+				var s1 = _n2.c;
+				var _n3 = parseB(s1);
+				if (_n3.$ === 1) {
+					var p2 = _n3.a;
+					var x = _n3.b;
+					return A2(elm$parser$Parser$Advanced$Bad, p1 || p2, x);
 				} else {
-					var p1 = _n2.a;
-					var a = _n2.b;
-					var s1 = _n2.c;
-					var _n3 = parseB(s1);
-					if (_n3.$ === 'Bad') {
-						var p2 = _n3.a;
-						var x = _n3.b;
-						return A2(elm$parser$Parser$Advanced$Bad, p1 || p2, x);
-					} else {
-						var p2 = _n3.a;
-						var b = _n3.b;
-						var s2 = _n3.c;
-						return A3(
-							elm$parser$Parser$Advanced$Good,
-							p1 || p2,
-							A2(func, a, b),
-							s2);
-					}
+					var p2 = _n3.a;
+					var b = _n3.b;
+					var s2 = _n3.c;
+					return A3(
+						elm$parser$Parser$Advanced$Good,
+						p1 || p2,
+						A2(func, a, b),
+						s2);
 				}
-			});
+			}
+		};
 	});
 var elm$parser$Parser$Advanced$keeper = F2(
 	function (parseFunc, parseArg) {
@@ -7636,7 +7641,7 @@ var elm$parser$Parser$Advanced$ignorer = F2(
 var elm$parser$Parser$ignorer = elm$parser$Parser$Advanced$ignorer;
 var elm$parser$Parser$Advanced$Append = F2(
 	function (a, b) {
-		return {$: 'Append', a: a, b: b};
+		return {$: 2, a: a, b: b};
 	});
 var elm$parser$Parser$Advanced$oneOfHelp = F3(
 	function (s0, bag, parsers) {
@@ -7645,10 +7650,10 @@ var elm$parser$Parser$Advanced$oneOfHelp = F3(
 			if (!parsers.b) {
 				return A2(elm$parser$Parser$Advanced$Bad, false, bag);
 			} else {
-				var parse = parsers.a.a;
+				var parse = parsers.a;
 				var remainingParsers = parsers.b;
 				var _n1 = parse(s0);
-				if (_n1.$ === 'Good') {
+				if (!_n1.$) {
 					var step = _n1;
 					return step;
 				} else {
@@ -7671,18 +7676,17 @@ var elm$parser$Parser$Advanced$oneOfHelp = F3(
 		}
 	});
 var elm$parser$Parser$Advanced$oneOf = function (parsers) {
-	return elm$parser$Parser$Advanced$Parser(
-		function (s) {
-			return A3(elm$parser$Parser$Advanced$oneOfHelp, s, elm$parser$Parser$Advanced$Empty, parsers);
-		});
+	return function (s) {
+		return A3(elm$parser$Parser$Advanced$oneOfHelp, s, elm$parser$Parser$Advanced$Empty, parsers);
+	};
 };
 var elm$parser$Parser$oneOf = elm$parser$Parser$Advanced$oneOf;
 var elm$parser$Parser$ExpectingSymbol = function (a) {
-	return {$: 'ExpectingSymbol', a: a};
+	return {$: 8, a: a};
 };
 var elm$parser$Parser$Advanced$Token = F2(
 	function (a, b) {
-		return {$: 'Token', a: a, b: b};
+		return {$: 0, a: a, b: b};
 	});
 var elm$core$Basics$not = _Basics_not;
 var elm$parser$Parser$Advanced$isSubString = _Parser_isSubString;
@@ -7690,21 +7694,20 @@ var elm$parser$Parser$Advanced$token = function (_n0) {
 	var str = _n0.a;
 	var expecting = _n0.b;
 	var progress = !elm$core$String$isEmpty(str);
-	return elm$parser$Parser$Advanced$Parser(
-		function (s) {
-			var _n1 = A5(elm$parser$Parser$Advanced$isSubString, str, s.offset, s.row, s.col, s.src);
-			var newOffset = _n1.a;
-			var newRow = _n1.b;
-			var newCol = _n1.c;
-			return _Utils_eq(newOffset, -1) ? A2(
-				elm$parser$Parser$Advanced$Bad,
-				false,
-				A2(elm$parser$Parser$Advanced$fromState, s, expecting)) : A3(
-				elm$parser$Parser$Advanced$Good,
-				progress,
-				_Utils_Tuple0,
-				{col: newCol, context: s.context, indent: s.indent, offset: newOffset, row: newRow, src: s.src});
-		});
+	return function (s) {
+		var _n1 = A5(elm$parser$Parser$Advanced$isSubString, str, s.f, s.a6, s.aE, s.c);
+		var newOffset = _n1.a;
+		var newRow = _n1.b;
+		var newCol = _n1.c;
+		return _Utils_eq(newOffset, -1) ? A2(
+			elm$parser$Parser$Advanced$Bad,
+			false,
+			A2(elm$parser$Parser$Advanced$fromState, s, expecting)) : A3(
+			elm$parser$Parser$Advanced$Good,
+			progress,
+			0,
+			{aE: newCol, g: s.g, h: s.h, f: newOffset, a6: newRow, c: s.c});
+	};
 };
 var elm$parser$Parser$Advanced$symbol = elm$parser$Parser$Advanced$token;
 var elm$parser$Parser$symbol = function (str) {
@@ -7749,22 +7752,22 @@ var author$project$Main$circleLabelName = A2(
 					elm$parser$Parser$symbol(':')),
 				author$project$Main$lineLabelName)
 			])));
-var elm$parser$Parser$Forbidden = {$: 'Forbidden'};
-var elm$parser$Parser$Advanced$Forbidden = {$: 'Forbidden'};
-var elm$parser$Parser$Advanced$Mandatory = {$: 'Mandatory'};
-var elm$parser$Parser$Advanced$Optional = {$: 'Optional'};
+var elm$parser$Parser$Forbidden = 0;
+var elm$parser$Parser$Advanced$Forbidden = 0;
+var elm$parser$Parser$Advanced$Mandatory = 2;
+var elm$parser$Parser$Advanced$Optional = 1;
 var elm$parser$Parser$toAdvancedTrailing = function (trailing) {
-	switch (trailing.$) {
-		case 'Forbidden':
-			return elm$parser$Parser$Advanced$Forbidden;
-		case 'Optional':
-			return elm$parser$Parser$Advanced$Optional;
+	switch (trailing) {
+		case 0:
+			return 0;
+		case 1:
+			return 1;
 		default:
-			return elm$parser$Parser$Advanced$Mandatory;
+			return 2;
 	}
 };
 var elm$parser$Parser$Expecting = function (a) {
-	return {$: 'Expecting', a: a};
+	return {$: 0, a: a};
 };
 var elm$parser$Parser$toToken = function (str) {
 	return A2(
@@ -7777,13 +7780,13 @@ var elm$parser$Parser$Advanced$loopHelp = F4(
 		loopHelp:
 		while (true) {
 			var _n0 = callback(state);
-			var parse = _n0.a;
+			var parse = _n0;
 			var _n1 = parse(s0);
-			if (_n1.$ === 'Good') {
+			if (!_n1.$) {
 				var p1 = _n1.a;
 				var step = _n1.b;
 				var s1 = _n1.c;
-				if (step.$ === 'Loop') {
+				if (!step.$) {
 					var newState = step.a;
 					var $temp$p = p || p1,
 						$temp$state = newState,
@@ -7807,38 +7810,36 @@ var elm$parser$Parser$Advanced$loopHelp = F4(
 	});
 var elm$parser$Parser$Advanced$loop = F2(
 	function (state, callback) {
-		return elm$parser$Parser$Advanced$Parser(
-			function (s) {
-				return A4(elm$parser$Parser$Advanced$loopHelp, false, state, callback, s);
-			});
+		return function (s) {
+			return A4(elm$parser$Parser$Advanced$loopHelp, false, state, callback, s);
+		};
 	});
 var elm$parser$Parser$Advanced$map = F2(
 	function (func, _n0) {
-		var parse = _n0.a;
-		return elm$parser$Parser$Advanced$Parser(
-			function (s0) {
-				var _n1 = parse(s0);
-				if (_n1.$ === 'Good') {
-					var p = _n1.a;
-					var a = _n1.b;
-					var s1 = _n1.c;
-					return A3(
-						elm$parser$Parser$Advanced$Good,
-						p,
-						func(a),
-						s1);
-				} else {
-					var p = _n1.a;
-					var x = _n1.b;
-					return A2(elm$parser$Parser$Advanced$Bad, p, x);
-				}
-			});
+		var parse = _n0;
+		return function (s0) {
+			var _n1 = parse(s0);
+			if (!_n1.$) {
+				var p = _n1.a;
+				var a = _n1.b;
+				var s1 = _n1.c;
+				return A3(
+					elm$parser$Parser$Advanced$Good,
+					p,
+					func(a),
+					s1);
+			} else {
+				var p = _n1.a;
+				var x = _n1.b;
+				return A2(elm$parser$Parser$Advanced$Bad, p, x);
+			}
+		};
 	});
 var elm$parser$Parser$Advanced$Done = function (a) {
-	return {$: 'Done', a: a};
+	return {$: 1, a: a};
 };
 var elm$parser$Parser$Advanced$Loop = function (a) {
-	return {$: 'Loop', a: a};
+	return {$: 0, a: a};
 };
 var elm$parser$Parser$Advanced$revAlways = F2(
 	function (_n0, b) {
@@ -7911,7 +7912,7 @@ var elm$parser$Parser$Advanced$sequenceEndMandatory = F4(
 						return elm$parser$Parser$Advanced$Done(
 							elm$core$List$reverse(revItems));
 					},
-					elm$parser$Parser$Advanced$succeed(_Utils_Tuple0))
+					elm$parser$Parser$Advanced$succeed(0))
 				]));
 	});
 var elm$parser$Parser$Advanced$sequenceEndOptional = F5(
@@ -7953,14 +7954,14 @@ var elm$parser$Parser$Advanced$sequenceEndOptional = F5(
 var elm$parser$Parser$Advanced$sequenceEnd = F5(
 	function (ender, ws, parseItem, sep, trailing) {
 		var chompRest = function (item) {
-			switch (trailing.$) {
-				case 'Forbidden':
+			switch (trailing) {
+				case 0:
 					return A2(
 						elm$parser$Parser$Advanced$loop,
 						_List_fromArray(
 							[item]),
 						A4(elm$parser$Parser$Advanced$sequenceEndForbidden, ender, ws, parseItem, sep));
-				case 'Optional':
+				case 1:
 					return A2(
 						elm$parser$Parser$Advanced$loop,
 						_List_fromArray(
@@ -8001,40 +8002,40 @@ var elm$parser$Parser$Advanced$sequenceEnd = F5(
 var elm$parser$Parser$Advanced$sequence = function (i) {
 	return A2(
 		elm$parser$Parser$Advanced$skip,
-		elm$parser$Parser$Advanced$token(i.start),
+		elm$parser$Parser$Advanced$token(i.U),
 		A2(
 			elm$parser$Parser$Advanced$skip,
-			i.spaces,
+			i.ay,
 			A5(
 				elm$parser$Parser$Advanced$sequenceEnd,
-				elm$parser$Parser$Advanced$token(i.end),
-				i.spaces,
-				i.item,
-				elm$parser$Parser$Advanced$token(i.separator),
-				i.trailing)));
+				elm$parser$Parser$Advanced$token(i.as),
+				i.ay,
+				i.at,
+				elm$parser$Parser$Advanced$token(i.ax),
+				i.aA)));
 };
 var elm$parser$Parser$sequence = function (i) {
 	return elm$parser$Parser$Advanced$sequence(
 		{
-			end: elm$parser$Parser$toToken(i.end),
-			item: i.item,
-			separator: elm$parser$Parser$toToken(i.separator),
-			spaces: i.spaces,
-			start: elm$parser$Parser$toToken(i.start),
-			trailing: elm$parser$Parser$toAdvancedTrailing(i.trailing)
+			as: elm$parser$Parser$toToken(i.as),
+			at: i.at,
+			ax: elm$parser$Parser$toToken(i.ax),
+			ay: i.ay,
+			U: elm$parser$Parser$toToken(i.U),
+			aA: elm$parser$Parser$toAdvancedTrailing(i.aA)
 		});
 };
 var elm$parser$Parser$Advanced$chompWhileHelp = F5(
 	function (isGood, offset, row, col, s0) {
 		chompWhileHelp:
 		while (true) {
-			var newOffset = A3(elm$parser$Parser$Advanced$isSubChar, isGood, offset, s0.src);
+			var newOffset = A3(elm$parser$Parser$Advanced$isSubChar, isGood, offset, s0.c);
 			if (_Utils_eq(newOffset, -1)) {
 				return A3(
 					elm$parser$Parser$Advanced$Good,
-					_Utils_cmp(s0.offset, offset) < 0,
-					_Utils_Tuple0,
-					{col: col, context: s0.context, indent: s0.indent, offset: offset, row: row, src: s0.src});
+					_Utils_cmp(s0.f, offset) < 0,
+					0,
+					{aE: col, g: s0.g, h: s0.h, f: offset, a6: row, c: s0.c});
 			} else {
 				if (_Utils_eq(newOffset, -2)) {
 					var $temp$isGood = isGood,
@@ -8065,26 +8066,22 @@ var elm$parser$Parser$Advanced$chompWhileHelp = F5(
 		}
 	});
 var elm$parser$Parser$Advanced$chompWhile = function (isGood) {
-	return elm$parser$Parser$Advanced$Parser(
-		function (s) {
-			return A5(elm$parser$Parser$Advanced$chompWhileHelp, isGood, s.offset, s.row, s.col, s);
-		});
+	return function (s) {
+		return A5(elm$parser$Parser$Advanced$chompWhileHelp, isGood, s.f, s.a6, s.aE, s);
+	};
 };
 var elm$parser$Parser$Advanced$spaces = elm$parser$Parser$Advanced$chompWhile(
 	function (c) {
-		return _Utils_eq(
-			c,
-			_Utils_chr(' ')) || (_Utils_eq(
-			c,
-			_Utils_chr('\n')) || _Utils_eq(
-			c,
-			_Utils_chr('\r')));
+		return (c === ' ') || ((c === '\n') || (c === '\r'));
 	});
 var elm$parser$Parser$spaces = elm$parser$Parser$Advanced$spaces;
 var author$project$Main$circleLabelNames = elm$parser$Parser$sequence(
-	{end: '', item: author$project$Main$circleLabelName, separator: ',', spaces: elm$parser$Parser$spaces, start: '', trailing: elm$parser$Parser$Forbidden});
+	{as: '', at: author$project$Main$circleLabelName, ax: ',', ay: elm$parser$Parser$spaces, U: '', aA: 0});
 var author$project$Main$lineLabelNames = elm$parser$Parser$sequence(
-	{end: '', item: author$project$Main$lineLabelName, separator: ',', spaces: elm$parser$Parser$spaces, start: '', trailing: elm$parser$Parser$Forbidden});
+	{as: '', at: author$project$Main$lineLabelName, ax: ',', ay: elm$parser$Parser$spaces, U: '', aA: 0});
+var author$project$Main$nCircle = author$project$Main$Cir2(
+	{d: '', e: ''});
+var author$project$Main$nLine = {d: '', e: ''};
 var elm$core$Basics$modBy = _Basics_modBy;
 var elm$core$Basics$round = _Basics_round;
 var elm$core$List$sum = function (numbers) {
@@ -8096,19 +8093,19 @@ var elm$core$String$toList = function (string) {
 };
 var author$project$Main$nameToPosition = F2(
 	function (model, s) {
-		if (A2(elm$core$Dict$member, s, model.points)) {
+		if (A2(elm$core$Dict$member, s, model.i)) {
 			var p = A2(author$project$Main$getP, model, s);
-			return p.pos;
+			return p.m;
 		} else {
-			var w = model.width - 10;
-			var h = model.height - 10;
+			var w = model.j.M - 10;
+			var h = model.j.J - 10;
 			return function (d) {
 				return {
-					x: A2(
+					a: A2(
 						elm$core$Basics$modBy,
 						elm$core$Basics$round(w),
 						A2(elm$core$Basics$modBy, 13, d) * 47) - (w / 2),
-					y: A2(
+					b: A2(
 						elm$core$Basics$modBy,
 						elm$core$Basics$round(h),
 						A2(elm$core$Basics$modBy, 19, d) * 61) - (h / 2)
@@ -8141,31 +8138,30 @@ var author$project$Main$newPoints = F6(
 				ns));
 	});
 var author$project$Main$pointLabelNames = elm$parser$Parser$sequence(
-	{end: '', item: author$project$Main$pointLabelName, separator: ',', spaces: elm$parser$Parser$spaces, start: '', trailing: elm$parser$Parser$Forbidden});
+	{as: '', at: author$project$Main$pointLabelName, ax: ',', ay: elm$parser$Parser$spaces, U: '', aA: 0});
 var elm$core$Dict$singleton = F2(
 	function (key, value) {
-		return A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Black, key, value, elm$core$Dict$RBEmpty_elm_builtin, elm$core$Dict$RBEmpty_elm_builtin);
+		return A5(elm$core$Dict$RBNode_elm_builtin, 1, key, value, elm$core$Dict$RBEmpty_elm_builtin, elm$core$Dict$RBEmpty_elm_builtin);
 	});
-var elm$parser$Parser$ExpectingEnd = {$: 'ExpectingEnd'};
+var elm$parser$Parser$ExpectingEnd = {$: 10};
 var elm$parser$Parser$Advanced$end = function (x) {
-	return elm$parser$Parser$Advanced$Parser(
-		function (s) {
-			return _Utils_eq(
-				elm$core$String$length(s.src),
-				s.offset) ? A3(elm$parser$Parser$Advanced$Good, false, _Utils_Tuple0, s) : A2(
-				elm$parser$Parser$Advanced$Bad,
-				false,
-				A2(elm$parser$Parser$Advanced$fromState, s, x));
-		});
+	return function (s) {
+		return _Utils_eq(
+			elm$core$String$length(s.c),
+			s.f) ? A3(elm$parser$Parser$Advanced$Good, false, 0, s) : A2(
+			elm$parser$Parser$Advanced$Bad,
+			false,
+			A2(elm$parser$Parser$Advanced$fromState, s, x));
+	};
 };
 var elm$parser$Parser$end = elm$parser$Parser$Advanced$end(elm$parser$Parser$ExpectingEnd);
-var elm$parser$Parser$ExpectingFloat = {$: 'ExpectingFloat'};
+var elm$parser$Parser$ExpectingFloat = {$: 5};
 var elm$parser$Parser$Advanced$consumeBase = _Parser_consumeBase;
 var elm$parser$Parser$Advanced$consumeBase16 = _Parser_consumeBase16;
 var elm$core$String$toFloat = _String_toFloat;
 var elm$parser$Parser$Advanced$bumpOffset = F2(
 	function (newOffset, s) {
-		return {col: s.col + (newOffset - s.offset), context: s.context, indent: s.indent, offset: newOffset, row: s.row, src: s.src};
+		return {aE: s.aE + (newOffset - s.f), g: s.g, h: s.h, f: newOffset, a6: s.a6, c: s.c};
 	});
 var elm$parser$Parser$Advanced$chompBase10 = _Parser_chompBase10;
 var elm$parser$Parser$Advanced$isAsciiCode = _Parser_isAsciiCode;
@@ -8191,7 +8187,7 @@ var elm$parser$Parser$Advanced$finalizeInt = F5(
 	function (invalid, handler, startOffset, _n0, s) {
 		var endOffset = _n0.a;
 		var n = _n0.b;
-		if (handler.$ === 'Err') {
+		if (handler.$ === 1) {
 			var x = handler.a;
 			return A2(
 				elm$parser$Parser$Advanced$Bad,
@@ -8201,7 +8197,7 @@ var elm$parser$Parser$Advanced$finalizeInt = F5(
 			var toValue = handler.a;
 			return _Utils_eq(startOffset, endOffset) ? A2(
 				elm$parser$Parser$Advanced$Bad,
-				_Utils_cmp(s.offset, startOffset) < 0,
+				_Utils_cmp(s.f, startOffset) < 0,
 				A2(elm$parser$Parser$Advanced$fromState, s, invalid)) : A3(
 				elm$parser$Parser$Advanced$Good,
 				true,
@@ -8219,23 +8215,23 @@ var elm$parser$Parser$Advanced$fromInfo = F4(
 var elm$parser$Parser$Advanced$finalizeFloat = F6(
 	function (invalid, expecting, intSettings, floatSettings, intPair, s) {
 		var intOffset = intPair.a;
-		var floatOffset = A2(elm$parser$Parser$Advanced$consumeDotAndExp, intOffset, s.src);
+		var floatOffset = A2(elm$parser$Parser$Advanced$consumeDotAndExp, intOffset, s.c);
 		if (floatOffset < 0) {
 			return A2(
 				elm$parser$Parser$Advanced$Bad,
 				true,
-				A4(elm$parser$Parser$Advanced$fromInfo, s.row, s.col - (floatOffset + s.offset), invalid, s.context));
+				A4(elm$parser$Parser$Advanced$fromInfo, s.a6, s.aE - (floatOffset + s.f), invalid, s.g));
 		} else {
-			if (_Utils_eq(s.offset, floatOffset)) {
+			if (_Utils_eq(s.f, floatOffset)) {
 				return A2(
 					elm$parser$Parser$Advanced$Bad,
 					false,
 					A2(elm$parser$Parser$Advanced$fromState, s, expecting));
 			} else {
 				if (_Utils_eq(intOffset, floatOffset)) {
-					return A5(elm$parser$Parser$Advanced$finalizeInt, invalid, intSettings, s.offset, intPair, s);
+					return A5(elm$parser$Parser$Advanced$finalizeInt, invalid, intSettings, s.f, intPair, s);
 				} else {
-					if (floatSettings.$ === 'Err') {
+					if (floatSettings.$ === 1) {
 						var x = floatSettings.a;
 						return A2(
 							elm$parser$Parser$Advanced$Bad,
@@ -8244,8 +8240,8 @@ var elm$parser$Parser$Advanced$finalizeFloat = F6(
 					} else {
 						var toValue = floatSettings.a;
 						var _n1 = elm$core$String$toFloat(
-							A3(elm$core$String$slice, s.offset, floatOffset, s.src));
-						if (_n1.$ === 'Nothing') {
+							A3(elm$core$String$slice, s.f, floatOffset, s.c));
+						if (_n1.$ === 1) {
 							return A2(
 								elm$parser$Parser$Advanced$Bad,
 								true,
@@ -8264,93 +8260,89 @@ var elm$parser$Parser$Advanced$finalizeFloat = F6(
 		}
 	});
 var elm$parser$Parser$Advanced$number = function (c) {
-	return elm$parser$Parser$Advanced$Parser(
-		function (s) {
-			if (A3(elm$parser$Parser$Advanced$isAsciiCode, 48, s.offset, s.src)) {
-				var zeroOffset = s.offset + 1;
-				var baseOffset = zeroOffset + 1;
-				return A3(elm$parser$Parser$Advanced$isAsciiCode, 120, zeroOffset, s.src) ? A5(
-					elm$parser$Parser$Advanced$finalizeInt,
-					c.invalid,
-					c.hex,
-					baseOffset,
-					A2(elm$parser$Parser$Advanced$consumeBase16, baseOffset, s.src),
-					s) : (A3(elm$parser$Parser$Advanced$isAsciiCode, 111, zeroOffset, s.src) ? A5(
-					elm$parser$Parser$Advanced$finalizeInt,
-					c.invalid,
-					c.octal,
-					baseOffset,
-					A3(elm$parser$Parser$Advanced$consumeBase, 8, baseOffset, s.src),
-					s) : (A3(elm$parser$Parser$Advanced$isAsciiCode, 98, zeroOffset, s.src) ? A5(
-					elm$parser$Parser$Advanced$finalizeInt,
-					c.invalid,
-					c.binary,
-					baseOffset,
-					A3(elm$parser$Parser$Advanced$consumeBase, 2, baseOffset, s.src),
-					s) : A6(
-					elm$parser$Parser$Advanced$finalizeFloat,
-					c.invalid,
-					c.expecting,
-					c._int,
-					c._float,
-					_Utils_Tuple2(zeroOffset, 0),
-					s)));
-			} else {
-				return A6(
-					elm$parser$Parser$Advanced$finalizeFloat,
-					c.invalid,
-					c.expecting,
-					c._int,
-					c._float,
-					A3(elm$parser$Parser$Advanced$consumeBase, 10, s.offset, s.src),
-					s);
-			}
-		});
+	return function (s) {
+		if (A3(elm$parser$Parser$Advanced$isAsciiCode, 48, s.f, s.c)) {
+			var zeroOffset = s.f + 1;
+			var baseOffset = zeroOffset + 1;
+			return A3(elm$parser$Parser$Advanced$isAsciiCode, 120, zeroOffset, s.c) ? A5(
+				elm$parser$Parser$Advanced$finalizeInt,
+				c.bx,
+				c.aL,
+				baseOffset,
+				A2(elm$parser$Parser$Advanced$consumeBase16, baseOffset, s.c),
+				s) : (A3(elm$parser$Parser$Advanced$isAsciiCode, 111, zeroOffset, s.c) ? A5(
+				elm$parser$Parser$Advanced$finalizeInt,
+				c.bx,
+				c.aU,
+				baseOffset,
+				A3(elm$parser$Parser$Advanced$consumeBase, 8, baseOffset, s.c),
+				s) : (A3(elm$parser$Parser$Advanced$isAsciiCode, 98, zeroOffset, s.c) ? A5(
+				elm$parser$Parser$Advanced$finalizeInt,
+				c.bx,
+				c.aC,
+				baseOffset,
+				A3(elm$parser$Parser$Advanced$consumeBase, 2, baseOffset, s.c),
+				s) : A6(
+				elm$parser$Parser$Advanced$finalizeFloat,
+				c.bx,
+				c.aI,
+				c.aO,
+				c.aJ,
+				_Utils_Tuple2(zeroOffset, 0),
+				s)));
+		} else {
+			return A6(
+				elm$parser$Parser$Advanced$finalizeFloat,
+				c.bx,
+				c.aI,
+				c.aO,
+				c.aJ,
+				A3(elm$parser$Parser$Advanced$consumeBase, 10, s.f, s.c),
+				s);
+		}
+	};
 };
 var elm$parser$Parser$Advanced$float = F2(
 	function (expecting, invalid) {
 		return elm$parser$Parser$Advanced$number(
 			{
-				binary: elm$core$Result$Err(invalid),
-				expecting: expecting,
-				_float: elm$core$Result$Ok(elm$core$Basics$identity),
-				hex: elm$core$Result$Err(invalid),
-				_int: elm$core$Result$Ok(elm$core$Basics$toFloat),
-				invalid: invalid,
-				octal: elm$core$Result$Err(invalid)
+				aC: elm$core$Result$Err(invalid),
+				aI: expecting,
+				aJ: elm$core$Result$Ok(elm$core$Basics$identity),
+				aL: elm$core$Result$Err(invalid),
+				aO: elm$core$Result$Ok(elm$core$Basics$toFloat),
+				bx: invalid,
+				aU: elm$core$Result$Err(invalid)
 			});
 	});
 var elm$parser$Parser$float = A2(elm$parser$Parser$Advanced$float, elm$parser$Parser$ExpectingFloat, elm$parser$Parser$ExpectingFloat);
 var elm$parser$Parser$ExpectingKeyword = function (a) {
-	return {$: 'ExpectingKeyword', a: a};
+	return {$: 9, a: a};
 };
 var elm$parser$Parser$Advanced$keyword = function (_n0) {
 	var kwd = _n0.a;
 	var expecting = _n0.b;
 	var progress = !elm$core$String$isEmpty(kwd);
-	return elm$parser$Parser$Advanced$Parser(
-		function (s) {
-			var _n1 = A5(elm$parser$Parser$Advanced$isSubString, kwd, s.offset, s.row, s.col, s.src);
-			var newOffset = _n1.a;
-			var newRow = _n1.b;
-			var newCol = _n1.c;
-			return (_Utils_eq(newOffset, -1) || (0 <= A3(
-				elm$parser$Parser$Advanced$isSubChar,
-				function (c) {
-					return elm$core$Char$isAlphaNum(c) || _Utils_eq(
-						c,
-						_Utils_chr('_'));
-				},
-				newOffset,
-				s.src))) ? A2(
-				elm$parser$Parser$Advanced$Bad,
-				false,
-				A2(elm$parser$Parser$Advanced$fromState, s, expecting)) : A3(
-				elm$parser$Parser$Advanced$Good,
-				progress,
-				_Utils_Tuple0,
-				{col: newCol, context: s.context, indent: s.indent, offset: newOffset, row: newRow, src: s.src});
-		});
+	return function (s) {
+		var _n1 = A5(elm$parser$Parser$Advanced$isSubString, kwd, s.f, s.a6, s.aE, s.c);
+		var newOffset = _n1.a;
+		var newRow = _n1.b;
+		var newCol = _n1.c;
+		return (_Utils_eq(newOffset, -1) || (0 <= A3(
+			elm$parser$Parser$Advanced$isSubChar,
+			function (c) {
+				return elm$core$Char$isAlphaNum(c) || (c === '_');
+			},
+			newOffset,
+			s.c))) ? A2(
+			elm$parser$Parser$Advanced$Bad,
+			false,
+			A2(elm$parser$Parser$Advanced$fromState, s, expecting)) : A3(
+			elm$parser$Parser$Advanced$Good,
+			progress,
+			0,
+			{aE: newCol, g: s.g, h: s.h, f: newOffset, a6: newRow, c: s.c});
+	};
 };
 var elm$parser$Parser$keyword = function (kwd) {
 	return elm$parser$Parser$Advanced$keyword(
@@ -8377,6 +8369,36 @@ var author$project$Main$statement = function (model) {
 							elm$parser$Parser$ignorer,
 							A2(
 								elm$parser$Parser$ignorer,
+								A2(
+									elm$parser$Parser$ignorer,
+									A2(
+										elm$parser$Parser$ignorer,
+										elm$parser$Parser$succeed(
+											F2(
+												function (w, h) {
+													return _Utils_update(
+														author$project$Main$emptyObjs,
+														{
+															j: {J: h, M: w}
+														});
+												})),
+										elm$parser$Parser$keyword('set')),
+									elm$parser$Parser$spaces),
+								elm$parser$Parser$keyword('size')),
+							elm$parser$Parser$spaces),
+						A2(elm$parser$Parser$ignorer, elm$parser$Parser$float, elm$parser$Parser$spaces)),
+					A2(
+						elm$parser$Parser$ignorer,
+						A2(elm$parser$Parser$ignorer, elm$parser$Parser$float, elm$parser$Parser$spaces),
+						elm$parser$Parser$end)),
+					A2(
+					elm$parser$Parser$keeper,
+					A2(
+						elm$parser$Parser$keeper,
+						A2(
+							elm$parser$Parser$ignorer,
+							A2(
+								elm$parser$Parser$ignorer,
 								elm$parser$Parser$succeed(
 									F2(
 										function (ns, _n0) {
@@ -8388,7 +8410,7 @@ var author$project$Main$statement = function (model) {
 											return _Utils_update(
 												author$project$Main$emptyObjs,
 												{
-													points: A5(
+													i: A5(
 														author$project$Main$newPoints(model),
 														ns,
 														t,
@@ -8504,17 +8526,19 @@ var author$project$Main$statement = function (model) {
 											return _Utils_update(
 												author$project$Main$emptyObjs,
 												{
-													lines: elm$core$Dict$fromList(
+													s: elm$core$Dict$fromList(
 														A2(
 															elm$core$List$map,
 															function (ll) {
 																return _Utils_Tuple2(
 																	ll,
-																	author$project$Main$fromJust(
+																	A2(
+																		author$project$Main$fromJust,
+																		author$project$Main$nLine,
 																		author$project$Main$lineNameToLine(ll)));
 															},
 															lls)),
-													lstates: elm$core$Dict$fromList(
+													p: elm$core$Dict$fromList(
 														A2(
 															elm$core$List$map,
 															function (ll) {
@@ -8522,7 +8546,7 @@ var author$project$Main$statement = function (model) {
 																	ll,
 																	_Utils_update(
 																		author$project$Main$defaultLSta,
-																		{dashed: t}));
+																		{H: t}));
 															},
 															lls))
 												});
@@ -8587,7 +8611,7 @@ var author$project$Main$statement = function (model) {
 																				return _Utils_update(
 																					author$project$Main$emptyObjs,
 																					{
-																						points: A2(
+																						i: A2(
 																							elm$core$Dict$singleton,
 																							pn,
 																							A2(author$project$Main$P2L, s1, s2))
@@ -8596,7 +8620,7 @@ var author$project$Main$statement = function (model) {
 																				return _Utils_update(
 																					author$project$Main$emptyObjs,
 																					{
-																						points: A2(
+																						i: A2(
 																							elm$core$Dict$singleton,
 																							pn,
 																							A3(author$project$Main$PCL, s2, s1, isPositive))
@@ -8610,7 +8634,7 @@ var author$project$Main$statement = function (model) {
 																				return _Utils_update(
 																					author$project$Main$emptyObjs,
 																					{
-																						points: A2(
+																						i: A2(
 																							elm$core$Dict$singleton,
 																							pn,
 																							A3(author$project$Main$PCL, s1, s2, isPositive))
@@ -8619,7 +8643,7 @@ var author$project$Main$statement = function (model) {
 																				return _Utils_update(
 																					author$project$Main$emptyObjs,
 																					{
-																						points: A2(
+																						i: A2(
 																							elm$core$Dict$singleton,
 																							pn,
 																							A3(author$project$Main$P2C, s1, s2, isPositive))
@@ -8761,7 +8785,7 @@ var author$project$Main$statement = function (model) {
 														return _Utils_update(
 															author$project$Main$emptyObjs,
 															{
-																points: A2(
+																i: A2(
 																	elm$core$Dict$singleton,
 																	pn,
 																	A2(author$project$Main$POLP, pl, ll))
@@ -8810,7 +8834,7 @@ var author$project$Main$statement = function (model) {
 											return _Utils_update(
 												author$project$Main$emptyObjs,
 												{
-													pstates: elm$core$Dict$fromList(
+													u: elm$core$Dict$fromList(
 														A2(
 															elm$core$List$map,
 															function (s) {
@@ -8818,7 +8842,7 @@ var author$project$Main$statement = function (model) {
 																	s,
 																	_Utils_update(
 																		author$project$Main$defaultPSta,
-																		{hidden: true}));
+																		{l: true}));
 															},
 															ns))
 												});
@@ -8826,7 +8850,7 @@ var author$project$Main$statement = function (model) {
 											return _Utils_update(
 												author$project$Main$emptyObjs,
 												{
-													lstates: elm$core$Dict$fromList(
+													p: elm$core$Dict$fromList(
 														A2(
 															elm$core$List$map,
 															function (s) {
@@ -8834,7 +8858,7 @@ var author$project$Main$statement = function (model) {
 																	s,
 																	_Utils_update(
 																		author$project$Main$defaultLSta,
-																		{hidden: true}));
+																		{l: true}));
 															},
 															ns))
 												});
@@ -8891,13 +8915,15 @@ var author$project$Main$statement = function (model) {
 									return _Utils_update(
 										author$project$Main$emptyObjs,
 										{
-											circles: elm$core$Dict$fromList(
+											r: elm$core$Dict$fromList(
 												A2(
 													elm$core$List$map,
 													function (c) {
 														return _Utils_Tuple2(
 															c,
-															author$project$Main$fromJust(
+															A2(
+																author$project$Main$fromJust,
+																author$project$Main$nCircle,
 																author$project$Main$circleNameToCircle(c)));
 													},
 													cs))
@@ -8919,23 +8945,22 @@ var author$project$Main$statement = function (model) {
 					elm$parser$Parser$problem('Cannot understand ')
 				])));
 };
-var elm$core$Debug$toString = _Debug_toString;
 var elm$core$String$lines = _String_lines;
 var elm$parser$Parser$DeadEnd = F3(
 	function (row, col, problem) {
-		return {col: col, problem: problem, row: row};
+		return {aE: col, bM: problem, a6: row};
 	});
 var elm$parser$Parser$problemToDeadEnd = function (p) {
-	return A3(elm$parser$Parser$DeadEnd, p.row, p.col, p.problem);
+	return A3(elm$parser$Parser$DeadEnd, p.a6, p.aE, p.bM);
 };
 var elm$parser$Parser$Advanced$bagToList = F2(
 	function (bag, list) {
 		bagToList:
 		while (true) {
 			switch (bag.$) {
-				case 'Empty':
+				case 0:
 					return list;
-				case 'AddRight':
+				case 1:
 					var bag1 = bag.a;
 					var x = bag.b;
 					var $temp$bag = bag1,
@@ -8956,10 +8981,10 @@ var elm$parser$Parser$Advanced$bagToList = F2(
 	});
 var elm$parser$Parser$Advanced$run = F2(
 	function (_n0, src) {
-		var parse = _n0.a;
+		var parse = _n0;
 		var _n1 = parse(
-			{col: 1, context: _List_Nil, indent: 1, offset: 0, row: 1, src: src});
-		if (_n1.$ === 'Good') {
+			{aE: 1, g: _List_Nil, h: 1, f: 0, a6: 1, c: src});
+		if (!_n1.$) {
 			var value = _n1.b;
 			return elm$core$Result$Ok(value);
 		} else {
@@ -8971,7 +8996,7 @@ var elm$parser$Parser$Advanced$run = F2(
 var elm$parser$Parser$run = F2(
 	function (parser, source) {
 		var _n0 = A2(elm$parser$Parser$Advanced$run, parser, source);
-		if (_n0.$ === 'Ok') {
+		if (!_n0.$) {
 			var a = _n0.a;
 			return elm$core$Result$Ok(a);
 		} else {
@@ -8996,7 +9021,7 @@ var author$project$Main$interpret = F2(
 							elm$parser$Parser$run,
 							author$project$Main$statement(model),
 							s);
-						if (_n0.$ === 'Ok') {
+						if (!_n0.$) {
 							var objs = _n0.a;
 							return objs;
 						} else {
@@ -9004,7 +9029,7 @@ var author$project$Main$interpret = F2(
 							return _Utils_update(
 								author$project$Main$emptyObjs,
 								{
-									prompt: 'Line ' + (elm$core$Debug$toString(n) + (': ' + (author$project$Main$showError(errInfo) + ('\"' + (s + '\"')))))
+									t: 'Line ' + (elm$core$String$fromInt(n) + (': ' + (author$project$Main$showError(errInfo) + ('\"' + (s + '\"')))))
 								});
 						}
 					}),
@@ -9012,77 +9037,77 @@ var author$project$Main$interpret = F2(
 				inputLines));
 	});
 var author$project$Main$plot = function (model) {
-	var input = model.input;
+	var input = model.X;
 	var info = A2(author$project$Main$interpret, model, input);
 	return _Utils_update(
 		model,
-		{circles: info.circles, labels: info.labels, lines: info.lines, lstates: info.lstates, points: info.points, prompt: info.prompt, pstates: info.pstates});
+		{r: info.r, o: info.o, s: info.s, p: info.p, i: info.i, t: info.t, u: info.u, j: info.j});
 };
 var author$project$Main$updateHelp = F2(
 	function (msg, model) {
 		switch (msg.$) {
-			case 'DragStart':
+			case 0:
 				var obj = msg.a;
 				var xy = msg.b;
 				return _Utils_update(
 					model,
 					{
-						drag: elm$core$Maybe$Just(
+						I: elm$core$Maybe$Just(
 							A3(author$project$Main$Drag, obj, xy, xy))
 					});
-			case 'DragAt':
+			case 1:
 				var xy = msg.a;
 				return _Utils_update(
 					model,
 					{
-						drag: A2(
+						I: A2(
 							elm$core$Maybe$map,
 							function (_n1) {
-								var start = _n1.start;
-								var obj = _n1.obj;
+								var start = _n1.U;
+								var obj = _n1.af;
 								return A3(author$project$Main$Drag, obj, start, xy);
 							},
-							model.drag)
+							model.I)
 					});
-			case 'DragEnd':
+			case 2:
 				return _Utils_update(
 					model,
 					{
-						drag: elm$core$Maybe$Nothing,
-						labels: author$project$Main$getLabels(model),
-						points: author$project$Main$getPoints(model)
+						I: elm$core$Maybe$Nothing,
+						o: author$project$Main$getLabels(model),
+						i: author$project$Main$getPoints(model)
 					});
-			case 'MOver':
+			case 3:
 				var obj = msg.a;
 				return _Utils_update(
 					model,
 					{
-						mOver: elm$core$Maybe$Just(obj)
+						Y: elm$core$Maybe$Just(obj)
 					});
-			case 'MOut':
+			case 4:
 				var obj = msg.a;
 				return _Utils_update(
 					model,
-					{mOver: elm$core$Maybe$Nothing});
-			case 'Change':
+					{Y: elm$core$Maybe$Nothing});
+			case 6:
 				var input = msg.a;
 				return _Utils_update(
 					model,
-					{input: input});
-			case 'Plot':
+					{X: input});
+			case 7:
 				return author$project$Main$plot(model);
-			case 'Export':
-				var objs = {circles: model.circles, labels: model.labels, lines: model.lines, lstates: model.lstates, points: model.points, prompt: '', pstates: model.pstates};
+			case 8:
+				var objs = {r: model.r, o: model.o, s: model.s, p: model.p, i: model.i, t: '', u: model.u, j: model.j};
 				return _Utils_update(
 					model,
 					{
-						prompt: 'width:' + (elm$core$Debug$toString(model.width) + (',height:' + (elm$core$Debug$toString(model.height) + (',input:' + ('\'' + (A2(
+						t: 'input:' + ('\'' + (A2(
 							elm$core$String$join,
 							'\\n',
-							elm$core$String$lines(model.input)) + ('\',\'' + (A2(
+							elm$core$String$lines(model.X)) + ('\',objsStr:\'' + (A2(
 							elm$json$Json$Encode$encode,
 							0,
-							author$project$Main$encodeObjs(objs)) + '\''))))))))
+							author$project$Main$encodeObjs(objs)) + '\''))))
 					});
 			default:
 				return model;
@@ -9094,21 +9119,6 @@ var author$project$Main$update = F2(
 			A2(author$project$Main$updateHelp, msg, model),
 			elm$core$Platform$Cmd$none);
 	});
-var author$project$Main$Export = {$: 'Export'};
-var author$project$Main$Plot = {$: 'Plot'};
-var author$project$Main$Change = function (a) {
-	return {$: 'Change', a: a};
-};
-var author$project$Main$change = function (input) {
-	return author$project$Main$Change(input);
-};
-var elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
-var elm$html$Html$text = elm$virtual_dom$VirtualDom$text;
-var author$project$Main$examples = A2(
-	elm$core$List$map,
-	elm$html$Html$text,
-	_List_fromArray(
-		['point A,B,C\n', 'connect AB,BC,AC\n', 'point D on line AB\n', 'point E on line BC 1:1\n', 'point F on circle ABC\n', 'connect AE dashed\n', 'connect CD\n', 'intersection of line AE line CD as point I\n', 'intersection of line AE circle ACD as point I\n', 'intersection of circle ABE circle ACD + as point I\n', 'intersection of circle ABE circle ACD - as point I\n', 'circle ABC\n', 'circle I:IA\n', 'projection of D on CB as point P\n', 'hide point I\n', 'hide line CD\n']));
 var author$project$Main$getCList = function (model) {
 	var circles = author$project$Main$getCircles(model);
 	return A2(
@@ -9139,6 +9149,7 @@ var author$project$Main$getPList = function (model) {
 			}),
 		points);
 };
+var elm$core$String$fromFloat = _String_fromNumber;
 var elm$svg$Svg$trustedNode = _VirtualDom_nodeNS('http://www.w3.org/2000/svg');
 var elm$svg$Svg$circle = elm$svg$Svg$trustedNode('circle');
 var elm$svg$Svg$g = elm$svg$Svg$trustedNode('g');
@@ -9152,8 +9163,8 @@ var author$project$Main$renderCircles = function (clist) {
 		elm$core$List$map,
 		function (_n0) {
 			var label = _n0.a;
-			var center = _n0.b.center;
-			var radius = _n0.b.radius;
+			var center = _n0.b.C;
+			var radius = _n0.b.F;
 			return A2(
 				elm$svg$Svg$g,
 				_List_Nil,
@@ -9165,11 +9176,11 @@ var author$project$Main$renderCircles = function (clist) {
 							[
 								elm$svg$Svg$Attributes$style('stroke:black;stroke-width:3;'),
 								elm$svg$Svg$Attributes$cx(
-								elm$core$Debug$toString(center.x)),
+								elm$core$String$fromFloat(center.a)),
 								elm$svg$Svg$Attributes$cy(
-								elm$core$Debug$toString(center.y)),
+								elm$core$String$fromFloat(center.b)),
 								elm$svg$Svg$Attributes$r(
-								elm$core$Debug$toString(radius)),
+								elm$core$String$fromFloat(radius)),
 								elm$svg$Svg$Attributes$fill('none')
 							]),
 						_List_Nil)
@@ -9187,12 +9198,12 @@ var author$project$Main$renderLines = function (llist) {
 		elm$core$List$map,
 		function (_n0) {
 			var label = _n0.a;
-			var twoPos = _n0.b.twoPos;
-			var extraState = _n0.b.extraState;
+			var twoPos = _n0.b.A;
+			var extraState = _n0.b.w;
 			var _n1 = function () {
-				if (extraState.$ === 'Just') {
+				if (!extraState.$) {
 					var es = extraState.a;
-					return _Utils_Tuple2(es.dashed, es.hidden);
+					return _Utils_Tuple2(es.H, es.l);
 				} else {
 					return _Utils_Tuple2(false, false);
 				}
@@ -9211,13 +9222,13 @@ var author$project$Main$renderLines = function (llist) {
 								elm$svg$Svg$Attributes$style(
 								'stroke:black;stroke-width:3;' + (dashed ? 'stroke-dasharray:10,6' : '')),
 								elm$svg$Svg$Attributes$x1(
-								elm$core$Debug$toString(twoPos.a.x)),
+								elm$core$String$fromFloat(twoPos.d.a)),
 								elm$svg$Svg$Attributes$y1(
-								elm$core$Debug$toString(twoPos.a.y)),
+								elm$core$String$fromFloat(twoPos.d.b)),
 								elm$svg$Svg$Attributes$x2(
-								elm$core$Debug$toString(twoPos.b.x)),
+								elm$core$String$fromFloat(twoPos.e.a)),
 								elm$svg$Svg$Attributes$y2(
-								elm$core$Debug$toString(twoPos.b.y))
+								elm$core$String$fromFloat(twoPos.e.b))
 							]),
 						_List_Nil)
 					]) : _List_Nil);
@@ -9225,17 +9236,17 @@ var author$project$Main$renderLines = function (llist) {
 		elm$core$Dict$toList(llist));
 };
 var author$project$Main$MOut = function (a) {
-	return {$: 'MOut', a: a};
+	return {$: 4, a: a};
 };
 var author$project$Main$MOver = function (a) {
-	return {$: 'MOver', a: a};
+	return {$: 3, a: a};
 };
 var author$project$Main$DragStart = F2(
 	function (a, b) {
-		return {$: 'DragStart', a: a, b: b};
+		return {$: 0, a: a, b: b};
 	});
 var elm$virtual_dom$VirtualDom$Custom = function (a) {
-	return {$: 'Custom', a: a};
+	return {$: 3, a: a};
 };
 var elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
 var elm$html$Html$Events$custom = F2(
@@ -9245,30 +9256,31 @@ var elm$html$Html$Events$custom = F2(
 			event,
 			elm$virtual_dom$VirtualDom$Custom(decoder));
 	});
+var elm$json$Json$Decode$map6 = _Json_map6;
 var mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$Event = F6(
 	function (keys, button, clientPos, offsetPos, pagePos, screenPos) {
-		return {button: button, clientPos: clientPos, keys: keys, offsetPos: offsetPos, pagePos: pagePos, screenPos: screenPos};
+		return {bf: button, bi: clientPos, bz: keys, bD: offsetPos, bH: pagePos, bO: screenPos};
 	});
-var mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$BackButton = {$: 'BackButton'};
-var mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$ErrorButton = {$: 'ErrorButton'};
-var mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$ForwardButton = {$: 'ForwardButton'};
-var mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$MainButton = {$: 'MainButton'};
-var mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$MiddleButton = {$: 'MiddleButton'};
-var mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$SecondButton = {$: 'SecondButton'};
+var mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$BackButton = 4;
+var mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$ErrorButton = 0;
+var mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$ForwardButton = 5;
+var mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$MainButton = 1;
+var mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$MiddleButton = 2;
+var mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$SecondButton = 3;
 var mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$buttonFromId = function (id) {
 	switch (id) {
 		case 0:
-			return mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$MainButton;
+			return 1;
 		case 1:
-			return mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$MiddleButton;
+			return 2;
 		case 2:
-			return mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$SecondButton;
+			return 3;
 		case 3:
-			return mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$BackButton;
+			return 4;
 		case 4:
-			return mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$ForwardButton;
+			return 5;
 		default:
-			return mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$ErrorButton;
+			return 0;
 	}
 };
 var mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$buttonDecoder = A2(
@@ -9285,7 +9297,7 @@ var mpizenberg$elm_pointer_events$Internal$Decode$clientPos = A3(
 	A2(elm$json$Json$Decode$field, 'clientY', elm$json$Json$Decode$float));
 var mpizenberg$elm_pointer_events$Internal$Decode$Keys = F3(
 	function (alt, ctrl, shift) {
-		return {alt: alt, ctrl: ctrl, shift: shift};
+		return {bc: alt, bl: ctrl, bP: shift};
 	});
 var mpizenberg$elm_pointer_events$Internal$Decode$keys = A4(
 	elm$json$Json$Decode$map3,
@@ -9327,29 +9339,29 @@ var mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$onWithOptions = F3(
 				elm$json$Json$Decode$map,
 				function (ev) {
 					return {
-						message: tag(ev),
-						preventDefault: options.preventDefault,
-						stopPropagation: options.stopPropagation
+						O: tag(ev),
+						aw: options.aw,
+						az: options.az
 					};
 				},
 				mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$eventDecoder));
 	});
-var mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$stopOptions = {preventDefault: true, stopPropagation: true};
+var mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$stopOptions = {aw: true, az: true};
 var mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$onDown = A2(mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$onWithOptions, 'mousedown', mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$stopOptions);
 var author$project$Main$onMouseDown = function (obj) {
 	return mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$onDown(
 		function (event) {
-			var _n0 = event.pagePos;
+			var _n0 = event.bH;
 			var x = _n0.a;
 			var y = _n0.b;
 			return A2(
 				author$project$Main$DragStart,
 				obj,
-				{x: x, y: y});
+				{a: x, b: y});
 		});
 };
 var elm$virtual_dom$VirtualDom$Normal = function (a) {
-	return {$: 'Normal', a: a};
+	return {$: 0, a: a};
 };
 var elm$html$Html$Events$on = F2(
 	function (event, decoder) {
@@ -9370,6 +9382,7 @@ var elm$html$Html$Events$onMouseOver = function (msg) {
 		'mouseover',
 		elm$json$Json$Decode$succeed(msg));
 };
+var elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var elm$svg$Svg$text = elm$virtual_dom$VirtualDom$text;
 var elm$svg$Svg$text_ = elm$svg$Svg$trustedNode('text');
 var elm$svg$Svg$Attributes$cursor = _VirtualDom_attribute('cursor');
@@ -9381,23 +9394,23 @@ var author$project$Main$renderPoints = function (plist) {
 		elm$core$List$map,
 		function (_n0) {
 			var label = _n0.a;
-			var pos = _n0.b.pos;
-			var labelPos = _n0.b.labelPos;
-			var state = _n0.b.state;
-			var extraState = _n0.b.extraState;
+			var pos = _n0.b.m;
+			var labelPos = _n0.b.D;
+			var state = _n0.b.G;
+			var extraState = _n0.b.w;
 			return A2(
 				elm$svg$Svg$g,
 				_List_Nil,
 				function () {
 					var hidden = function () {
-						if (extraState.$ === 'Just') {
+						if (!extraState.$) {
 							var es = extraState.a;
-							return es.hidden;
+							return es.l;
 						} else {
 							return false;
 						}
 					}();
-					if (labelPos.$ === 'Just') {
+					if (!labelPos.$) {
 						var lpos = labelPos.a;
 						return (!hidden) ? _List_fromArray(
 							[
@@ -9406,15 +9419,15 @@ var author$project$Main$renderPoints = function (plist) {
 								_List_fromArray(
 									[
 										elm$svg$Svg$Attributes$cx(
-										elm$core$Debug$toString(pos.x)),
+										elm$core$String$fromFloat(pos.a)),
 										elm$svg$Svg$Attributes$cy(
-										elm$core$Debug$toString(pos.y)),
+										elm$core$String$fromFloat(pos.b)),
 										elm$svg$Svg$Attributes$r(
-										(state.dragging || state.labelDragging) ? '6' : '4'),
+										(state.v || state.y) ? '6' : '4'),
 										elm$svg$Svg$Attributes$fill(
-										(state.dragging || state.labelDragging) ? 'red' : 'black'),
+										(state.v || state.y) ? 'red' : 'black'),
 										elm$svg$Svg$Attributes$cursor(
-										state.dragging ? 'move' : 'default'),
+										state.v ? 'move' : 'default'),
 										author$project$Main$onMouseDown(
 										author$project$Main$P(label)),
 										elm$html$Html$Events$onMouseOver(
@@ -9430,13 +9443,13 @@ var author$project$Main$renderPoints = function (plist) {
 								_List_fromArray(
 									[
 										elm$svg$Svg$Attributes$x(
-										elm$core$Debug$toString(pos.x + lpos.x)),
+										elm$core$String$fromFloat(pos.a + lpos.a)),
 										elm$svg$Svg$Attributes$y(
-										elm$core$Debug$toString((-pos.y) - lpos.y)),
+										elm$core$String$fromFloat((-pos.b) - lpos.b)),
 										elm$svg$Svg$Attributes$cursor('move'),
 										elm$svg$Svg$Attributes$transform('scale(1,-1)'),
 										elm$svg$Svg$Attributes$fill(
-										(state.dragging || state.labelDragging) ? 'red' : 'black'),
+										(state.v || state.y) ? 'red' : 'black'),
 										author$project$Main$onMouseDown(
 										author$project$Main$Label(label))
 									]),
@@ -9452,58 +9465,9 @@ var author$project$Main$renderPoints = function (plist) {
 		},
 		elm$core$Dict$toList(plist));
 };
-var elm$html$Html$button = _VirtualDom_node('button');
 var elm$html$Html$div = _VirtualDom_node('div');
-var elm$html$Html$textarea = _VirtualDom_node('textarea');
-var elm$html$Html$ul = _VirtualDom_node('ul');
-var elm$html$Html$Attributes$stringProperty = F2(
-	function (key, string) {
-		return A2(
-			_VirtualDom_property,
-			key,
-			elm$json$Json$Encode$string(string));
-	});
-var elm$html$Html$Attributes$placeholder = elm$html$Html$Attributes$stringProperty('placeholder');
 var elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
 var elm$html$Html$Attributes$style = elm$virtual_dom$VirtualDom$style;
-var elm$html$Html$Attributes$value = elm$html$Html$Attributes$stringProperty('value');
-var elm$html$Html$Events$onClick = function (msg) {
-	return A2(
-		elm$html$Html$Events$on,
-		'click',
-		elm$json$Json$Decode$succeed(msg));
-};
-var elm$html$Html$Events$alwaysStop = function (x) {
-	return _Utils_Tuple2(x, true);
-};
-var elm$virtual_dom$VirtualDom$MayStopPropagation = function (a) {
-	return {$: 'MayStopPropagation', a: a};
-};
-var elm$html$Html$Events$stopPropagationOn = F2(
-	function (event, decoder) {
-		return A2(
-			elm$virtual_dom$VirtualDom$on,
-			event,
-			elm$virtual_dom$VirtualDom$MayStopPropagation(decoder));
-	});
-var elm$json$Json$Decode$at = F2(
-	function (fields, decoder) {
-		return A3(elm$core$List$foldr, elm$json$Json$Decode$field, decoder, fields);
-	});
-var elm$html$Html$Events$targetValue = A2(
-	elm$json$Json$Decode$at,
-	_List_fromArray(
-		['target', 'value']),
-	elm$json$Json$Decode$string);
-var elm$html$Html$Events$onInput = function (tagger) {
-	return A2(
-		elm$html$Html$Events$stopPropagationOn,
-		'input',
-		A2(
-			elm$json$Json$Decode$map,
-			elm$html$Html$Events$alwaysStop,
-			A2(elm$json$Json$Decode$map, tagger, elm$html$Html$Events$targetValue)));
-};
 var elm$svg$Svg$svg = elm$svg$Svg$trustedNode('svg');
 var elm$svg$Svg$Attributes$height = _VirtualDom_attribute('height');
 var elm$svg$Svg$Attributes$width = _VirtualDom_attribute('width');
@@ -9521,9 +9485,9 @@ var author$project$Main$view = function (model) {
 				_List_fromArray(
 					[
 						elm$svg$Svg$Attributes$width(
-						elm$core$Debug$toString(model.width)),
+						elm$core$String$fromFloat(model.j.M)),
 						elm$svg$Svg$Attributes$height(
-						elm$core$Debug$toString(model.height))
+						elm$core$String$fromFloat(model.j.J))
 					]),
 				_List_fromArray(
 					[
@@ -9532,7 +9496,7 @@ var author$project$Main$view = function (model) {
 						_List_fromArray(
 							[
 								elm$svg$Svg$Attributes$transform(
-								'translate(' + (elm$core$Debug$toString(model.width / 2) + (',' + (elm$core$Debug$toString(model.height / 2) + ') scale(1,-1)'))))
+								'translate(' + (elm$core$String$fromFloat(model.j.M / 2) + (',' + (elm$core$String$fromFloat(model.j.J / 2) + ') scale(1,-1)'))))
 							]),
 						_Utils_ap(
 							author$project$Main$renderPoints(
@@ -9542,93 +9506,22 @@ var author$project$Main$view = function (model) {
 									author$project$Main$getLList(model)),
 								author$project$Main$renderCircles(
 									author$project$Main$getCList(model)))))
-					])),
-				A2(
-				elm$html$Html$div,
-				_List_Nil,
-				_List_fromArray(
-					[
-						A2(
-						elm$html$Html$textarea,
-						_List_fromArray(
-							[
-								A2(elm$html$Html$Attributes$style, 'width', '400px'),
-								A2(elm$html$Html$Attributes$style, 'height', '200px'),
-								A2(elm$html$Html$Attributes$style, 'rows', '20'),
-								A2(elm$html$Html$Attributes$style, 'cols', '30'),
-								A2(elm$html$Html$Attributes$style, 'background-color', '#595b5b'),
-								A2(elm$html$Html$Attributes$style, 'color', '#fff'),
-								elm$html$Html$Attributes$placeholder('input commands here'),
-								elm$html$Html$Attributes$value(model.input),
-								elm$html$Html$Events$onInput(author$project$Main$change)
-							]),
-						_List_Nil),
-						A2(
-						elm$html$Html$button,
-						_List_fromArray(
-							[
-								elm$html$Html$Events$onClick(author$project$Main$Plot)
-							]),
-						_List_fromArray(
-							[
-								elm$html$Html$text('plot')
-							])),
-						A2(
-						elm$html$Html$button,
-						_List_fromArray(
-							[
-								elm$html$Html$Events$onClick(author$project$Main$Export)
-							]),
-						_List_fromArray(
-							[
-								elm$html$Html$text('export')
-							]))
-					])),
-				A2(
-				elm$html$Html$div,
-				_List_fromArray(
-					[
-						A2(elm$html$Html$Attributes$style, 'color', 'red'),
-						A2(elm$html$Html$Attributes$style, 'white-space', 'pre-line')
-					]),
-				_List_fromArray(
-					[
-						elm$html$Html$text(model.prompt)
-					])),
-				elm$html$Html$text('Input examples:'),
-				A2(
-				elm$html$Html$ul,
-				_List_fromArray(
-					[
-						A2(elm$html$Html$Attributes$style, 'color', 'blue'),
-						A2(elm$html$Html$Attributes$style, 'white-space', 'pre-line')
-					]),
-				author$project$Main$examples)
+					]))
 			]));
 };
 var elm$browser$Browser$element = _Browser_element;
 var author$project$Main$main = elm$browser$Browser$element(
-	{init: author$project$Main$init, subscriptions: author$project$Main$subscriptions, update: author$project$Main$update, view: author$project$Main$view});
+	{bw: author$project$Main$init, bR: author$project$Main$subscriptions, bX: author$project$Main$update, bZ: author$project$Main$view});
 _Platform_export({'Main':{'init':author$project$Main$main(
 	A2(
 		elm$json$Json$Decode$andThen,
-		function (width) {
+		function (objsStr) {
 			return A2(
 				elm$json$Json$Decode$andThen,
-				function (objsStr) {
-					return A2(
-						elm$json$Json$Decode$andThen,
-						function (input) {
-							return A2(
-								elm$json$Json$Decode$andThen,
-								function (height) {
-									return elm$json$Json$Decode$succeed(
-										{height: height, input: input, objsStr: objsStr, width: width});
-								},
-								A2(elm$json$Json$Decode$field, 'height', elm$json$Json$Decode$float));
-						},
-						A2(elm$json$Json$Decode$field, 'input', elm$json$Json$Decode$string));
+				function (input) {
+					return elm$json$Json$Decode$succeed(
+						{X: input, aT: objsStr});
 				},
-				A2(elm$json$Json$Decode$field, 'objsStr', elm$json$Json$Decode$string));
+				A2(elm$json$Json$Decode$field, 'input', elm$json$Json$Decode$string));
 		},
-		A2(elm$json$Json$Decode$field, 'width', elm$json$Json$Decode$float)))(0)}});}(this));
+		A2(elm$json$Json$Decode$field, 'objsStr', elm$json$Json$Decode$string)))(0)}});}(this));

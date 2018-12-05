@@ -10,7 +10,6 @@ import List as List
 import Dict as Dict
 import Svg as S
 import Svg.Attributes as SA
-import Debug exposing (toString)
 import Html.Events.Extra.Pointer as Pointer
 import Html.Events.Extra.Mouse as Mouse
 import Parser exposing (..)
@@ -604,7 +603,7 @@ statement model=succeed (identity)
                              ]
                 ,succeed (\lls t->{emptyObjs|
                                      lines=List.map
-                                           (\ll->(ll,lineNameToLine ll|>fromJust))
+                                           (\ll->(ll,lineNameToLine ll|>fromJust nLine))
                                            lls |> Dict.fromList
                                     ,lstates=List.map
                                            (\ll->(ll,{defaultLSta|dashed=t}))
@@ -732,7 +731,7 @@ statement model=succeed (identity)
                      |.spaces
                      |.end
                 ,succeed (\cs->{emptyObjs|circles=
-                                    List.map (\c->(c,circleNameToCircle c |>fromJust))
+                                    List.map (\c->(c,circleNameToCircle c |>fromJust nCircle))
                                     cs |> Dict.fromList
                                }
                          )
@@ -769,7 +768,7 @@ interpret model input=let inputLines=String.lines input
                                 Ok objs->objs
                                 Err errInfo->
                                   {emptyObjs|prompt=
-                                       ("Line "++(toString n)++": "
+                                       ("Line "++(String.fromInt n)++": "
                                             ++showError errInfo ++ "\""++s++"\"")}
                                ) numL inputLines
                           |> collectAndCheck model
@@ -779,7 +778,7 @@ collectAndCheck model objsList=let objs=List.foldl addObjs emptyObjs objsList
                          in
                              {objs|labels=Dict.map (\s p->
                                                     if (Dict.member s model.labels) then
-                                                        getLabelPos model s |> fromJust
+                                                        getLabelPos model s |> fromJust nPos
                                                     else
                                                         {x=4,y=4}
                                                    ) objs.points} 
@@ -831,7 +830,7 @@ renderPoints plist=
               if (not hidden)
               then
                   [
-                   S.circle [SA.cx (toString pos.x), SA.cy (toString pos.y),
+                   S.circle [SA.cx (String.fromFloat pos.x), SA.cy (String.fromFloat pos.y),
                              SA.r (if state.dragging||state.labelDragging then "6" else "4"),
                              SA.fill (if state.dragging||state.labelDragging then "red" else "black"),
                              SA.cursor (if state.dragging then "move" else "default"),
@@ -839,7 +838,7 @@ renderPoints plist=
                              onMouseOver (MOver (P label)),
                              onMouseOut (MOut (P label))
                             ][]
-                  ,S.text_ [SA.x (pos.x+lpos.x |> toString), SA.y (-pos.y-lpos.y |>toString ),
+                  ,S.text_ [SA.x (pos.x+lpos.x |> String.fromFloat), SA.y (-pos.y-lpos.y |>String.fromFloat ),
                                         SA.cursor "move",
                                         SA.transform "scale(1,-1)",
                                         SA.fill (if state.dragging || state.labelDragging then "red" else "black"),
@@ -869,8 +868,8 @@ renderLines llist=
               [
                S.line [SA.style ("stroke:black;stroke-width:3;"
                                  ++if dashed then "stroke-dasharray:10,6" else ""),
-                  SA.x1 (toString twoPos.a.x), SA.y1 (toString twoPos.a.y),
-                  SA.x2 (toString twoPos.b.x), SA.y2 (toString twoPos.b.y)
+                  SA.x1 (String.fromFloat twoPos.a.x), SA.y1 (String.fromFloat twoPos.a.y),
+                  SA.x2 (String.fromFloat twoPos.b.x), SA.y2 (String.fromFloat twoPos.b.y)
                  ][]
               ]
           else
@@ -886,8 +885,8 @@ renderCircles clist=
               S.g []
               [
                S.circle [SA.style "stroke:black;stroke-width:3;"
-                        ,SA.cx (toString center.x),SA.cy (toString center.y)
-                        ,SA.r (toString radius)
+                        ,SA.cx (String.fromFloat center.x),SA.cy (String.fromFloat center.y)
+                        ,SA.r (String.fromFloat radius)
                         ,SA.fill "none"
                  ][]
               ]
@@ -907,9 +906,9 @@ view model =
         style "touch-action" "none"
         ]
         [
-         S.svg [SA.width (toString model.styles.width), SA.height (toString model.styles.height)]
+         S.svg [SA.width (String.fromFloat model.styles.width), SA.height (String.fromFloat model.styles.height)]
              [S.g [SA.transform
-                  ("translate("++(model.styles.width/2 |> toString )++","++(model.styles.height/2 |>toString)++") scale(1,-1)")]
+                  ("translate("++(model.styles.width/2 |> String.fromFloat )++","++(model.styles.height/2 |>String.fromFloat)++") scale(1,-1)")]
                   ((renderPoints (getPList model))
                    ++(renderLines (getLList model))
                    ++(renderCircles (getCList model))                       
@@ -947,7 +946,8 @@ view model =
         ]
 
 examples=List.map text [
-                       "point A,B,C\n"
+                        "set size 500 300\n"
+                       ,"point A,B,C\n"
                        ,"connect AB,BC,AC\n"
                        ,"point D on line AB\n"
                        ,"point E on line BC 1:1\n"
@@ -1095,7 +1095,7 @@ intersectionL twoPos1 twoPos2=
         
 getPoint:Model->PLabel->Point
 getPoint model plabel=
-    let point=Dict.get plabel model.points |> fromJust
+    let point=Dict.get plabel model.points |> fromJust nPoint
     in
         case model.drag of
             Nothing ->point
@@ -1164,10 +1164,19 @@ getLines model=model.lines
 getCircles:Model->Circles
 getCircles model=model.circles
 
-fromJust : Maybe a -> a
-fromJust x = case x of
+fromJust : a->Maybe a -> a
+fromJust na x = case x of
                  Just y -> y
-                 Nothing -> Debug.todo "error: fromJust Nothing"
+                 Nothing ->na
+
+nPos:Position
+nPos={x=0/0 ,y=0/0}
+nPoint:Point
+nPoint=FP nPos
+nLine:Line
+nLine=LineAB {a="",b=""}
+nCircle:Circle
+nCircle=Cir2 {a="",b=""}
 
 getP:Model->PLabel->Pinfo
 getP model plabel=
