@@ -4,7 +4,7 @@
 
 elm make geo2d.elm --output main.js --optimize
  
-elm make geo2d.elm --output main_show.js --optimize
+elm make geo2d_show.elm --output main_show.js --optimize
 
 ## usage
 
