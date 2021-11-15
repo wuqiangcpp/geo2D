@@ -30,7 +30,7 @@ type alias CLabel=String
 
 
 --free point(FP), point on line (POL), free POL(FPOL), two line intersection(P2L)
-type Point =FP Position | POL LLabel Float Float | FPOL LLabel Position
+type Point =FP Position | POL LLabel LLabel LLabel | FPOL LLabel Position
            | P2L LLabel LLabel| POLP PLabel LLabel
            | P2C CLabel CLabel Bool| PCL CLabel LLabel Bool|FPOC CLabel Position
 
@@ -98,9 +98,9 @@ initpoints: Points
 initpoints=Dict.empty
 samplePoints=Dict.insert "B" (FP {x=20,y=-120}) (Dict.singleton "A" (FP {x=0,y=0}))
         |> (Dict.insert "C" (FP {x=60,y=120}))
-        |> (Dict.insert "D" (POL "AB" 1 1))
-        |> (Dict.insert "E" (POL "BC" 1 1))
-        |> (Dict.insert "F" (POL "AC" 1 1))
+        |> (Dict.insert "D" (POL "AB" "1" "1"))
+        |> (Dict.insert "E" (POL "BC" "1" "1"))
+        |> (Dict.insert "F" (POL "AC" "1" "1"))
         |> (Dict.insert "G" (FPOL "AC" {x=30,y=30}))
         |> (Dict.insert "I" (P2L "CD" "AE"))
         |> (Dict.insert "H" (P2L "CD" "BG"))           
@@ -253,8 +253,8 @@ decodePoint=D.field "type" D.string
               |> D.andThen (\t->case t of
                                 "FP"->D.map FP (D.field "position" decodePosition)
                                 "POL"->D.map3 POL (D.field "llabel" D.string)
-                                                   (D.field "a" D.float)
-                                                   (D.field "b" D.float)
+                                                   (D.field "l1label" D.string)
+                                                   (D.field "l2label" D.string)
                                 "FPOL"->D.map2 FPOL
                                                  (D.field "llabel" D.string)
                                                  (D.field "position" decodePosition)
@@ -324,10 +324,10 @@ encodePoint:Point->E.Value
 encodePoint point=case point of
                       FP pos->E.object [("type",E.string "FP")
                                        ,("position",encodePosition pos)]
-                      POL ll a b->E.object [("type",E.string "POL")
+                      POL ll l1 l2->E.object [("type",E.string "POL")
                                            ,("llabel",E.string ll)
-                                           ,("a",E.float a)
-                                           ,("b",E.float b)
+                                           ,("l1label",E.string l1)
+                                           ,("l2label",E.string l2)
                                            ]
                       FPOL ll pos->E.object [("type",E.string "FPOL")
                                             ,("llabel",E.string ll)
@@ -403,7 +403,7 @@ mergePstate:Pstate->Maybe Pstate->Pstate
 mergePstate ps1 s=case s of
                         Nothing->ps1
                         (Just ps2)->{defaultPSta|hidden=ps1.hidden||ps2.hidden}
---if collion, preference is given to first arg
+--if collision, preference is given to first arg
 mergePstates:Pstates->Pstates->Pstates
 mergePstates ps1 ps2=Dict.foldl
     (\c v d->
@@ -532,7 +532,7 @@ circleNameToCircle clabel=
                 Just (Cir3 {a=a,b=b,c=c})
         _->Nothing
     
-newPoints:Model->List String->String->LLabel->Float->Float->Points
+newPoints:Model->List String->String->LLabel->String->String->Points
 newPoints model ns t label a b=List.map
                          (\s->
                               let
@@ -541,7 +541,7 @@ newPoints model ns t label a b=List.map
                                   if (String.isEmpty label)
                                   then (s,FP pos)
                                   else if (t=="line")
-                                       then if(a==0 && b==0)
+                                       then if(a=="0" && b=="0")
                                             then
                                                  (s,FPOL label pos)
                                             else (s,POL label a b)
@@ -582,23 +582,29 @@ statement model=succeed (identity)
                                         |. spaces
                                         |=lineLabelName
                                         |.spaces
-                                        |=oneOf [succeed (\a b->(a,b))
+                                        |=oneOf [succeed (\l1 l2->(l1,l2))
+                                                |=lineLabelName
+                                                |.symbol ":"
+                                                |=lineLabelName
+                                                |.spaces
+                                                |.end
+                                                ,succeed (\l1 l2->(String.fromFloat l1,String.fromFloat l2))
                                                 |=float
                                                 |.symbol ":"
                                                 |=float
                                                 |.spaces
                                                 |.end
-                                                ,succeed (\_->(0,0))
+                                                ,succeed (\_->("0","0"))
                                                 |=end
                                                 ]
-                                        ,succeed (\clabel->("circle",clabel,(0,0)))
+                                        ,succeed (\clabel->("circle",clabel,("0","0")))
                                             |. keyword "circle"
                                             |. spaces
                                             |=circleLabelName
                                             |.spaces
                                             |.end
                                         ]
-                             ,succeed (\_->("","",(0,0)))
+                             ,succeed (\_->("","",("0","0")))
                                  |=end
                              ]
                 ,succeed (\lls t->{emptyObjs|
@@ -1206,12 +1212,18 @@ getP model plabel=
                            }
                     ,extraState=extraSta
                     }  
-            POL llabel f1 f2->
+            POL llabel l1 l2->
                 let
                     linfo=getL model llabel
                     twoPos=linfo.twoPos
                     posa=twoPos.a
                     posb=twoPos.b
+                    f1=case (String.toFloat l1) of
+                            Just a->a
+                            Nothing->getLength model l1                                       
+                    f2=case (String.toFloat l2) of
+                            Just a->a
+                            Nothing->getLength model l2
                     ratio=f1/(f1+f2)
                     vab=minusPos posb posa
                 in
@@ -1314,6 +1326,15 @@ getL model llabel=
                    }
             Nothing->{twoPos={a={x=0,y=0},b={x=0,y=0}}
                      ,extraState=Nothing}--this will never happen
+getLength:Model->LLabel->Float
+getLength model label=
+    let   linfo=getL model label
+          twoPos=linfo.twoPos
+          posa=twoPos.a
+          posb=twoPos.b
+          dpos=minusPos posa posb
+    in    sqrt(dpos.x*dpos.x+dpos.y*dpos.y)
+
 
 getC:Model->CLabel->Cinfo
 getC model clabel=

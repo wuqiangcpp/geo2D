@@ -5044,8 +5044,8 @@ var author$project$Main$decodePoint = A2(
 					elm$json$Json$Decode$map3,
 					author$project$Main$POL,
 					A2(elm$json$Json$Decode$field, 'llabel', elm$json$Json$Decode$string),
-					A2(elm$json$Json$Decode$field, 'a', elm$json$Json$Decode$float),
-					A2(elm$json$Json$Decode$field, 'b', elm$json$Json$Decode$float));
+					A2(elm$json$Json$Decode$field, 'l1label', elm$json$Json$Decode$string),
+					A2(elm$json$Json$Decode$field, 'l2label', elm$json$Json$Decode$string));
 			case 'FPOL':
 				return A3(
 					elm$json$Json$Decode$map2,
@@ -6020,8 +6020,8 @@ var author$project$Main$encodePoint = function (point) {
 					]));
 		case 1:
 			var ll = point.a;
-			var a = point.b;
-			var b = point.c;
+			var l1 = point.b;
+			var l2 = point.c;
 			return elm$json$Json$Encode$object(
 				_List_fromArray(
 					[
@@ -6032,11 +6032,11 @@ var author$project$Main$encodePoint = function (point) {
 						'llabel',
 						elm$json$Json$Encode$string(ll)),
 						_Utils_Tuple2(
-						'a',
-						elm$json$Json$Encode$float(a)),
+						'l1label',
+						elm$json$Json$Encode$string(l1)),
 						_Utils_Tuple2(
-						'b',
-						elm$json$Json$Encode$float(b))
+						'l2label',
+						elm$json$Json$Encode$string(l2))
 					]));
 		case 2:
 			var ll = point.a;
@@ -6893,6 +6893,7 @@ var elm$core$Dict$member = F2(
 			return false;
 		}
 	});
+var elm$core$String$toFloat = _String_toFloat;
 var author$project$Main$getC = F2(
 	function (model, clabel) {
 		var circles = author$project$Main$getCircles(model);
@@ -6902,7 +6903,7 @@ var author$project$Main$getC = F2(
 				var a = circle.a.a.d;
 				var b = circle.a.a.e;
 				var infob = A2(author$project$Main$getL, model, b);
-				var posb = infob.A;
+				var posb = infob.z;
 				var infoa = A2(author$project$Main$getP, model, a);
 				var posa = infoa.m;
 				var dpos = A2(author$project$Main$minusPos, posb.d, posb.e);
@@ -6938,7 +6939,7 @@ var author$project$Main$getL = F2(
 			var b = line.a.e;
 			return {
 				w: state,
-				A: {
+				z: {
 					d: A2(author$project$Main$getP, model, a).m,
 					e: A2(author$project$Main$getP, model, b).m
 				}
@@ -6946,12 +6947,21 @@ var author$project$Main$getL = F2(
 		} else {
 			return {
 				w: elm$core$Maybe$Nothing,
-				A: {
+				z: {
 					d: {a: 0, b: 0},
 					e: {a: 0, b: 0}
 				}
 			};
 		}
+	});
+var author$project$Main$getLength = F2(
+	function (model, label) {
+		var linfo = A2(author$project$Main$getL, model, label);
+		var twoPos = linfo.z;
+		var posa = twoPos.d;
+		var posb = twoPos.e;
+		var dpos = A2(author$project$Main$minusPos, posa, posb);
+		return elm$core$Basics$sqrt((dpos.a * dpos.a) + (dpos.b * dpos.b));
 	});
 var author$project$Main$getP = F2(
 	function (model, plabel) {
@@ -6990,7 +7000,7 @@ var author$project$Main$getP = F2(
 				var pos = point.b;
 				var actualPos = A2(
 					author$project$Main$footPoint,
-					A2(author$project$Main$getL, model, llabel).A,
+					A2(author$project$Main$getL, model, llabel).z,
 					pos);
 				return {
 					w: extraSta,
@@ -7011,14 +7021,32 @@ var author$project$Main$getP = F2(
 				};
 			case 1:
 				var llabel = point.a;
-				var f1 = point.b;
-				var f2 = point.c;
-				var ratio = f1 / (f1 + f2);
+				var l1 = point.b;
+				var l2 = point.c;
 				var linfo = A2(author$project$Main$getL, model, llabel);
-				var twoPos = linfo.A;
+				var twoPos = linfo.z;
 				var posa = twoPos.d;
 				var posb = twoPos.e;
 				var vab = A2(author$project$Main$minusPos, posb, posa);
+				var f2 = function () {
+					var _n4 = elm$core$String$toFloat(l2);
+					if (!_n4.$) {
+						var a = _n4.a;
+						return a;
+					} else {
+						return A2(author$project$Main$getLength, model, l2);
+					}
+				}();
+				var f1 = function () {
+					var _n3 = elm$core$String$toFloat(l1);
+					if (!_n3.$) {
+						var a = _n3.a;
+						return a;
+					} else {
+						return A2(author$project$Main$getLength, model, l1);
+					}
+				}();
+				var ratio = f1 / (f1 + f2);
 				return {
 					w: extraSta,
 					D: A2(author$project$Main$getLabelPos, model, plabel),
@@ -7038,8 +7066,8 @@ var author$project$Main$getP = F2(
 			case 3:
 				var l1 = point.a;
 				var l2 = point.b;
-				var twoPos2 = A2(author$project$Main$getL, model, l2).A;
-				var twoPos1 = A2(author$project$Main$getL, model, l1).A;
+				var twoPos2 = A2(author$project$Main$getL, model, l2).z;
+				var twoPos1 = A2(author$project$Main$getL, model, l1).z;
 				return {
 					w: extraSta,
 					D: A2(author$project$Main$getLabelPos, model, plabel),
@@ -7061,7 +7089,7 @@ var author$project$Main$getP = F2(
 				return {
 					w: extraSta,
 					D: A2(author$project$Main$getLabelPos, model, plabel),
-					m: A2(author$project$Main$footPoint, twoP.A, pinfo.m),
+					m: A2(author$project$Main$footPoint, twoP.z, pinfo.m),
 					G: _Utils_update(
 						author$project$Main$defaultSta,
 						{
@@ -7102,7 +7130,7 @@ var author$project$Main$getP = F2(
 					m: A3(
 						author$project$Main$intersectionCL,
 						cinfo,
-						author$project$Main$twoPointLine(linfo.A),
+						author$project$Main$twoPointLine(linfo.z),
 						isPositive),
 					G: _Utils_update(
 						author$project$Main$defaultSta,
@@ -7174,7 +7202,7 @@ var author$project$Main$getPoint = F2(
 						var newPos = A4(author$project$Main$translatePos, model, pos, start, current);
 						var actualPos = A2(
 							author$project$Main$footPoint,
-							A2(author$project$Main$getL, model, llabel).A,
+							A2(author$project$Main$getL, model, llabel).z,
 							newPos);
 						return A2(author$project$Main$FPOL, llabel, actualPos);
 					case 7:
@@ -8127,7 +8155,7 @@ var author$project$Main$newPoints = F6(
 					var pos = A2(author$project$Main$nameToPosition, model, s);
 					return elm$core$String$isEmpty(label) ? _Utils_Tuple2(
 						s,
-						author$project$Main$FP(pos)) : ((t === 'line') ? (((!a) && (!b)) ? _Utils_Tuple2(
+						author$project$Main$FP(pos)) : ((t === 'line') ? (((a === '0') && (b === '0')) ? _Utils_Tuple2(
 						s,
 						A2(author$project$Main$FPOL, label, pos)) : _Utils_Tuple2(
 						s,
@@ -8143,6 +8171,7 @@ var elm$core$Dict$singleton = F2(
 	function (key, value) {
 		return A5(elm$core$Dict$RBNode_elm_builtin, 1, key, value, elm$core$Dict$RBEmpty_elm_builtin, elm$core$Dict$RBEmpty_elm_builtin);
 	});
+var elm$core$String$fromFloat = _String_fromNumber;
 var elm$parser$Parser$ExpectingEnd = {$: 10};
 var elm$parser$Parser$Advanced$end = function (x) {
 	return function (s) {
@@ -8158,7 +8187,6 @@ var elm$parser$Parser$end = elm$parser$Parser$Advanced$end(elm$parser$Parser$Exp
 var elm$parser$Parser$ExpectingFloat = {$: 5};
 var elm$parser$Parser$Advanced$consumeBase = _Parser_consumeBase;
 var elm$parser$Parser$Advanced$consumeBase16 = _Parser_consumeBase16;
-var elm$core$String$toFloat = _String_toFloat;
 var elm$parser$Parser$Advanced$bumpOffset = F2(
 	function (newOffset, s) {
 		return {aE: s.aE + (newOffset - s.f), g: s.g, h: s.h, f: newOffset, a6: s.a6, c: s.c};
@@ -8462,8 +8490,27 @@ var author$project$Main$statement = function (model) {
 															elm$parser$Parser$keeper,
 															elm$parser$Parser$succeed(
 																F2(
-																	function (a, b) {
-																		return _Utils_Tuple2(a, b);
+																	function (l1, l2) {
+																		return _Utils_Tuple2(l1, l2);
+																	})),
+															A2(
+																elm$parser$Parser$ignorer,
+																author$project$Main$lineLabelName,
+																elm$parser$Parser$symbol(':'))),
+														A2(
+															elm$parser$Parser$ignorer,
+															A2(elm$parser$Parser$ignorer, author$project$Main$lineLabelName, elm$parser$Parser$spaces),
+															elm$parser$Parser$end)),
+														A2(
+														elm$parser$Parser$keeper,
+														A2(
+															elm$parser$Parser$keeper,
+															elm$parser$Parser$succeed(
+																F2(
+																	function (l1, l2) {
+																		return _Utils_Tuple2(
+																			elm$core$String$fromFloat(l1),
+																			elm$core$String$fromFloat(l2));
 																	})),
 															A2(
 																elm$parser$Parser$ignorer,
@@ -8477,7 +8524,7 @@ var author$project$Main$statement = function (model) {
 														elm$parser$Parser$keeper,
 														elm$parser$Parser$succeed(
 															function (_n2) {
-																return _Utils_Tuple2(0, 0);
+																return _Utils_Tuple2('0', '0');
 															}),
 														elm$parser$Parser$end)
 													]))),
@@ -8492,7 +8539,7 @@ var author$project$Main$statement = function (model) {
 															return _Utils_Tuple3(
 																'circle',
 																clabel,
-																_Utils_Tuple2(0, 0));
+																_Utils_Tuple2('0', '0'));
 														}),
 													elm$parser$Parser$keyword('circle')),
 												elm$parser$Parser$spaces),
@@ -8508,7 +8555,7 @@ var author$project$Main$statement = function (model) {
 										return _Utils_Tuple3(
 											'',
 											'',
-											_Utils_Tuple2(0, 0));
+											_Utils_Tuple2('0', '0'));
 									}),
 								elm$parser$Parser$end)
 							]))),
@@ -9164,7 +9211,6 @@ var author$project$Main$getPList = function (model) {
 			}),
 		points);
 };
-var elm$core$String$fromFloat = _String_fromNumber;
 var elm$svg$Svg$trustedNode = _VirtualDom_nodeNS('http://www.w3.org/2000/svg');
 var elm$svg$Svg$circle = elm$svg$Svg$trustedNode('circle');
 var elm$svg$Svg$g = elm$svg$Svg$trustedNode('g');
@@ -9213,7 +9259,7 @@ var author$project$Main$renderLines = function (llist) {
 		elm$core$List$map,
 		function (_n0) {
 			var label = _n0.a;
-			var twoPos = _n0.b.A;
+			var twoPos = _n0.b.z;
 			var extraState = _n0.b.w;
 			var _n1 = function () {
 				if (!extraState.$) {

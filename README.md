@@ -1,5 +1,5 @@
 # geo2D: A tool for planar geometry drawing. http://implex.top/tools/geo2d.html
-  
+## elm version 0.19.0  
 ## make
 
 elm make geo2d.elm --output main.js --optimize
