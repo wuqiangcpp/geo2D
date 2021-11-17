@@ -207,6 +207,7 @@ updateHelp msg model =
                      ++"',objsStr:'"
                      ++(E.encode 0 (encodeObjs objs))++"'"
                 }
+--                (model,Download.string "export.org" "text/org" org)
         _->model
            
 type alias Styles={width:Float,height:Float}

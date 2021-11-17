@@ -6852,8 +6852,10 @@ var author$project$Main$intersectionCL = F3(
 		var aa = (((a * a) * o.b) + (b * c)) - ((a * b) * o.a);
 		var d = elm$core$Basics$sqrt(
 			A2(elm$core$Basics$pow, (((a * b) * o.a) - (b * c)) - ((a * a) * o.b), 2) - ((A2(elm$core$Basics$pow, a, 2) + A2(elm$core$Basics$pow, b, 2)) * ((A2(elm$core$Basics$pow, c, 2) - (((2 * a) * c) * o.a)) + (A2(elm$core$Basics$pow, a, 2) * ((A2(elm$core$Basics$pow, o.a, 2) + A2(elm$core$Basics$pow, o.b, 2)) - A2(elm$core$Basics$pow, r, 2))))));
-		var y = isPositive ? ((aa + d) / (A2(elm$core$Basics$pow, a, 2) + A2(elm$core$Basics$pow, b, 2))) : ((aa - d) / (A2(elm$core$Basics$pow, a, 2) + A2(elm$core$Basics$pow, b, 2)));
-		var x = (c - (b * y)) / a;
+		var sign = (a < 0) ? 1 : (-1);
+		var y = isPositive ? ((aa + (sign * d)) / (A2(elm$core$Basics$pow, a, 2) + A2(elm$core$Basics$pow, b, 2))) : ((aa - (sign * d)) / (A2(elm$core$Basics$pow, a, 2) + A2(elm$core$Basics$pow, b, 2)));
+		var x = (elm$core$Basics$abs(a) < 1.0e-4) ? (o.a + (sign * elm$core$Basics$sqrt(
+			A2(elm$core$Basics$pow, r, 2) - A2(elm$core$Basics$pow, y - o.b, 2)))) : ((c - (b * y)) / a);
 		return {a: x, b: y};
 	});
 var author$project$Main$intersectionC = F3(

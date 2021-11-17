@@ -948,7 +948,7 @@ view model =
 --            ,style "white-space" "pre-line"
 --            ]
 --            examples
-           
+--           
         ]
 
 examples=List.map text [
@@ -1062,10 +1062,15 @@ intersectionCL cinfo l isPositive=
         aa=a*a*o.y+b*c-a*b*o.x
         d=sqrt((a*b*o.x-b*c-a*a*o.y)^2-
                    (a^2+b^2)*(c^2-2*a*c*o.x+a^2*(o.x^2+o.y^2-r^2)))
+        sign=if a<0
+             then 1
+             else -1
         y=if isPositive
-          then (aa+d)/(a^2+b^2)
-          else (aa-d)/(a^2+b^2)
-        x=(c-b*y)/a
+          then (aa+sign*d)/(a^2+b^2)
+          else (aa-sign*d)/(a^2+b^2)
+        x=if (abs(a)<1e-4)
+          then o.x+sign*sqrt(r^2-(y-o.y)^2)
+          else (c-b*y)/a
     in
         {x=x,y=y}
         
