@@ -2643,7 +2643,7 @@ var _VirtualDom_mapEventTuple = F2(function(func, tuple)
 var _VirtualDom_mapEventRecord = F2(function(func, record)
 {
 	return {
-		O: func(record.O),
+		P: func(record.P),
 		az: record.az,
 		aw: record.aw
 	}
@@ -2913,7 +2913,7 @@ function _VirtualDom_makeCallback(eventNode, initialHandler)
 		// 3 = Custom
 
 		var value = result.a;
-		var message = !tag ? value : tag < 3 ? value.a : value.O;
+		var message = !tag ? value : tag < 3 ? value.a : value.P;
 		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.az;
 		var currentEventNode = (
 			stopPropagation && event.stopPropagation(),
@@ -4430,7 +4430,7 @@ var author$project$Main$Model = function (styles) {
 								return function (mOver) {
 									return function (input) {
 										return function (prompt) {
-											return {s: circles, I: drag, S: input, o: labels, t: lines, p: lstates, Y: mOver, i: points, r: prompt, u: pstates, j: styles};
+											return {s: circles, I: drag, O: input, o: labels, t: lines, p: lstates, Y: mOver, i: points, r: prompt, u: pstates, j: styles};
 										};
 									};
 								};
@@ -5283,7 +5283,7 @@ var author$project$Main$interpret0 = function (objsStr) {
 var elm$core$Platform$Cmd$batch = _Platform_batch;
 var elm$core$Platform$Cmd$none = elm$core$Platform$Cmd$batch(_List_Nil);
 var author$project$Main$init = function (_n0) {
-	var input = _n0.S;
+	var input = _n0.O;
 	var objsStr = _n0.aT;
 	var objs = author$project$Main$interpret0(objsStr);
 	return _Utils_Tuple2(
@@ -9086,7 +9086,7 @@ var author$project$Main$interpret = F2(
 				inputLines));
 	});
 var author$project$Main$plot = function (model) {
-	var input = model.S;
+	var input = model.O;
 	var info = A2(author$project$Main$interpret, model, input);
 	return _Utils_update(
 		model,
@@ -9142,18 +9142,25 @@ var author$project$Main$updateHelp = F2(
 				var input = msg.a;
 				return _Utils_update(
 					model,
-					{S: input});
+					{O: input});
 			case 7:
 				return author$project$Main$plot(model);
 			case 8:
 				var objs = {s: model.s, o: model.o, t: model.t, p: model.p, i: model.i, r: '', u: model.u, j: model.j};
+				var org = '#+TITLE: \n#+OPTIONS: toc:nil\n#+INFOJS_OPT: path:/js/geo2d_show.js\n#+LINK_UP: ../geo2d.html\ndescriptions\n#+BEGIN_HTML\n<div id=\"elm\"></div>\n<script>\nvar app = Elm.Main.init({\nnode: document.getElementById(\'elm\')\n,flags:{input:' + ('\'' + (A2(
+					elm$core$String$join,
+					'\\n',
+					elm$core$String$lines(model.O)) + ('\',objsStr:\'' + (A2(
+					elm$json$Json$Encode$encode,
+					0,
+					author$project$Main$encodeObjs(objs)) + '\'}\n})\n</script>\n#+END_HTML'))));
 				return _Utils_update(
 					model,
 					{
 						r: 'input:' + ('\'' + (A2(
 							elm$core$String$join,
 							'\\n',
-							elm$core$String$lines(model.S)) + ('\',objsStr:\'' + (A2(
+							elm$core$String$lines(model.O)) + ('\',objsStr:\'' + (A2(
 							elm$json$Json$Encode$encode,
 							0,
 							author$project$Main$encodeObjs(objs)) + '\''))))
@@ -9402,7 +9409,7 @@ var mpizenberg$elm_pointer_events$Html$Events$Extra$Mouse$onWithOptions = F3(
 				elm$json$Json$Decode$map,
 				function (ev) {
 					return {
-						O: tag(ev),
+						P: tag(ev),
 						aw: options.aw,
 						az: options.az
 					};
@@ -9634,7 +9641,7 @@ var author$project$Main$view = function (model) {
 								A2(elm$html$Html$Attributes$style, 'background-color', '#595b5b'),
 								A2(elm$html$Html$Attributes$style, 'color', '#fff'),
 								elm$html$Html$Attributes$placeholder('input commands here'),
-								elm$html$Html$Attributes$value(model.S),
+								elm$html$Html$Attributes$value(model.O),
 								elm$html$Html$Events$onInput(author$project$Main$change)
 							]),
 						_List_Nil),
@@ -9692,7 +9699,7 @@ _Platform_export({'Main':{'init':author$project$Main$main(
 				elm$json$Json$Decode$andThen,
 				function (input) {
 					return elm$json$Json$Decode$succeed(
-						{S: input, aT: objsStr});
+						{O: input, aT: objsStr});
 				},
 				A2(elm$json$Json$Decode$field, 'input', elm$json$Json$Decode$string));
 		},

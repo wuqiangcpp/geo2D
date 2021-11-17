@@ -201,6 +201,10 @@ updateHelp msg model =
                      ,circles=model.circles
                      ,labels=model.labels,pstates=model.pstates,lstates=model.lstates
                      ,prompt=""}
+                org="#+TITLE: \n#+OPTIONS: toc:nil\n#+INFOJS_OPT: path:/js/geo2d_show.js\n#+LINK_UP: ../geo2d.html\ndescriptions\n#+BEGIN_HTML\n<div id=\"elm\"></div>\n<script>\nvar app = Elm.Main.init({\nnode: document.getElementById('elm')\n,flags:{input:"++"'"++(String.join "\\n" (String.lines model.input))
+                     ++"',objsStr:'"
+                     ++(E.encode 0 (encodeObjs objs))
+                     ++"'}\n})\n</script>\n#+END_HTML"
             in
                 {model|prompt="input:"++"'"++(String.join "\\n"
                                                   (String.lines model.input))
